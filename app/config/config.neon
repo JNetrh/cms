@@ -1,8 +1,15 @@
 parameters:
 
 
+database:
+    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
+    user: jakub
+    password: 1234
+
+
+
 application:
-	errorPresenter: Error
+	errorPresenter: App\FrontModule\Presenters\Error
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 
@@ -11,5 +18,15 @@ session:
 	expiration: 14 days
 
 
+
 services:
-	router: App\RouterFactory::createRouter
+	authenticator: App\Model\Authenticator
+	authorizatorFactory: App\Model\AuthorizatorFactory
+	authorizator: @authorizatorFactory::create
+
+	- App\Router\RouterFactory
+	router: @App\Router\RouterFactory::createRouter
+
+
+constants:
+    UPLOAD_DIR: ./

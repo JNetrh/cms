@@ -1,0 +1,279 @@
+body, html
+{
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    min-height: 100vh;
+}
+
+/*----------------------------------------------------------------------------*/
+/* HROMADNÁ DEKLARACE FONTŮ: */
+body, p, ul, ol, ul li, ol li, table, table td, span, div, a, a:hover, a:visited, input, textarea, select /*----NEMAZAT----*/
+{
+    font-family: 'exo_2light', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+}
+h1, h2, h3, h4, h5, h6, button /*----NEMAZAT----*/
+{
+    font-weight: normal;
+    font-style: normal;
+}
+em /*----NEMAZAT----*/
+{
+    font-family: 'exo_2medium', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+strong /*----NEMAZAT----*/
+{
+    font-family: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    color: inherit;
+    text-decoration: inherit;
+    line-height: inherit;
+    text-transform: inherit;
+}
+
+/*----------------------------------------------------------------------------*/
+/* TEXT: */
+h1, h2, h3, h4, h5, h6 /*----NEMAZAT----*/
+{
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 120%;
+    color: #000;
+}
+h1 /*----NEMAZAT----*/
+{
+    font-family:  'exo_2regular', sans-serif;
+    font-size: 40px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    clear: both;
+}
+
+
+h2 /*----NEMAZAT----*/
+{
+    font-family: 'exo_2light', sans-serif;
+    text-align: left;
+    font-size: 30px;
+    padding: 30px 0 0 0;
+}
+h3 /*----NEMAZAT----*/
+{
+    font-family: 'exo_2light', sans-serif;
+    font-size: 20px;
+    color: #000;
+    text-align: left;
+    padding: 30px 0 0 0;
+}
+h4 /*----NEMAZAT----*/
+{
+    font-size: 18px;
+    font-style: oblique;
+}
+h5 /*----NEMAZAT----*/
+{
+    font-size: 18px;
+}
+
+p /*----NEMAZAT----*/
+{
+    margin: 0;
+    padding: 20px 0 0 0;
+    text-align: justify;
+    line-height: 140%;
+    color: #000;
+}
+
+pre /*----NEMAZAT----*/
+{
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+pre.preFotka /*----NEMAZAT----*/
+{
+    text-align: center;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    white-space: pre-wrap;
+    -webkit-white-space: pre-wrap;
+    -moz-white-space: pre-wrap;
+}
+
+/*----------------------------------------------------------------------------*/
+/* DIVY: */
+div {
+    margin: 0;
+    padding: 0;
+}
+
+div.divSign{
+    margin: 40vh auto 0 auto;
+    max-width: 450px;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/* ODKAZY: */
+a /*----NEMAZAT----*/
+{
+    font-family: inherit;
+    color: inherit;
+    border: none;
+    text-decoration: underline;
+    font-size: inherit;
+}
+a:hover /*----NEMAZAT----*/
+{
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: none;
+    color: #1E6AFF;
+}
+
+
+
+a img /*----NEMAZAT----*/
+{
+    border: none;
+    text-decoration: none;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+}
+a:hover img /*----NEMAZAT----*/
+{
+    border: none;
+    text-decoration: none;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    color: inherit;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+
+a.aAktButton /*----NEMAZAT----*/
+{
+    display: block;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    /*background:  url(../img/aktuality-p.png) left center no-repeat;*/
+    width: 141px;
+    height: 37px;
+    margin: 0;
+    padding: 13px 0 0 79px;
+}
+a.aAktButton:hover /*----NEMAZAT----*/
+{
+    /*background:  url(../img/aktuality-a.png) left center no-repeat;*/
+    color: #000;
+}
+/*----------------------------------------------------------------------------*/
+/* OBRÁZKY: */
+img
+{
+    border: none; /*----NEMAZAT----*/
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+/* TABULKY: */
+table /*----NEMAZAT----*/
+{
+    margin: 15px 0 0 0;
+    padding: 0;
+    border-collapse: collapse;
+    border: none;
+}
+table td /*----NEMAZAT----*/
+{
+    margin: 0;
+    padding: 5px 0 0 0;
+    border-collapse: collapse;
+    border: none;
+    text-align: left;
+    vertical-align: top;
+    line-height: 110%;
+}
+table td pre /*----NEMAZAT----*/
+{
+    white-space: pre-wrap;
+    -webkit-white-space: pre-wrap;
+    -moz-white-space: pre-wrap;
+    margin: 0;
+    padding: 0;
+}
+
+/*----------------------------------------------------------------------------*/
+/* SEZNAMY: */
+ul
+{
+    padding: 15px 0 0 30px;
+    margin: 0;
+}
+ul li
+{
+    margin: 0;
+    padding: 10px 0 0 5px;
+    list-style-type: disc;
+}
+
+
+/*----------------------------------------------------------------------------*/
+/* FRAMY: */
+iframe /*----NEMAZAT----*/
+{
+    width: 960px;
+    height: 200px;
+    border: 0;
+    margin: 20px 0 0 0;
+}
+
+/*----------------------------------------------------------------------------*/
+/* FORMULARE: */
+button.buttonCisty /*----NEMAZAT----*/
+{
+    font-family: Georgia, serif;
+    font-size: 18px;
+    margin: 0 0 0 auto;
+    text-align: right;
+    padding: 0;
+    display: block;
+    background: url(../img/buttonNic.png) left top no-repeat;
+    text-decoration: underline;
+    color: #657b99;
+    border: none;
+    text-transform: none;
+    cursor: pointer;
+}
+button.buttonCisty:hover /*----NEMAZAT----*/
+{
+    text-decoration: none;
+    color: #b1d349;
+    cursor: pointer;
+}
+
+
+

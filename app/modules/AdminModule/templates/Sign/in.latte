@@ -1,0 +1,37 @@
+{* This is the welcome page, you can delete it *}
+{layout "../@layout-sign.latte"}
+{block title}Sign in{/block}
+
+{block content}
+<div class="container">
+    <div class="divSign">
+        {form logInForm}
+        <div n:if="$form->hasErrors()" class="alert alert-danger alert-dismissable fade in">
+            <li n:foreach="$logInForm->errors as $error">{$error}</li>
+        </div>
+            <div class="form-group row">
+                <label for="inputEmail" class="col-md-4 col-form-label">Email</label>
+                <div class="col-md-8">
+                    {*<input name="email" type="email" class="form-control" id="inputEmail" placeholder="Email">*}
+                    {input email class => 'form-control'}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputPassword" class="col-md-4 col-form-label">Password</label>
+                <div class="col-md-8">
+                    {*<input name="password" type="password" class="form-control" id="inputPassword" placeholder="Heslo" autocomplete="off">*}
+                    {input password class => 'form-control'}
+                </div>
+            </div>
+            <div class="form-group row text-right">
+                <div class="offset-md-2 col-sm-12">
+                    <button type="submit" class="btn btn-primary btnSubmit">Sign in</button>
+                </div>
+            </div>
+            {*</form>*}
+        {/form}
+
+    </div>
+
+</div>
+
