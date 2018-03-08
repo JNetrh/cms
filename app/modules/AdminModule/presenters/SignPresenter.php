@@ -85,12 +85,13 @@ class SignPresenter extends BasePresenter
             $this->getUser()->setExpiration('+ 40 minutes', TRUE);
 
             //provedení autentizace, vnitřní zavolání metody "authenticate"
+
             $this->getUser()->login($values->email, $values->password);
 
             $this->flashMessage('Uživatel "' . $values->email . '" byl úspěšně přihlášen.');
             $this->redirect('Main:');
         } catch (NS\AuthenticationException $e) {
-            $form->addError($e->getMessage());
+            $form['email']->addError($e->getMessage());
         }
     }
 

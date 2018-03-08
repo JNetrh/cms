@@ -1,0 +1,296 @@
+{block content}
+
+
+    <form n:name=headerForm>
+        <div class="container odsaditBottom-50">
+
+            <h1>Opening block</h1>
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h2 class="h2form">Page background</h2>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="background_color" class="form-control" id="color_9" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_background"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
+                            <div class="col-md-7 inputGroupContainer">
+
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h2 class="h2form">Heading text</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Heading text</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <textarea n:name="heading_1" class="form-control"></textarea>
+                                <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Heading color</label>
+
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="heading_1_color" class="form-control" id="color_1" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_heading_1"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError heading_1_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Sub heading</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <textarea n:name="heading_2" class="form-control"></textarea>
+                                <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Heading color</label>
+
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="heading_2_color" class="form-control" id="color_2" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_heading_2"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError heading_2_color}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h2 class="h2form">First button</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Text</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="button_1" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError button_1}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Link to</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="button_1_link" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError button_1_link}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Text color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="button_1_color" class="form-control" id="color_3" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_button_1_color"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError button_1_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="button_1_background" class="form-control" id="color_4" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_button_1_background"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError button_1_background}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Border color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="button_1_border" class="form-control" id="color_5" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_button_1_border"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError button_1_border}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h2 class="h2form">Second button</h2>
+                    </div>
+                    <div class="panel-body">
+                        <div class="panel-body">
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-5 col-form-label">Text</label>
+                                <div class="col-md-7 inputGroupContainer">
+                                    <input type="text" n:name="button_2" class="form-control">
+                                    <span class="formError red" n:ifcontent>{inputError button_2}</span> {* error *}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-5 col-form-label">Link to</label>
+                                <div class="col-md-7 inputGroupContainer">
+                                    <input type="text" n:name="button_2_link" class="form-control">
+                                    <span class="formError red" n:ifcontent>{inputError button_2_link}</span> {* error *}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-5 col-form-label">Text color</label>
+                                <div class="col-md-7 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input n:name="button_2_color" class="form-control" id="color_6" value="transparent">
+                                        <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                        <div class="divColpick well">
+                                            <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                            <div id="colpick_button_2_color"></div>
+                                        </div>
+                                    </div>
+                                    <span class="formError red" n:ifcontent>{inputError button_2_color}</span> {* error *}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                                <div class="col-md-7 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input n:name="button_2_background" class="form-control" id="color_7" value="transparent">
+                                        <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                        <div class="divColpick well">
+                                            <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                            <div id="colpick_button_2_background"></div>
+                                        </div>
+                                    </div>
+                                    <span class="formError red" n:ifcontent>{inputError button_2_background}</span> {* error *}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-5 col-form-label">Border color</label>
+                                <div class="col-md-7 inputGroupContainer">
+                                    <div class="input-group">
+                                        <input n:name="button_2_border" class="form-control" id="color_8" value="transparent">
+                                        <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                        <div class="divColpick well">
+                                            <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                            <div id="colpick_button_2_border"></div>
+                                        </div>
+                                    </div>
+                                    <span class="formError red" n:ifcontent>{inputError button_2_border}</span> {* error *}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+            <div class="col-md-12">
+                <button type="submit" n:name="submit" value="Odeslat" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+
+
+    </form>
+
+{/block}
+
+{block scripts}
+    <script type="text/javascript">
+       $(document).ready(function() {
+
+
+            $('#colpick_heading_1').farbtastic(function(color){
+                $("#color_1").val(color)
+                $("#color_1").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_heading_2').farbtastic(function(color){
+                $("#color_2").val(color)
+                $("#color_2").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_1_color').farbtastic(function(color){
+                $("#color_3").val(color)
+                $("#color_3").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_1_background').farbtastic(function(color){
+                $("#color_4").val(color)
+                $("#color_4").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_1_border').farbtastic(function(color){
+                $("#color_5").val(color)
+                $("#color_5").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_2_color').farbtastic(function(color){
+                $("#color_6").val(color)
+                $("#color_6").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_2_background').farbtastic(function(color){
+                $("#color_7").val(color)
+                $("#color_7").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_button_2_border').farbtastic(function(color){
+                $("#color_8").val(color)
+                $("#color_8").next('.openColpick').css('background-color', color)
+            });
+            $('#colpick_background').farbtastic(function(color){
+                $("#color_9").val(color)
+                $("#color_9").next('.openColpick').css('background-color', color)
+            });
+
+
+
+
+        });
+    </script>
+{/block}

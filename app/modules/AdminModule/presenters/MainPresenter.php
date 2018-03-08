@@ -6,4 +6,7 @@ use Nette;
 
 class MainPresenter extends SecuredBasePresenter {
 
+
+
+
 }

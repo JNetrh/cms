@@ -22,6 +22,11 @@
 
     <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
 
+
+    <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
+    <link rel="stylesheet" href="{$basePath}/admin/js/farbtastic/farbtastic.css" type="text/css" />
+    <script src="{$basePath}/admin/js/js.js"></script>
+
     {*<link href="{$basePath}/css/bootstrap-grid.min.css" rel="stylesheet" >*}
     {*<link href="{$basePath}/css/bootstrap-reboot.min.css" rel="stylesheet" >*}
 
@@ -31,15 +36,27 @@
 <body>
 {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
 
+<div class="divMenu bg-grey">
+    <ul class="ulMenu">
+        <li><a n:href="Main:" >Home</a></li>
+        <li><a n:href="Header:new" >New Header</a></li>
+        <li><a n:href="Members:new" >New Members</a></li>
+        <li><a n:href="Members:newMember 1" >New member</a></li>
+        <li><a n:href="References:new" >New references</a></li>
+        <li><a n:href="References:newReference 1" >New reference</a></li>
+    </ul>
+</div>
 
-
-
-{include content}
+<div class="container">
+    {include content}
+</div>
 
 
 {block css}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {/block}
+
+{include scripts}
 
 {block scripts}
     <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>

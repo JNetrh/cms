@@ -11,6 +11,12 @@ create TABLE block_header
   bg_type               varchar(255) not null DEFAULT "color",
   heading_1             varchar(255) not null DEFAULT "",
   heading_2             varchar(255) not null DEFAULT "",
+  button_1              varchar(255) not null DEFAULT "",
+  button_2              varchar(255) not null DEFAULT "",
+  button_1_link         TEXT not null DEFAULT "",
+  button_2_link         TEXT not null DEFAULT "",
+  image                 VARCHAR(255) default null,
+  active                SMALLINT DEFAULT 0,
   primary key (id)
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;

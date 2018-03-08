@@ -239,8 +239,8 @@ header, section {
     margin: auto;
     top: 0;
     width:100%;
-    min-height: 100vh;
-    padding-top: 150px;
+    height:670px;
+    padding-top: 250px;
     padding-bottom: 66.66666px;
     text-align: center;
     color: #F2F2F2;
