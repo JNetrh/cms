@@ -2,7 +2,7 @@ body, html
 {
     margin: 0;
     padding: 0;
-    background-color: #eee;
+    background-color: #fff;
     min-height: 100vh;
 }
 
@@ -159,9 +159,10 @@ div.divSign{
 }
 
 div.divMenu{
-    text-align: right;
-    padding: 15px 20%;
-    margin-bottom: 50px;
+    position: relative;
+    margin: 0;
+    padding: 20px 0 0 20px;
+    text-align: left;
 }
 
 
@@ -238,6 +239,15 @@ img
 }
 
 
+img.imgLogo
+{
+    position: relative;
+    left: 0;
+    top: 20px;
+    margin: 0 auto 50px auto;
+    padding: 0;
+    width: 60%;
+}
 
 /*----------------------------------------------------------------------------*/
 /* TABULKY: */
@@ -281,30 +291,122 @@ ul li
     list-style-type: disc;
 }
 
-ul.ulMenu{
-    list-style-type: none;
+ul.menu
+{
+    position: relative;
+    left: 5px;
+    top: 0;
     padding: 0;
-    height: 50px;
+    margin: 0;
+    z-index: 3001;
 }
-
-ul.ulMenu li{
-    display: inline-table;
+ul.menu li
+{
+    margin: 0;
+    padding: 0 0 0 5px;
     list-style-type: none;
 }
-
-ul.ulMenu li a{
+ul.menu li.liSPozadim
+{
+    background:  url(../img/sipka-p.png) right center no-repeat;
+}
+ul.menu li a
+{
+    font-size: 25px;
     display: block;
     text-decoration: none;
+    padding: 8px 12px 10px 12px;
+    color: #000;
+}
+ul.menu li ul
+{
+    position: absolute;
+    visibility: hidden;
+    left: 217px;
+    /*background-color: #26a69a;*/
+    display: inline-grid;
+    width: max-content;
+    z-index: 2001;
+}
+ul.ulSubmenu1
+{
+    margin: -45px 0 0 0;
+    padding: 5px 12px 5px 12px;
+}
+ul.menu li ul li
+{
+    clear: both;
+    list-style-type: none;
+    height: auto;
+    background-color: #26a69a;
+    margin: 0 0 5px 0;
+}
+ul.menu li ul li a
+{
+    font-size: 17px;
+    text-transform: none;
+    display: block;
+    padding: 7px 15px;
+    margin: 0;
+    text-decoration: none;
+    text-align: left;
+    color: #000;
+}
+ul.menu li a:hover
+{
+    color: #2672a6;
+}
+ul.menu li:hover a
+{
+    color: #2672a6;
+}
+ul.menu li:hover ul li a
+{
+    color: #000;
+}
+ul.menu li ul li a:hover
+{
+    display: block;
+    color: #2672a6;
+}
+ul.menu li:hover ul
+{
+    visibility: visible;
+}
+ul.menu li.liSPozadim:hover
+{
+    color: #2672a6;
+    background:  url(../img/sipka-p.png) right center no-repeat;
 }
 
-ul.ulMenu li a{
+
+
+
+
+
+
+.ulMenuActive a{
+    background-color: #EEE;
+    color: #eee;
     text-decoration: none;
-}
-ul.ulMenu li a:hover{
-    text-decoration: none;
-    border-bottom: 1.5px solid #2672a6;
 }
 
+
+
+
+ul.ulNav{
+    padding: 10px 0 0 0;
+}
+ul.ulNav li{
+    color: #a06066;
+}
+ul.ulNav li a{
+    color: #a06066;
+    text-decoration: none;
+}
+ul.ulNav li a:hover{
+    text-decoration: underline;
+}
 
 /*----------------------------------------------------------------------------*/
 /* FRAMY: */

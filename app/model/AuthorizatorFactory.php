@@ -25,10 +25,11 @@ class AuthorizatorFactory {
         $permission->addResource('Admin:Header');
         $permission->addResource('Admin:Members');
         $permission->addResource('Admin:References');
+        $permission->addResource('Admin:Summary');
         $permission->addResource('Admin:');
 
         /* zákldní pole zdrojů */
-        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References');
+        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary');
 
         /* základní pole práv */
         $defaultPrivileges = array('default', 'detail', 'logout');

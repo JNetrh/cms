@@ -5,65 +5,25 @@
         <div class="container odsaditBottom-50">
 
             <h1>Opening block</h1>
-            <div class="col-md-6">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h2 class="h2form">Page background</h2>
-                    </div>
-                    <div class="panel-body">
-
-
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Color</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="background_color" class="form-control" id="color_9" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_background"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
-                            <div class="col-md-7 inputGroupContainer">
-
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-primary">
-                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> {*end col-md*}
-
-            <div class="col-md-6">
+            {* /START\ Heading formPart *}
+            <div class="col-md-12">
                 <div class="panel container-fluid">
                     <div class="panel-title">
                         <h2 class="h2form">Heading text</h2>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Heading text</label>
-                            <div class="col-md-7 inputGroupContainer">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
+                            <div class="col-md-12 inputGroupContainer">
                                 <textarea n:name="heading_1" class="form-control"></textarea>
                                 <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Heading color</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Heading color</label>
 
-                            <div class="col-md-7 inputGroupContainer">
+                            <div class="col-md-5 inputGroupContainer">
                                 <div class="input-group">
                                     <input n:name="heading_1_color" class="form-control" id="color_1" value="transparent">
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
@@ -76,17 +36,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Sub heading</label>
-                            <div class="col-md-7 inputGroupContainer">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading</label>
+                            <div class="col-md-12 inputGroupContainer">
                                 <textarea n:name="heading_2" class="form-control"></textarea>
                                 <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Heading color</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading color</label>
 
-                            <div class="col-md-7 inputGroupContainer">
+                            <div class="col-md-5 inputGroupContainer">
                                 <div class="input-group">
                                     <input n:name="heading_2_color" class="form-control" id="color_2" value="transparent">
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
@@ -102,7 +62,11 @@
                 </div>
 
             </div> {*end col-md*}
+            {* /END\ Heading formPart *}
 
+
+
+            {* /START\ First button formPart *}
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -168,7 +132,8 @@
                     </div>
                 </div>
             </div> {*end col-md*}
-
+            {* /END\ First button formPart *}
+            {* /START\ Second button formPart *}
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -236,6 +201,57 @@
                     </div>
                 </div>
             </div> {*end col-md*}
+            {* /END\ Second button formPart *}{* /START\ Background formPart *}
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h2 class="h2form">Page settings</h2>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Order</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
+                                <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="background_color" class="form-control" id="color_9" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_background"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
+                            <div class="col-md-7 inputGroupContainer">
+
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+            {* /END\ Background formPart *}
+
+
             <div class="col-md-12">
                 <button type="submit" n:name="submit" value="Odeslat" class="buttonCisty">Submit</button>
             </div> {*end col-md*}

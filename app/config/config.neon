@@ -20,9 +20,14 @@ session:
 
 
 services:
+	- App\Model\UploadFile
+	- App\Model\Members
+	- App\Model\Member
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create
+	blockFactory: App\Model\BlockFactory
+	blockBuilder: @blockFactory::create
 
 	- App\Router\RouterFactory
 	router: @App\Router\RouterFactory::createRouter

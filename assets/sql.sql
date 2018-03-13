@@ -4,6 +4,9 @@
 /*==============================================================*/
 
 
+/*==============================================================*/
+/* Table: block_header                                                 */
+/*==============================================================*/
 create TABLE block_header
 (
   id                    SERIAL,
@@ -17,7 +20,56 @@ create TABLE block_header
   button_2_link         TEXT not null DEFAULT "",
   image                 VARCHAR(255) default null,
   active                SMALLINT DEFAULT 0,
+  position              INTEGER not NULL DEFAULT 696969,
   primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+
+/*==============================================================*/
+/* Table: block_members                                                 */
+/*==============================================================*/
+create TABLE block_members
+(
+   id                    SERIAL,
+   style                 TEXT,
+   bg_type               varchar(255) not null DEFAULT "color",
+   heading_1             varchar(255) not null DEFAULT "",
+   image                 VARCHAR(255) default null,
+   active                SMALLINT DEFAULT 0,
+   position              INTEGER not NULL DEFAULT 696969,
+   primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: block_references                                                 */
+/*==============================================================*/
+create TABLE block_references
+(
+   id                    SERIAL,
+   style                 TEXT,
+   bg_type               varchar(255) not null DEFAULT "color",
+   heading_1             varchar(255) not null DEFAULT "",
+   image                 VARCHAR(255) default null,
+   active                SMALLINT DEFAULT 0,
+   position              INTEGER not NULL DEFAULT 696969,
+   primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: members                                                 */
+/*==============================================================*/
+create TABLE members
+(
+   id                    SERIAL,
+   name                  varchar(255) not null DEFAULT "",
+   text                  TEXT not null DEFAULT "",
+   image                 VARCHAR(255) default null,
+   owner                 BIGINT UNSIGNED,
+   primary key (id),
+   foreign key (owner) references block_members (id) on delete set null
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 

@@ -1,65 +1,167 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{ifset title}{include title|stripHtml} | {/ifset}Administration</title>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{ifset title}{include title|stripHtml} | {/ifset}Administration</title>
 
-    {*<script src="{$basePath}/js/jquery-3.3.1.min.js"></script>*}
-    {*Necessary for bootstrap v 4.0 *}
-    {*<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>*}
-    {*<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>*}
-    {*<script src="{$basePath}/js/bootstrap.min.js"></script>*}
+        {*<script src="{$basePath}/js/jquery-3.3.1.min.js"></script>*}
+        {*Necessary for bootstrap v 4.0 *}
+        {*<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>*}
+        {*<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>*}
+        {*<script src="{$basePath}/js/bootstrap.min.js"></script>*}
 
-    {*<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" >*}
+        {*<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" >*}
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link href="{$basePath}/admin/css/style.css" rel="stylesheet" >
-
-    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
-    <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
-    <link rel="stylesheet" href="{$basePath}/admin/js/farbtastic/farbtastic.css" type="text/css" />
-    <script src="{$basePath}/admin/js/js.js"></script>
-
-    {*<link href="{$basePath}/css/bootstrap-grid.min.css" rel="stylesheet" >*}
-    {*<link href="{$basePath}/css/bootstrap-reboot.min.css" rel="stylesheet" >*}
+        <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
 
 
-</head>
+        <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
+        <link rel="stylesheet" href="{$basePath}/admin/js/farbtastic/farbtastic.css" type="text/css" />
+        <script src="{$basePath}/admin/js/tinymce/tinymce.min.js"></script>
+        <script src="{$basePath}/admin/js/js.js"></script>
 
-<body>
-{*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
-
-<div class="divMenu bg-grey">
-    <ul class="ulMenu">
-        <li><a n:href="Main:" >Home</a></li>
-        <li><a n:href="Header:new" >New Header</a></li>
-        <li><a n:href="Members:new" >New Members</a></li>
-        <li><a n:href="Members:newMember 1" >New member</a></li>
-        <li><a n:href="References:new" >New references</a></li>
-        <li><a n:href="References:newReference 1" >New reference</a></li>
-    </ul>
-</div>
-
-<div class="container">
-    {include content}
-</div>
+        <link href="{$basePath}/admin/css/style.css" rel="stylesheet" >
 
 
-{block css}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-{/block}
+        <script>tinymce.init({ selector:'textarea' });</script>
 
-{include scripts}
+        {*<link href="{$basePath}/css/bootstrap-grid.min.css" rel="stylesheet" >*}
+        {*<link href="{$basePath}/css/bootstrap-reboot.min.css" rel="stylesheet" >*}
 
-{block scripts}
-    <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-{/block}
-</body>
+
+    </head>
+
+    <body>
+    {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
+
+    <div class="container-fluid full-height">
+        <div class="row content full-height">
+
+            <nav class="navbar navbar-default visible-sm visible-xs">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav ulmenu">
+
+
+                            <li class="lead"><a n:href="Main:" >Home</a></li>
+                            <li class="lead"><a n:href="Summary:" >Block summary</a></li>
+                            <li class="lead"><a n:href="Header:new" >New Header</a></li>
+                            <li class="lead"><a n:href="Members:new" >New Members</a></li>
+                            {*<li class="lead"><a n:href="Members:newMember 1" >New member</a></li>*}
+                            <li class="lead"><a n:href="References:new" >New references</a></li>
+                            {*<li class="lead"><a n:href="References:newReference 1" >New reference</a></li>*}
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!--menu pro velké obrazovky-->
+            <div class="col-md-2 sidenav hidden-sm hidden-xs same-height">
+                <a n:href="Main:"><img class="img-responsive imgLogo" src="{$basePath}/admin/img/svg/moje.svg" alt="logo"/></a>
+                <div class="divMenu">
+                    <ul class="menu">
+                        <li id="home"><a n:href="Main:" >Home</a></li>
+                        <li id="summary"><a n:href="Summary:" >Block summary</a></li>
+                        <li id="blocks" class="liSPozadim"><a href="#" >New block</a>
+                            <!--První submenu-->
+                            <ul class="ulSubmenu1">
+                                <li id="header"><a n:href="Header:new" >New Header</a></li>
+                                <li id="members"><a n:href="Members:new" >New Members</a></li>
+                                {*<li id=""><a n:href="Members:newMember 1" >New member</a></li>*}
+                                <li id="references"><a n:href="References:new" >New references</a></li>
+                                {*<li id=""><a n:href="References:newReference 1" >New reference</a></li>*}
+                            </ul>
+                            <!--Konec První Sub-->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            {*<div class="col-md-2 sidenav hidden-sm hidden-xs divMenu same-height">*}
+                {*<a n:href="Main:"><img class="img-responsive imgLogo" src="{$basePath}/admin/img/svg/moje.svg" alt="logo"/></a>*}
+                {*<ul class="nav nav-pills nav-stacked menu">*}
+
+                    {*<li id="home" class="liMenu"><a n:href="Main:" >Home</a></li>*}
+                    {*<li id="blocks" class="liMenu"><a href="#" >New block</a></li>*}
+                    {*<ul class='ulSubmenu1'>*}
+                        {*<li id="header"><a n:href="Header:new" >New Header</a></li>*}
+                        {*<li id="members"><a n:href="Members:new" >New Members</a></li>*}
+                        {*<li id=""><a n:href="Members:newMember 1" >New member</a></li>*}
+                        {*<li id="references"><a n:href="References:new" >New references</a></li>*}
+                        {*<li id=""><a n:href="References:newReference 1" >New reference</a></li>*}
+                    {*</ul>*}
+
+                {*</ul>*}
+            {*</div>*}
+
+            <div class="col-md-10 navbar hidden-xs">
+                <div class="container-fluid text-right">
+                    <ul class="list-inline ulNav">
+                        <li><i class="fa fa-user-circle-o" aria-hidden="true"></i></li>
+                        {*<li>{ifset $firstName}{$firstName} {$lastName}{/ifset}</li>*}
+                        <li>|</li>
+                        <li><a class="bila" n:href="logout"><strong>Sign out</strong></a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-10 by-height">
+
+                <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+
+                {include content}
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {block css}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {/block}
+
+    {include scripts}
+
+    {block scripts}
+        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+    {/block}
+    </body>
 </html>

@@ -37,6 +37,7 @@ class HeaderPresenter extends SecuredBasePresenter {
         $form -> addText('button_2_background');
         $form -> addText('button_2_border');
         $form -> addText('background_color');
+        $form -> addText('position');
         $form ->addUpload('image')
             ->addCondition(Form::FILLED)
             ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
@@ -67,7 +68,8 @@ class HeaderPresenter extends SecuredBasePresenter {
             'button_2' => $data['button_2'],
             'button_1_link' => $data['button_1_link'],
             'button_2_link' => $data['button_2_link'],
-            'active' => 1
+            'active' => 1,
+            'position' => $data['position']
         ];
         if($file != null){
             $hardData['bg_type'] = 'image';
@@ -84,6 +86,7 @@ class HeaderPresenter extends SecuredBasePresenter {
         unset($data['button_1'], $data['button_2']);
         unset($data['button_1_link'], $data['button_2_link']);
         unset($data['image']);
+        unset($data['position']);
 
         $metaData = $data;
         $arrayKeys = array_keys($data);

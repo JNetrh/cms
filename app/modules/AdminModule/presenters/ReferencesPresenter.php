@@ -7,9 +7,11 @@ use Nette\Application\UI\Form;
 
 class ReferencesPresenter extends SecuredBasePresenter {
 
-    public function __construct()
-    {
+    private $database;
 
+    public function __construct(Nette\Database\Context $database)
+    {
+        $this->database = $database;
     }
 
     public function renderNewReference($blockId){
@@ -26,6 +28,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $form -> addText('name_color');
         $form -> addText('block_background_color');
         $form -> addText('background_color');
+        $form -> addText('position');
         $form ->addUpload('image')
             ->addCondition(Form::FILLED)
             ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
@@ -41,13 +44,83 @@ class ReferencesPresenter extends SecuredBasePresenter {
     public function referencesFormSucceeded($form, $values){
 
         $data = $form->getHttpData();
+        $headerId = $this->getParameter('id');
+//        $isImage = $this->database->table('block_header')->where('active', 1); // možnost mít vícero hlaviček, co když dělám novou a takový záznam neexistuje, jak vybrat mezi existujícími tu správnou? - nějaké ID si předávat?
         $hardData = [];
+        $metaData = [];
+        $file = $data['image'];
+        $arrayKeys = [];
 
         $hardData = [
             'heading_1' => $data['heading_1'],
+            'active' => 1,
+            'position' => $data['position']
         ];
+        if($file != null){
+            $hardData['bg_type'] = 'image';
+            if(!$file->isImage() and !$file->isOk())
+                $form['image']->addError('Image was not ok');
+        }
 
-        bdump($data);
+
+
+        unset($data['heading_1']);
+        unset($data['image']);
+        unset($data['position']);
+
+        $metaData = $data;
+        $arrayKeys = array_keys($data);
+        forEach($arrayKeys as $value){
+            if(substr($value, 0, 1) != "_"){
+                if(!($metaData[$value] == 'transparent' || (strlen($metaData[$value]) == 7 and substr($metaData[$value], 0, 1) == "#"))){
+
+                    $form[$value]->addError('Wrong color type');
+                }
+
+            }
+
+        }
+
+        $hardData['style'] = json_encode($metaData);
+
+        if($file != null){
+            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+
+            if($headerId){
+                $oldImg = $this->database->table('block_references')->where('id', $headerId)->fetch()->image;
+                if(file_exists($oldImg)){
+                    unlink($oldImg);
+                }
+            }
+
+            $hardData['image'] = $path;
+
+            $file->move($path);
+        }
+
+
+
+        if(!$form->hasErrors()){
+            $this->database->table('block_references')->update(['active' => 0]);
+            if(!$headerId){
+                $this->database->table('block_references')->insert($hardData);
+            }
+            else{
+                $this->database->table('block_references')->where('id', $headerId)->update($hardData);
+            }
+
+            $this->redirect('Main:');
+
+        }
+
+
+        bdump($data); //ZDE
+
+
+
+
+
 
     }
 
