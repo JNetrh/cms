@@ -23,11 +23,11 @@ services:
 	- App\Model\UploadFile
 	- App\Model\Members
 	- App\Model\Member
+	- App\Model\BlockFactory
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create
-	blockFactory: App\Model\BlockFactory
-	blockBuilder: @blockFactory::create
+	blockFactory: @App\Model\BlockFactory::create
 
 	- App\Router\RouterFactory
 	router: @App\Router\RouterFactory::createRouter

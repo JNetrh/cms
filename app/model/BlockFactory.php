@@ -14,17 +14,19 @@ use App\Model\Members as Members;
 class BlockFactory
 {
     public $database;
+    private $blocks;
     private $block_members;
 
     public function __construct(Nette\Database\Context $database)
     {
         $this->database = $database;
         $this->block_members = Nette\Utils\ArrayList();
+        $this->blocks = Nette\Utils\ArrayList();
     }
 
 
     /**
-     * @return mixed
+     * @return Nette\Utils\ArrayList
      */
     public function create(){
 
@@ -33,6 +35,9 @@ class BlockFactory
         foreach ($members as $member){
             $this->block_members[] = new Members($member['id']);
         }
+
+        return $this->blocks;
+
     }
 
     /**

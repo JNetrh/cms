@@ -30,7 +30,7 @@ class Members
      * @param Nette\Database\Context $database
      * @param $id
      */
-    public function __construct(Nette\Database\Context $database, $id = -1, blockBuilder $blockBuilder)
+    public function __construct(Nette\Database\Context $database, $id = -1, blockFactory $blockBuilder)
     {
         $this->database = $database;
         $this->members = $blockBuilder->getBlockMembers();
