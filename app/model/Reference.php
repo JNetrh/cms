@@ -10,7 +10,7 @@ namespace App\Model;
 
 use Nette;
 
-class Member
+class Reference
 {
     public  $database;
 
@@ -20,12 +20,12 @@ class Member
     private $image;
     private $owner;
     private $active;
+    private $reference;
 
 
     /**
-     * Members constructor.
+     * Reference constructor.
      * @param Nette\Database\Context $database
-     * @param $id
      */
     public function __construct(Nette\Database\Context $database)
     {
@@ -33,18 +33,30 @@ class Member
     }
 
 
+    /**
+     * @param int $id
+     */
     public function initialize($id = -1){
         $this->id = $id;
         $this->setVariables($id);
     }
 
 
-    public function setData($name, $text, $image, $owner, $active){
+    /**
+     * @param $name
+     * @param $text
+     * @param $image
+     * @param $owner
+     * @param $active
+     * @param $reference
+     */
+    public function setData($name, $text, $image, $owner, $active, $reference){
         $this->name = $name;
         $this->text = $text;
         $this->image = $image;
         $this->owner = $owner;
         $this->active = $active;
+        $this->reference = $reference;
     }
 
     /**
@@ -56,7 +68,8 @@ class Member
             'text' => $this->text,
             'image' => $this->image,
             'owner' => $this->owner,
-            'active' => $this->active
+            'active' => $this->active,
+            'reference' => $this->reference
         ];
     }
 
@@ -68,16 +81,17 @@ class Member
             'text' => $this->text,
             'image' => $this->image,
             'owner' => $this->owner,
-            'active' => $this->active
+            'active' => $this->active,
+            'reference' => $this->reference
         ];
     }
 
     public function saveToDb(){
         if(isset($this->id)){
-            $this->database->table('members')->where('id', $this->id)->update($this->databaseInput());
+            $this->database->table('referencese')->where('id', $this->id)->update($this->databaseInput());
         }
         else{
-            $this->database->table('members')->insert($this->databaseInput());
+            $this->database->table('referencese')->insert($this->databaseInput());
         }
 
     }
@@ -87,7 +101,7 @@ class Member
      * @param $id
      */
     private function setVariables($id){
-        $dbOut = $this->database->table('members');
+        $dbOut = $this->database->table('referencese');
 
         if(count($dbOut) > 0){
             $dbOut = $dbOut->where('id', $id)->fetch();
@@ -96,13 +110,14 @@ class Member
             $this->setImage($dbOut->image);
             $this->setOwner($dbOut->owner);
             $this->setActive($dbOut->active);
+            $this->setReference($dbOut->reference);
         }
 
 
     }
 
     public function delete(){
-        $toDelete = $this->database->table('members')->where('id', $this->getId())->fetch();
+        $toDelete = $this->database->table('referencese')->where('id', $this->getId())->fetch();
         if(file_exists($toDelete->image)){
             unlink($toDelete->image);
         }
@@ -134,7 +149,7 @@ class Member
             return $this->id;
         }
         else{
-            $newId =  $this->database->table('members')->where('name', $this->getName())->where('text', $this->getText())->where('active', $this->getActive())->get('id');
+            $newId =  $this->database->table('referencese')->where('name', $this->getName())->where('text', $this->getText())->where('active', $this->getActive())->where('reference', $this->getReference())->get('id');
             $this->setId($newId);
             return $newId;
         }
@@ -211,6 +226,23 @@ class Member
     {
         $this->active = $active;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    /**
+     * @param mixed $reference
+     */
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+    }
+
 
 
 

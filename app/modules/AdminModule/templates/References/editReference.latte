@@ -80,7 +80,7 @@
                 selector: '#content',
                 entity_encoding : "raw",
                 init_instance_callback : function(editor){
-
+                    editor.setContent({$data['reference']});
                 }
             });
         })

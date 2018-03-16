@@ -1,31 +1,13 @@
 {block content}
 
 
-    <form n:name=oneReferenceForm>
+    <form n:name=oneMemberForm>
         <div class="container odsaditBottom-50">
-            <h1>New reference</h1>
-
-            <div class="col-md-12">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h3 class="h3form">Reference</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Content</label>
-                            <div class="col-md-12 inputGroupContainer">
-                                <textarea id="content" n:name="content" class="form-control"></textarea>
-                                <span class="formError red" n:ifcontent>{inputError content}</span> {* error *}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div> {*end col-md*}
+            <h1>Edit member</h1>
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h3 class="h3form">Referrer&rsquo;s data</h3>
+                        <h3 class="h3form">Profile photography</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
@@ -43,6 +25,15 @@
                                 <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Member's data</h3>
+                    </div>
+                    <div class="panel-body">
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Name</label>
                             <div class="col-md-7 inputGroupContainer">
@@ -57,8 +48,16 @@
                                 <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="checkbox" n:name="active" class="" >
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div> {*end col-md*}
 
 
@@ -74,15 +73,5 @@
 {/block}
 
 {block bordel}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            tinymce.init({
-                selector: '#content',
-                entity_encoding : "raw",
-                init_instance_callback : function(editor){
 
-                }
-            });
-        })
-    </script>
 {/block}

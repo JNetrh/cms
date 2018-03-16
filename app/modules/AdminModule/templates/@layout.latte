@@ -30,8 +30,6 @@
         <link href="{$basePath}/admin/css/style.css" rel="stylesheet" >
 
 
-        <script>tinymce.init({ selector:'textarea' });</script>
-
         {*<link href="{$basePath}/css/bootstrap-grid.min.css" rel="stylesheet" >*}
         {*<link href="{$basePath}/css/bootstrap-reboot.min.css" rel="stylesheet" >*}
 
@@ -139,29 +137,17 @@
     </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {block css}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {/block}
 
-    {include scripts}
 
+
+    {ifset bordel}{include bordel}{/ifset}
     {block scripts}
         <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <!--SCRIPT same height panel-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
     {/block}
     </body>
 </html>

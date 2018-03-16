@@ -14,7 +14,8 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <textarea n:name="heading_1" class="form-control"></textarea>
+                                {*<textarea n:name="heading_1" class="form-control"></textarea>*}
+                                <input type="text" n:name="heading_1" class="form-control">
                                 <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
                             </div>
                         </div>
@@ -51,6 +52,13 @@
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
                                 <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="checkbox" n:name="active" class="" >
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -139,10 +147,18 @@
 
 {/block}
 
-{block scripts}
+{block bordel}
     <script type="text/javascript">
-        $(document).ready(function() {
+        // tinymce.init({
+        //     selector: 'textarea',
+        //     entity_encoding : "raw",
+        //     init_instance_callback : function(editor){
+        //         console.log(editor)
+        //     }
+        // });
 
+
+        $(document).ready(function() {
 
             $('#colpick_heading_1').farbtastic(function(color){
                 $("#color_2").val(color)

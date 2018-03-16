@@ -120,7 +120,7 @@
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                     <div class="divColpick well">
                                         <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_names"></div>
+                                        <div id="colpick_name"></div>
                                     </div>
                                 </div>
                                 <span class="formError red" n:ifcontent>{inputError name_color}</span> {* error *}
@@ -155,33 +155,55 @@
 
     </form>
 
+    <div class="container odsaditBottom-150">
+        <h2>Members</h2>
+        <table class="tableSummary table table-responsive">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Visible</th>
+                <th>Profile photo</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            {foreach $references as $row}
+                <tr>
+                    <td class="col">{$row->getName()}</td>
+                    <td class="col">{$row->getText()}</td>
+                    <td class="col">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    <td class="col">{strlen($row->getImage()) > 5 ? "yes" : "no"}</td>
+                    <td class="col"><a n:href="References:editReference, $row->getId(), $row->getOwner()" >edit</a></td>
+                    <td class="col"><a n:href="deleteReference! $row->getId(), $row->getOwner()" >delete</a></td>
+                    {*<td class="col"><a href="#" >edit</a></td>*}
+                </tr>
+            {/foreach}
+        </table>
+    </div>
+
 {/block}
 
-{block scripts}
+{block bordel}
     <script type="text/javascript">
-        $(document).ready(function() {
 
+        $(document).ready(function(){
+            var pickers = [['heading', '#color_2'], ['background', '#color_1'], ['text', '#color_3'], ['name', '#color_4'], ['block_background', '#color_5']];
+            var colors = {$colors};
+            pickers.forEach(function (name) {
+                var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
+                picker.setColor(colors[name[0] + '_color']); //set initial color
+                picker.linkTo(function (color) {
+                    $(name[1]).val(color)
+                    $(name[1]).next('.openColpick').css('background-color', color)
+                }); //link to callback
+            })
+            console.log(colors)
 
-            $('#colpick_heading').farbtastic(function(color){
-                $("#color_2").val(color)
-                $("#color_2").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_background').farbtastic(function(color){
-                $("#color_1").val(color)
-                $("#color_1").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_text').farbtastic(function(color){
-                $("#color_3").val(color)
-                $("#color_3").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_names').farbtastic(function(color){
-                $("#color_4").val(color)
-                $("#color_4").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_block_background').farbtastic(function(color){
-                $("#color_5").val(color)
-                $("#color_5").next('.openColpick').css('background-color', color)
-            });
+            setTimeout(function () {
+                pickers.forEach(function (name) {
+                    $(name[1]).val(colors[name[0] + '_color'])
+                    $(name[1]).next('.openColpick').css('background-color', colors[name[0] + '_color'])
+                })
+            }, 100)
 
         });
     </script>

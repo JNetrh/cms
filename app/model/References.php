@@ -9,9 +9,9 @@
 namespace App\Model;
 
 use Nette;
-use App\Model\Member as Member;
+use App\Model\Reference as Reference;
 
-class Members
+class References
 {
 
     public $database;
@@ -23,11 +23,11 @@ class Members
     private $active;
     private $position;
     private $image;
-    private $members = [];
+    private $references = [];
 
 
     /**
-     * Members constructor.
+     * References constructor.
      * @param Nette\Database\Context $database
      */
     public function __construct(Nette\Database\Context $database)
@@ -59,7 +59,7 @@ class Members
         return [
             'style' => $this->style,
             'bg_type' => $this->bg_type,
-            'heading_1' => $this->heading,
+            'heading' => $this->heading,
             'active' => $this->active,
             'position' => $this->position,
             'image' => $this->image
@@ -70,7 +70,7 @@ class Members
 
         return [
             'id' => $this->id,
-            'heading_1' => $this->heading,
+            'heading' => $this->heading,
             'position' => $this->position,
             'active' => $this->active,
             'image' => $this->image
@@ -82,10 +82,11 @@ class Members
 
 
         return [
-            'heading_1_color' => $style->heading_1_color,
+            'heading_color' => $style->heading_color,
             'text_color' => $style->text_color,
             'name_color' => $style->name_color,
-            'background_color' => $style->background_color
+            'background_color' => $style->background_color,
+            'block_background_color' => $style->block_background_color
         ];
     }
 
@@ -93,19 +94,19 @@ class Members
     public function saveToDb(){
 
         if(isset($this->id)){
-            $this->database->table('block_members')->where('id', $this->id)->update($this->databaseInput());
+            $this->database->table('block_references')->where('id', $this->id)->update($this->databaseInput());
         }
         else{
-            $this->database->table('block_members')->insert($this->databaseInput());
+            $this->database->table('block_references')->insert($this->databaseInput());
         }
 
     }
 
     public function delete(){
-        foreach ($this->getMembers() as $member){
-            $member->delete();
+        foreach ($this->getReferences() as $reference){
+            $reference->delete();
         }
-        $toDelete = $this->database->table('block_members')->where('id', $this->id)->fetch();
+        $toDelete = $this->database->table('block_references')->where('id', $this->id)->fetch();
         if(file_exists($toDelete->image)){
             unlink($toDelete->image);
         }
@@ -116,41 +117,36 @@ class Members
      * @param $id
      */
     private function setVariables($id){
-        $dbOut = $this->database->table('block_members');
+        $dbOut = $this->database->table('block_references');
 
         if(count($dbOut) > 0){
             $dbOut = $dbOut->where('id', $id)->fetch();
             $this->setStyle($dbOut->style);
             $this->setBgType($dbOut->bg_type);
-            $this->setHeading($dbOut->heading_1);
+            $this->setHeading($dbOut->heading);
             $this->setActive($dbOut->active);
             $this->setPosition($dbOut->position);
             $this->setImage($dbOut->image);
 
-            $dbMembers = $this->database->table('members')->where('owner', $this->id);
+            $dbReferences = $this->database->table('referencese')->where('owner', $this->id);
 
-            if(count($dbMembers) > 0){
-                foreach ($dbMembers as $dbMember){
-                    $i = new Member($this->database);
-                    $i->initialize($dbMember->id);
-                    $this->setMember($i);
+            if(count($dbReferences) > 0){
+                foreach ($dbReferences as $dbReference){
+                    $i = new Reference($this->database);
+                    $i->initialize($dbReference->id);
+                    $this->setReference($i);
                 }
             }
 
         }
     }
 
-
-    public function setMember(Member $member){
-        $this->members[$member->getId()] = $member;
-    }
-
     /**
      * @return mixed
      */
-    public function membersCount()
+    public function referencesCount()
     {
-        return count($this->members);
+        return count($this->references);
     }
 
 
@@ -163,7 +159,7 @@ class Members
             return $this->id;
         }
         else{
-            $newId =  $this->database->table('block_members')->where('style', $this->getStyle())->where('bg_type', $this->getBgType())->where('heading_1', $this->getHeading())->get('id');
+            $newId =  $this->database->table('block_references')->where('style', $this->getStyle())->where('bg_type', $this->getBgType())->where('heading', $this->getHeading())->get('id');
             $this->setId($newId);
             return $newId;
         }
@@ -274,11 +270,11 @@ class Members
     }
 
     /**
-     * @return Nette\Utils\ArrayList
+     * @return array
      */
-    public function getMembers()
+    public function getReferences()
     {
-        return $this->members;
+        return $this->references;
     }
 
 
@@ -286,18 +282,25 @@ class Members
      * @param $id
      * @return mixed
      */
-    public function getMemberById($id){
-        return $this->members[$id];
+    public function getReferenceById($id){
+
+        return $this->references[$id];
     }
 
     /**
-     * @param Nette\Utils\ArrayList $members
+     * @param $id
+     * @param $ref reference to set with id
      */
-    public function setMembers($members)
-    {
-        $this->members = $members;
+    public function setReferenceById($id, $ref){
+        $this->references[$id] = $ref;
     }
 
+    /**
+     * @param $reference to set
+     */
+    public function setReference($reference){
+        $this->references[$reference->getId()] = $reference;
+    }
 
 
 

@@ -43,14 +43,14 @@ create TABLE block_members
 ;
 
 /*==============================================================*/
-/* Table: block_references                                                 */
+/* Table: block_references                                      */
 /*==============================================================*/
 create TABLE block_references
 (
    id                    SERIAL,
    style                 TEXT,
    bg_type               varchar(255) not null DEFAULT "color",
-   heading_1             varchar(255) not null DEFAULT "",
+   heading             varchar(255) not null DEFAULT "",
    image                 VARCHAR(255) default null,
    active                SMALLINT DEFAULT 0,
    position              INTEGER not NULL DEFAULT 696969,
@@ -59,7 +59,7 @@ create TABLE block_references
 ;
 
 /*==============================================================*/
-/* Table: members                                                 */
+/* Table: members                                               */
 /*==============================================================*/
 create TABLE members
 (
@@ -68,8 +68,26 @@ create TABLE members
    text                  TEXT not null DEFAULT "",
    image                 VARCHAR(255) default null,
    owner                 BIGINT UNSIGNED,
+   active                TINYINT not null DEFAULT 0,
    primary key (id),
    foreign key (owner) references block_members (id) on delete set null
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: referencese                                           */
+/*==============================================================*/
+create TABLE referencese
+(
+   id                    SERIAL,
+   name                  varchar(255) not null DEFAULT "",
+   text                  TEXT not null DEFAULT "",
+   image                 VARCHAR(255) default null,
+   owner                 BIGINT UNSIGNED,
+   active                TINYINT not null DEFAULT 0,
+   reference             TEXT not null DEFAULT "",
+   primary key (id),
+   foreign key (owner) references block_references (id) on delete set null
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 

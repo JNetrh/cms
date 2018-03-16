@@ -97,7 +97,7 @@
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                     <div class="divColpick well">
                                         <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_button_1_color"></div>
+                                        <div id="colpick_button_1"></div>
                                     </div>
                                 </div>
                                 <span class="formError red" n:ifcontent>{inputError button_1_color}</span> {* error *}
@@ -165,7 +165,7 @@
                                         <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                         <div class="divColpick well">
                                             <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                            <div id="colpick_button_2_color"></div>
+                                            <div id="colpick_button_2"></div>
                                         </div>
                                     </div>
                                     <span class="formError red" n:ifcontent>{inputError button_2_color}</span> {* error *}
@@ -271,66 +271,61 @@
 
 {/block}
 
-{block scripts}
+{block bordel}
     <script type="text/javascript">
-       $(document).ready(function() {
 
-           // tinymce.init({
-           //     selector: '#heading_1',
-           //     entity_encoding : "raw",
-           //     init_instance_callback : function(editor){
-           //         console.log('1')
-           //     }
-           // });
-           //
-           // tinymce.init({
-           //     selector: '#heading_2',
-           //     entity_encoding : "raw",
-           //     init_instance_callback : function(editor){
-           //         console.log('2')
-           //     }
-           // });
+        {*tinymce.init({*}
+            {*selector: '#heading_1',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function(editor){*}
+                {*editor.setContent({$data['heading_1']});*}
+            {*}*}
+        {*});*}
 
-            $('#colpick_heading_1').farbtastic(function(color){
-                $("#color_1").val(color)
-                $("#color_1").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_heading_2').farbtastic(function(color){
-                $("#color_2").val(color)
-                $("#color_2").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_1_color').farbtastic(function(color){
-                $("#color_3").val(color)
-                $("#color_3").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_1_background').farbtastic(function(color){
-                $("#color_4").val(color)
-                $("#color_4").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_1_border').farbtastic(function(color){
-                $("#color_5").val(color)
-                $("#color_5").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_2_color').farbtastic(function(color){
-                $("#color_6").val(color)
-                $("#color_6").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_2_background').farbtastic(function(color){
-                $("#color_7").val(color)
-                $("#color_7").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_button_2_border').farbtastic(function(color){
-                $("#color_8").val(color)
-                $("#color_8").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_background').farbtastic(function(color){
-                $("#color_9").val(color)
-                $("#color_9").next('.openColpick').css('background-color', color)
-            });
+        {*tinymce.init({*}
+            {*selector: '#heading_2',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function(editor){*}
+                {*editor.setContent({$data['heading_2']});*}
+            {*}*}
+        {*});*}
 
 
+        $(document).ready(function() {
+
+            var pickers = [
+                ['heading_1', '#color_1'],
+                ['heading_2', '#color_2'],
+                ['button_1', '#color_3'],
+                ['button_1_background', '#color_4'],
+                ['button_1_border', '#color_5'],
+                ['button_2', '#color_6'],
+                ['button_2_background', '#color_7'],
+                ['button_2_border', '#color_8'],
+                ['background', '#color_9']
+            ];
+            var colors = {$colors};
+
+            pickers.forEach(function (name) {
+                var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
+                picker.setColor(colors[name[0] + '_color']); //set initial color
+                picker.linkTo(function (color) {
+                    $(name[1]).val(color)
+                    $(name[1]).next('.openColpick').css('background-color', color)
+                }); //link to callback
+            })
+            console.log(colors)
+
+            setTimeout(function () {
+                pickers.forEach(function (name) {
+                    $(name[1]).val(colors[name[0] + '_color'])
+                    $(name[1]).next('.openColpick').css('background-color', colors[name[0] + '_color'])
+                })
+            }, 100)
 
 
         });
+
+
     </script>
 {/block}

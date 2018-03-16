@@ -4,27 +4,46 @@ namespace App\AdminModule\Presenters;
 
 use Nette;
 use Nette\Application\UI\Form;
+use App\Model\BlockFactory as BF;
+use App\Model\Headers as Header;
 
 class HeaderPresenter extends SecuredBasePresenter {
 
     private $database;
+    public $headers;
+    public $id;
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Nette\Database\Context $database, BF $blockFactory)
     {
         $this->database = $database;
+        $this->headers = $blockFactory->getBlockHeader();
     }
 
     public function renderDefault(){
 
     }
 
+
+    public function actionEdit($blockId){
+
+        $defaults = $this->headers[$blockId]->getFormProperties();
+        bdump($defaults);
+        $this->id = $defaults['id'];
+        $defaultColors = $this->headers[$blockId]->getColorProperties();
+        $this['headerForm']->setDefaults($defaults);
+        $this->template->data = $defaults;
+        $this->template->colors = $defaultColors;
+    }
+
     public function createComponentHeaderForm(){
         $form = new Form();
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
 
-        $form -> addTextArea('heading_1');
+//        $form -> addTextArea('heading_1');
+        $form -> addText('heading_1');
         $form -> addText('heading_1_color');
-        $form -> addTextArea('heading_2');
+        $form -> addText('heading_2');
+//        $form -> addTextArea('heading_2');
         $form -> addText('heading_2_color');
         $form -> addText('button_1');
         $form -> addText('button_1_link');
@@ -38,6 +57,7 @@ class HeaderPresenter extends SecuredBasePresenter {
         $form -> addText('button_2_border');
         $form -> addText('background_color');
         $form -> addText('position');
+        $form -> addCheckbox('active');
         $form ->addUpload('image')
             ->addCondition(Form::FILLED)
             ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
@@ -54,10 +74,11 @@ class HeaderPresenter extends SecuredBasePresenter {
     public function headerFormSucceeded($form, $values){
 
         $data = $form->getHttpData();
-        $headerId = $this->getParameter('id');
-//        $isImage = $this->database->table('block_header')->where('active', 1); // možnost mít vícero hlaviček, co když dělám novou a takový záznam neexistuje, jak vybrat mezi existujícími tu správnou? - nějaké ID si předávat?
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
+        $blockId = $this->id;
         $hardData = [];
         $metaData = [];
+        $path = is_int($blockId) ? $this->headers[$blockId]->getImage() : null;
         $file = $data['image'];
         $arrayKeys = [];
 
@@ -68,13 +89,18 @@ class HeaderPresenter extends SecuredBasePresenter {
             'button_2' => $data['button_2'],
             'button_1_link' => $data['button_1_link'],
             'button_2_link' => $data['button_2_link'],
-            'active' => 1,
+            'active' => $data['active'],
             'position' => $data['position']
         ];
+
+
         if($file != null){
             $hardData['bg_type'] = 'image';
             if(!$file->isImage() and !$file->isOk())
                 $form['image']->addError('Image was not ok');
+        }
+        else{
+            $hardData['bg_type'] = 'color';
         }
 
         if(strlen($data['button_1_link']) < 2)
@@ -85,6 +111,7 @@ class HeaderPresenter extends SecuredBasePresenter {
         unset($data['heading_1'], $data['heading_2']);
         unset($data['button_1'], $data['button_2']);
         unset($data['button_1_link'], $data['button_2_link']);
+        unset($data['active']);
         unset($data['image']);
         unset($data['position']);
 
@@ -103,36 +130,40 @@ class HeaderPresenter extends SecuredBasePresenter {
 
         $hardData['style'] = json_encode($metaData);
 
+        if(isset($blockId)){
+            $header = $this->headers[$blockId];
+        }
+        else{
+            $header = new Header($this->database);
+        }
+
         if($file != null){
             $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
             $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
 
-            if($headerId){
-                $oldImg = $this->database->table('block_header')->where('id', $headerId)->fetch()->image;
+            if($blockId){
+                $oldImg = $this->database->table('block_header')->where('id', $blockId)->fetch()->image;
                 if(file_exists($oldImg)){
                     unlink($oldImg);
                 }
             }
 
-            $hardData['image'] = $path;
 
             $file->move($path);
         }
 
+        bdump($hardData);
 
 
         if(!$form->hasErrors()){
-            $this->database->table('block_header')->update(['active' => 0]);
-            if(!$headerId){
-                $this->database->table('block_header')->insert($hardData);
-            }
-            else{
-                $this->database->table('block_header')->where('id', $headerId)->update($hardData);
-            }
-
-            $this->redirect('Main:');
-
+            $header->setData($hardData['style'], $hardData['bg_type'], $hardData['heading_1'], $hardData['heading_2'], $hardData['button_1'], $hardData['button_1_link'], $hardData['button_2'], $hardData['button_2_link'], $path, $hardData['active'], $hardData['position']);
+            $header->saveToDb();
+            $id = $header->getId();
+            $this->headers[$id] = $header;
+            $this->redirect('Summary:');
         }
+
+
 
 
         bdump($data); //ZDE
