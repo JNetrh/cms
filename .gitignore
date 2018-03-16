@@ -1,5 +1,6 @@
 app/config/config.local.neon
 temp/*
-www/img/*
-www/admin/img/*
+www/img/repo/*
+temp/cache/*
+log/*
 .idea/
