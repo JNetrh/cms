@@ -3,6 +3,16 @@
 /* Created on:     5.5.2017 18:04:52                            */
 /*==============================================================*/
 
+DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS referencese;
+DROP TABLE IF EXISTS block_header;
+DROP TABLE IF EXISTS block_members;
+DROP TABLE IF EXISTS block_references;
+DROP TABLE IF EXISTS userrights;
+DROP TABLE IF EXISTS rights;
+DROP TABLE IF EXISTS users;
+
+
 
 /*==============================================================*/
 /* Table: block_header                                                 */
@@ -100,81 +110,10 @@ create table users
    id                   SERIAL,
    email                varchar(255) not null,
    password             varchar(255) not null,
-   rights               double not null DEFAULT 0,
    primary key (id),
    unique (email)
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
-
-
-/*==============================================================*/
-/* Table: events                                                */
-/*==============================================================*/
-create table events
-(
-   id                   SERIAL,
-   caption              varchar(255) not null,
-   event_time           datetime,
-   time                 datetime not null,
-   description          text not null,
-   type                 int,
-   autor                BIGINT UNSIGNED,
-   note                 varchar(255),
-   primary key (id),
-   foreign key (autor) references users (id) on delete set null
-) ENGINE=InnoDB CHARACTER SET utf8
-;
-
-/*==============================================================*/
-/* Table: news                                                  */
-/*==============================================================*/
-create table news
-(
-   id                   SERIAL,
-   caption              varchar(255) not null,
-   time                 varchar(255) not null,
-   content              text not null,
-   autor                BIGINT UNSIGNED,
-   odkaz                varchar(255) not null,
-   note                 varchar(255),
-   created              TIMESTAMP,
-   primary key (id),
-   foreign key (autor) references users (id) on delete set null
-) ENGINE=InnoDB CHARACTER SET utf8
-;
-
-/*==============================================================*/
-/* Table: images                                                */
-/*==============================================================*/
-create table images
-(
-   id                   SERIAL,
-   category             varchar(255) not null,
-   alt                  varchar(255),
-   img                  varchar(255) not null,
-   owner                BIGINT UNSIGNED,
-   primary key (id),
-   foreign key (owner) references events (id) on delete set null,
-   foreign key (owner) references news (id) on delete set null
-) ENGINE=InnoDB CHARACTER SET utf8
-;
-
-/*==============================================================*/
-/* Table: jobs         Ma42kl53                                         */
-/*==============================================================*/
-create table jobs
-(
-   id                   SERIAL,
-   caption              varchar(255) not null,
-   description          text not null,
-   autor                BIGINT UNSIGNED,
-   note                 text,
-   timestamp            TIMESTAMP,
-   primary key (id),
-   foreign key (autor) references users (id) on delete set null
-) ENGINE=InnoDB CHARACTER SET utf8
-;
-
 
 /*==============================================================*/
 /* Table: rights                                                */
@@ -190,9 +129,9 @@ create table rights
 
 
 /*==============================================================*/
-/* Table: userRights                                                */
+/* Table: userRights                                            */
 /*==============================================================*/
-create table userRights
+create table userrights
 (
    userId             BIGINT UNSIGNED not null,
    rightId            BIGINT UNSIGNED not null,
@@ -205,20 +144,31 @@ create table userRights
 ;
 
 
-/*==============================================================*/
-/* Table: galery                                                */
-/*==============================================================*/
-create table galery
-(
-   id                   SERIAL,
-   caption              varchar(255) not null,
-   newsId               BIGINT UNSIGNED,
-   cover                boolean,
-   autor                BIGINT UNSIGNED,
-   odkaz                varchar(255) not null,
-   directory            varchar(255) not null,
-   primary key (id),
-   foreign key (newsId) references news (id) on delete set null,
-   foreign key (autor) references users (id) on delete set null
-) ENGINE=InnoDB CHARACTER SET utf8
-;
+INSERT INTO `rights`(`name`) VALUES ("admin");
+INSERT INTO `rights`(`name`) VALUES ("headers");
+INSERT INTO `rights`(`name`) VALUES ("members");
+INSERT INTO `rights`(`name`) VALUES ("references");
+
+INSERT INTO `users`(`email`, `password`) VALUES ("netj01@vse.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
+INSERT INTO `userrights`(`userId`, `rightId`) VALUES (1,1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
