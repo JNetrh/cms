@@ -2,6 +2,7 @@
 
 namespace App\AdminModule\Presenters;
 
+use App\Model\Members;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
@@ -40,6 +41,11 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $this->redirect('References:edit', $blockId);
     }
 
+
+    public function handleDeleteImg($id) {
+        $this->references[$id]->deleteImage();
+        $this->redirect('References:edit', $id);
+    }
 
 
     public function actionEditReference($referenceId, $blockId){

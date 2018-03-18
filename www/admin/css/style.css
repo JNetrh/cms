@@ -91,6 +91,10 @@ h2 /*----NEMAZAT----*/
     font-size: 20px;
     padding: 30px 0 0 0;
 }
+h2.h2small {
+    padding: 0;
+    cursor: pointer;
+}
 h3 /*----NEMAZAT----*/
 {
     font-family: 'robotoregular', sans-serif;
@@ -164,17 +168,82 @@ div.divMenu{
     padding: 20px 0 0 20px;
     text-align: left;
 }
+
+div.divSummaryPanel {
+    display: block;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+div.divSummaryExpand {
+    overflow: hidden;
+}
+div.divNewBlock {
+    margin: 10px 10px 0 0;
+    background-color: #26a69a;
+    color: #f2f2f2;
+    display: inline-table;
+}
+div.divNewBlock:hover {
+    background-color: #f2f2f2;
+    color: #26a69a;
+}
+div.divSummaryExpand a{
+    padding: 6px 10px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
 div.divSummImg{
-    width: 100%;
-    height: 250px;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-origin: border-box;
+    min-height: 150px;
 }
 div.divSummButtons{
-    width: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.divPanelTable{
+    display: flex;
+    align-items: center;
+}
+
+/*Sign on every left top corner in summary page*/
+div.divBlockSign {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eee;
+    background-image: url('../img/pozadi-upoutavka.png');
+}
+/*Sign in form next to img input to del current img*/
+div.divBlockDelete {
+    left: 15px;
+    background-color: #a06066;
+    opacity: .7;
+    width: 50px;
+    height: 50px;
+}
+/*div nex to img input in edit form*/
+div.divEditImg {
+    padding: 0 0 15px 0;
+}
+
+/*Color spectrum in summary table*/
+div.divColor{
+    padding: 8px 8px;
+    margin: 0 5px;
+    float: left;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -291,23 +360,24 @@ table td pre /*----NEMAZAT----*/
 table.tableSummary {
     margin: 5px 0 15px 0;
     width: 100%;
-    float: right;
 }
-table.tableSummary tr {
+table.tableSummary td {
 
 }
-table.tableSummary tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+/*table.tableSummary tr:nth-child(even) {*/
+    /*background-color: #f2f2f2;*/
+/*}*/
 table.tableSummary tr td.tdHeading{
     /*border-bottom: 1px dotted;*/
+    width: 40%;
+    font-family: 'robotoblack', sans-serif;
 }
 table.tableSummary td{
     font-size: 16px;
-    padding: 4px 10px 4px 10px;
+    padding: 6px 10px 6px 10px;
     vertical-align: middle;
+    border-bottom: 1px solid #26a69a;
 }
-
 /*----------------------------------------------------------------------------*/
 /* SEZNAMY: */
 ul
@@ -474,6 +544,11 @@ iframe /*----NEMAZAT----*/
     border: 1px solid #2672a6;
     cursor: pointer;
     text-decoration: none;
+}
+
+.buttonBlockSummary {
+    width: 100%;
+    margin: 5px 0;
 }
 
 .buttonColpick{

@@ -23,6 +23,11 @@ class HeaderPresenter extends SecuredBasePresenter {
 
     }
 
+    public function handleDeleteImg($id) {
+        $this->headers[$id]->deleteImage();
+        $this->redirect('Header:edit', $id);
+    }
+
 
     public function actionEdit($blockId){
 

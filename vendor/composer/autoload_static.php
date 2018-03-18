@@ -8,10 +8,168 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
 {
     public static $files = array (
         '7745382c92b7799bf1294b1f43023ba2' => __DIR__ . '/..' . '/tracy/tracy/src/shortcuts.php',
+        'a12da592622097d2b593a430e32e13fd' => __DIR__ . '/..' . '/nette/utils/src/loader.php',
         'e7a6fd2e7a869bb207158e9416bdd9b0' => __DIR__ . '/..' . '/nette/application/src/compatibility.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '9d08842a2aa0dc42ee93aa591835610d' => __DIR__ . '/..' . '/kdyby/events/src/Doctrine/compatibility.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Debug\\' => 24,
+            'Symfony\\Component\\Console\\' => 26,
+        ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
+        'K' => 
+        array (
+            'Kdyby\\StrictObjects\\' => 20,
+            'Kdyby\\DoctrineCache\\' => 20,
+            'Kdyby\\Console\\' => 14,
+            'Kdyby\\Annotations\\' => 18,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+            'Doctrine\\Common\\' => 16,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Debug\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/debug',
+        ),
+        'Symfony\\Component\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/console',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Kdyby\\StrictObjects\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kdyby/strict-objects/src',
+        ),
+        'Kdyby\\DoctrineCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kdyby/doctrine-cache/src',
+        ),
+        'Kdyby\\Console\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kdyby/console/src',
+        ),
+        'Kdyby\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kdyby/annotations/src',
+        ),
+        'Doctrine\\Instantiator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
+        ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
+        'Doctrine\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'K' => 
+        array (
+            'Kdyby\\Persistence\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
+            ),
+            'Kdyby\\Events\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kdyby/events/src',
+            ),
+            'Kdyby\\Doctrine\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
+            ),
+            'Kdyby\\DibiBridge\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
+            ),
+        ),
+        'D' => 
+        array (
+            'Doctrine\\ORM\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/orm/lib',
+            ),
+            'Doctrine\\DBAL\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
+            ),
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
+            ),
+            'Doctrine\\Common\\Inflector\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+            'Doctrine\\Common\\Collections\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
+            ),
+        ),
     );
 
     public static $classMap = array (
+        'KdybyModule\\CliPresenter' => __DIR__ . '/..' . '/kdyby/console/src/CliPresenter.php',
+        'Kdyby\\Console\\Exception' => __DIR__ . '/..' . '/kdyby/console/src/exceptions.php',
+        'Kdyby\\Console\\InvalidApplicationModeException' => __DIR__ . '/..' . '/kdyby/console/src/exceptions.php',
+        'Kdyby\\Console\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/console/src/exceptions.php',
+        'Kdyby\\Console\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/console/src/exceptions.php',
+        'Kdyby\\Console\\UnknownCommandException' => __DIR__ . '/..' . '/kdyby/console/src/exceptions.php',
+        'Kdyby\\DoctrineCache\\Exception' => __DIR__ . '/..' . '/kdyby/doctrine-cache/src/exceptions.php',
+        'Kdyby\\DoctrineCache\\NotImplementedException' => __DIR__ . '/..' . '/kdyby/doctrine-cache/src/exceptions.php',
+        'Kdyby\\Doctrine\\BatchImportException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\DBALException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\DuplicateEntryException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\EmptyValueException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\Exception' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\MissingClassException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\NotImplementedException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\NotSupportedException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\QueryException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\ReadOnlyCollectionException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\StaticClassException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Doctrine\\UnexpectedValueException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
+        'Kdyby\\Events\\Exception' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidListenerException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\NotSupportedException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\OutOfRangeException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\StrictObjects\\Exception' => __DIR__ . '/..' . '/kdyby/strict-objects/src/exceptions.php',
+        'Kdyby\\StrictObjects\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/strict-objects/src/exceptions.php',
         'Latte\\CompileException' => __DIR__ . '/..' . '/latte/latte/src/Latte/exceptions.php',
         'Latte\\Compiler' => __DIR__ . '/..' . '/latte/latte/src/Latte/Compiler/Compiler.php',
         'Latte\\Engine' => __DIR__ . '/..' . '/latte/latte/src/Latte/Engine.php',
@@ -242,9 +400,8 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'Nette\\InvalidArgumentException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\InvalidStateException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Iterators\\CachingIterator' => __DIR__ . '/..' . '/nette/utils/src/Iterators/CachingIterator.php',
-        'Nette\\Iterators\\Filter' => __DIR__ . '/..' . '/nette/utils/src/Iterators/Filter.php',
         'Nette\\Iterators\\Mapper' => __DIR__ . '/..' . '/nette/utils/src/Iterators/Mapper.php',
-        'Nette\\Iterators\\RecursiveFilter' => __DIR__ . '/..' . '/nette/utils/src/Iterators/RecursiveFilter.php',
+        'Nette\\LegacyObject' => __DIR__ . '/..' . '/nette/utils/src/Utils/LegacyObject.php',
         'Nette\\Loaders\\RobotLoader' => __DIR__ . '/..' . '/nette/robot-loader/src/RobotLoader/RobotLoader.php',
         'Nette\\Localization\\ITranslator' => __DIR__ . '/..' . '/nette/utils/src/Utils/ITranslator.php',
         'Nette\\Mail\\FallbackMailer' => __DIR__ . '/..' . '/nette/mail/src/Mail/FallbackMailer.php',
@@ -264,7 +421,6 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'Nette\\Neon\\Neon' => __DIR__ . '/..' . '/nette/neon/src/Neon/Neon.php',
         'Nette\\NotImplementedException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\NotSupportedException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
-        'Nette\\Object' => __DIR__ . '/..' . '/nette/utils/src/Utils/Object.php',
         'Nette\\OutOfRangeException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\PhpGenerator\\ClassType' => __DIR__ . '/..' . '/nette/php-generator/src/PhpGenerator/ClassType.php',
         'Nette\\PhpGenerator\\Closure' => __DIR__ . '/..' . '/nette/php-generator/src/PhpGenerator/Closure.php',
@@ -322,6 +478,7 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'Nette\\Utils\\ImageException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
         'Nette\\Utils\\Json' => __DIR__ . '/..' . '/nette/utils/src/Utils/Json.php',
         'Nette\\Utils\\JsonException' => __DIR__ . '/..' . '/nette/utils/src/Utils/exceptions.php',
+        'Nette\\Utils\\ObjectHelpers' => __DIR__ . '/..' . '/nette/utils/src/Utils/ObjectHelpers.php',
         'Nette\\Utils\\ObjectMixin' => __DIR__ . '/..' . '/nette/utils/src/Utils/ObjectMixin.php',
         'Nette\\Utils\\Paginator' => __DIR__ . '/..' . '/nette/utils/src/Utils/Paginator.php',
         'Nette\\Utils\\Random' => __DIR__ . '/..' . '/nette/utils/src/Utils/Random.php',
@@ -375,6 +532,9 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$classMap;
 
         }, null, ClassLoader::class);

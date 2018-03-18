@@ -73,6 +73,13 @@
                             <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
                             <div class="col-md-7 inputGroupContainer">
 
+                                {if strlen($data['image']) > 5}
+                                    <div class="divEditImg">
+                                        <img class="img-responsive" src="{$basePath}/{$data['image']}" alt="background-img" />
+                                        <a n:href="deleteImg! $data['id']"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
+                                    </div>
+                                {/if}
+
                                 <div class="input-group">
                                     <label class="input-group-btn">
                                         <span class="btn btn-primary">
@@ -154,6 +161,10 @@
 
 
     </form>
+
+    <div class="col-md-12">
+        <a class="buttonCisty buttonView" n:href="Summary:"><i class="fa fa-chevron-circle-left"></i> Back</a>
+    </div>
 
     <div class="container odsaditBottom-150">
         <h2>Members</h2>

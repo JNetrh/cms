@@ -21,6 +21,9 @@
 
         <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
 
+        <!--SCRIPT same height panel-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
+
 
         <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
         <link rel="stylesheet" href="{$basePath}/admin/js/farbtastic/farbtastic.css" type="text/css" />
@@ -56,7 +59,7 @@
 
 
                             <li class="lead"><a n:href="Main:" >Home</a></li>
-                            <li class="lead"><a n:href="Summary:" >Block summary</a></li>
+                            <li class="lead"><a n:href="Summary:" >Manage</a></li>
                             <li class="lead"><a n:href="Header:new" >New Header</a></li>
                             <li class="lead"><a n:href="Members:new" >New Members</a></li>
                             {*<li class="lead"><a n:href="Members:newMember 1" >New member</a></li>*}
@@ -72,18 +75,18 @@
                 <div class="divMenu">
                     <ul class="menu">
                         <li id="home"><a n:href="Main:" >Home</a></li>
-                        <li id="summary"><a n:href="Summary:" >Block summary</a></li>
-                        <li id="blocks" class="liSPozadim"><a href="#" >New block</a>
-                            <!--První submenu-->
-                            <ul class="ulSubmenu1">
-                                <li id="header"><a n:href="Header:new" >New Header</a></li>
-                                <li id="members"><a n:href="Members:new" >New Members</a></li>
+                        <li id="summary"><a n:href="Summary:" >Manage</a></li>
+                        {*<li id="blocks" class="liSPozadim"><a href="#" >New block</a>*}
+                            {*<!--První submenu-->*}
+                            {*<ul class="ulSubmenu1">*}
+                                {*<li id="header"><a n:href="Header:new" >New Header</a></li>*}
+                                {*<li id="members"><a n:href="Members:new" >New Members</a></li>*}
                                 {*<li id=""><a n:href="Members:newMember 1" >New member</a></li>*}
-                                <li id="references"><a n:href="References:new" >New references</a></li>
+                                {*<li id="references"><a n:href="References:new" >New references</a></li>*}
                                 {*<li id=""><a n:href="References:newReference 1" >New reference</a></li>*}
-                            </ul>
-                            <!--Konec První Sub-->
-                        </li>
+                            {*</ul>*}
+                            {*<!--Konec První Sub-->*}
+                        {*</li>*}
                     </ul>
                 </div>
             </div>
@@ -145,9 +148,6 @@
 
     {ifset bordel}{include bordel}{/ifset}
     {block scripts}
-        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-        <!--SCRIPT same height panel-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
-    {/block}
+        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>{/block}
     </body>
 </html>

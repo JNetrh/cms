@@ -11,23 +11,21 @@ namespace App\Model;
 use Nette;
 use App\Model\Member as Member;
 
-class Headers
+class Headers  extends BaseBlock implements IBlock
 {
 
     public $database;
 
-    private $id;
-    private $style;
-    private $bg_type;
+
+    protected $table = 'block_header';
+
+
     private $heading_1;
     private $heading_2;
     private $button_1;
     private $button_1_link;
     private $button_2;
     private $button_2_link;
-    private $image;
-    private $active;
-    private $position;
 
 
     /**
@@ -39,26 +37,18 @@ class Headers
         $this->database = $database;
     }
 
-    /**
-     * @param int $id
-     */
-    public function initialize($id = -1){
-        $this->id = $id;
-        $this->setVariables($id);
-    }
-
     public function setData($style, $bg_type, $heading_1, $heading_2, $button_1, $button_1_link, $button_2, $button_2_link, $image, $active, $position){
-        $this->style = $style;
-        $this->bg_type = $bg_type;
+        $this->setStyle($style);
+        $this->setBgType($bg_type);
         $this->heading_1 = $heading_1;
         $this->heading_2 = $heading_2;
         $this->button_1 = $button_1;
         $this->button_1_link = $button_1_link;
         $this->button_2 = $button_2;
         $this->button_2_link = $button_2_link;
-        $this->active = $active;
-        $this->position = $position;
-        $this->image = $image;
+        $this->setActive($active);
+        $this->setPosition($position);
+        $this->setImage($image);
     }
 
 
@@ -67,33 +57,33 @@ class Headers
      */
     public function databaseInput(){
         return [
-            'style' => $this->style,
-            'bg_type' => $this->bg_type,
+            'style' => $this->getStyle(),
+            'bg_type' => $this->getBgType(),
             'heading_1' => $this->heading_1,
             'heading_2' => $this->heading_2,
             'button_1' => $this->button_1,
             'button_1_link' => $this->button_1_link,
             'button_2' => $this->button_2,
             'button_2_link' => $this->button_2_link,
-            'active' => $this->active,
-            'position' => $this->position,
-            'image' => $this->image
+            'active' => $this->getActive(),
+            'position' => $this->getPosition(),
+            'image' => $this->getImage()
         ];
     }
 
     public function getFormProperties(){
 
         return [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'heading_1' => $this->heading_1,
             'heading_2' => $this->heading_2,
             'button_1' => $this->button_1,
             'button_1_link' => $this->button_1_link,
             'button_2' => $this->button_2,
             'button_2_link' => $this->button_2_link,
-            'active' => $this->active,
-            'position' => $this->position,
-            'image' => $this->image
+            'active' => $this->getActive(),
+            'position' => $this->getPosition(),
+            'image' => $this->getImage()
         ];
     }
     public function getColorProperties(){
@@ -115,33 +105,12 @@ class Headers
     }
 
 
-    public function saveToDb(){
-        if(isset($this->id)){
-            $this->database->table('block_header')->where('id', $this->id)->update($this->databaseInput());
-        }
-        else{
-            $this->database->table('block_header')->insert($this->databaseInput());
-        }
-
-    }
-
-
-
-    public function delete(){
-
-        $toDelete = $this->database->table('block_header')->where('id', $this->id)->fetch();
-        if(file_exists($toDelete->image)){
-            unlink($toDelete->image);
-        }
-        $toDelete->delete();
-    }
 
     /**
      * @param $id
      */
-    private function setVariables($id){
-        $dbOut = $this->database->table('block_header');
-
+    public function setVariables($id){
+        $dbOut = $this->database->table($this->getTable());
 
         if(count($dbOut) > 0){
             $dbOut = $dbOut->where('id', $id)->fetch();
@@ -160,60 +129,6 @@ class Headers
         }
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        if(isset($this->id)){
-            return $this->id;
-        }
-        else{
-            $newId =  $this->database->table('block_header')->where('style', $this->getStyle())->where('bg_type', $this->getBgType())->where('heading_1', $this->getHeading1())->get('id');
-            $this->setId($newId);
-            return $newId;
-        }
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
-     * @param mixed $style
-     */
-    public function setStyle($style)
-    {
-        $this->style = $style;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBgType()
-    {
-        return $this->bg_type;
-    }
-
-    /**
-     * @param mixed $bg_type
-     */
-    public function setBgType($bg_type)
-    {
-        $this->bg_type = $bg_type;
-    }
 
     /**
      * @return mixed
@@ -311,56 +226,10 @@ class Headers
         $this->button_2_link = $button_2_link;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getImage()
+    public function toString()
     {
-        return $this->image;
+        return "headers";
     }
-
-    /**
-     * @param mixed $image
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param mixed $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-
-
 
 
 }

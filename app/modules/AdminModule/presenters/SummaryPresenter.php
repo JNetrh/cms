@@ -11,6 +11,7 @@ class SummaryPresenter extends SecuredBasePresenter {
     private $members;
     private $headers;
     private $references;
+    private $myBlocks;
 
     public function __construct(Nette\Database\Context $database, BF $blockFactory)
     {
@@ -19,6 +20,7 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->members = $blockFactory->getBlockMembers();
         $this->headers = $blockFactory->getBlockHeader();
         $this->references = $blockFactory->getBlockReferences();
+        $this->myBlocks = $blockFactory->getAllBlocks();
     }
 
 
@@ -26,6 +28,7 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->template->members = $this->members;
         $this->template->headers = $this->headers;
         $this->template->references = $this->references;
+        $this->template->myBlocks = $this->myBlocks;
 
     }
 

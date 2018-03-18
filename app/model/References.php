@@ -11,18 +11,14 @@ namespace App\Model;
 use Nette;
 use App\Model\Reference as Reference;
 
-class References
+class References extends BaseBlock implements IBlock
 {
 
     public $database;
 
-    private $id;
-    private $style;
-    private $bg_type;
+    protected $table = 'block_references';
+
     private $heading;
-    private $active;
-    private $position;
-    private $image;
     private $references = [];
 
 
@@ -35,21 +31,14 @@ class References
         $this->database = $database;
     }
 
-    /**
-     * @param int $id
-     */
-    public function initialize($id = -1){
-        $this->id = $id;
-        $this->setVariables($id);
-    }
 
     public function setData($style, $bg_type, $heading, $active, $position, $image){
-        $this->style = $style;
-        $this->bg_type = $bg_type;
+        $this->setStyle($style);
+        $this->setBgType($bg_type);
         $this->heading = $heading;
-        $this->active = $active;
-        $this->position = $position;
-        $this->image = $image;
+        $this->setActive($active);
+        $this->setPosition($position);
+        $this->setImage($image);
     }
 
     /**
@@ -57,23 +46,23 @@ class References
      */
     public function databaseInput(){
         return [
-            'style' => $this->style,
-            'bg_type' => $this->bg_type,
+            'style' => $this->getStyle(),
+            'bg_type' => $this->getBgType(),
             'heading' => $this->heading,
-            'active' => $this->active,
-            'position' => $this->position,
-            'image' => $this->image
+            'active' => $this->getActive(),
+            'position' => $this->getPosition(),
+            'image' => $this->getImage()
         ];
     }
 
     public function getFormProperties(){
 
         return [
-            'id' => $this->id,
+            'id' => $this->getId(),
             'heading' => $this->heading,
-            'position' => $this->position,
-            'active' => $this->active,
-            'image' => $this->image
+            'position' => $this->getPosition(),
+            'active' => $this->getActive(),
+            'image' => $this->getImage()
         ];
     }
     public function getColorProperties(){
@@ -91,34 +80,14 @@ class References
     }
 
 
-    public function saveToDb(){
 
-        if(isset($this->id)){
-            $this->database->table('block_references')->where('id', $this->id)->update($this->databaseInput());
-        }
-        else{
-            $this->database->table('block_references')->insert($this->databaseInput());
-        }
-
-    }
-
-    public function delete(){
-        foreach ($this->getReferences() as $reference){
-            $reference->delete();
-        }
-        $toDelete = $this->database->table('block_references')->where('id', $this->id)->fetch();
-        if(file_exists($toDelete->image)){
-            unlink($toDelete->image);
-        }
-        $toDelete->delete();
-    }
 
     /**
      * @param $id
      */
-    private function setVariables($id){
-        $dbOut = $this->database->table('block_references');
-
+    public function setVariables($id){
+        $dbOut = $this->database->table($this->getTable());
+        $currId = $this->getId();
         if(count($dbOut) > 0){
             $dbOut = $dbOut->where('id', $id)->fetch();
             $this->setStyle($dbOut->style);
@@ -128,7 +97,7 @@ class References
             $this->setPosition($dbOut->position);
             $this->setImage($dbOut->image);
 
-            $dbReferences = $this->database->table('referencese')->where('owner', $this->id);
+            $dbReferences = $this->database->table('referencese')->where('owner', $currId);
 
             if(count($dbReferences) > 0){
                 foreach ($dbReferences as $dbReference){
@@ -150,60 +119,7 @@ class References
     }
 
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        if(isset($this->id)){
-            return $this->id;
-        }
-        else{
-            $newId =  $this->database->table('block_references')->where('style', $this->getStyle())->where('bg_type', $this->getBgType())->where('heading', $this->getHeading())->get('id');
-            $this->setId($newId);
-            return $newId;
-        }
-    }
 
-    /**
-     * @param mixed $id
-     */
-    private function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
-     * @param mixed $style
-     */
-    public function setStyle($style)
-    {
-        $this->style = $style;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBgType()
-    {
-        return $this->bg_type;
-    }
-
-    /**
-     * @param mixed $bg_type
-     */
-    public function setBgType($bg_type)
-    {
-        $this->bg_type = $bg_type;
-    }
 
     /**
      * @return mixed
@@ -219,54 +135,6 @@ class References
     public function setHeading($heading)
     {
         $this->heading = $heading;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param mixed $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param mixed $image
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
     }
 
     /**
@@ -300,6 +168,10 @@ class References
      */
     public function setReference($reference){
         $this->references[$reference->getId()] = $reference;
+    }
+
+    public function toString(){
+        return "references";
     }
 
 

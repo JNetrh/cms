@@ -1,11 +1,25 @@
 parameters:
 
 
+doctrine:
+    user: jakub
+    password: 1234
+    dbname: d950521_cms
+    metadata:
+        App: %appDir%
+
 database:
-    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
+#    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
+    dsn: 'mysql:host=192.168.64.2;dbname=d950521_cms'
     user: jakub
     password: 1234
 
+extensions:
+        console: Kdyby\Console\DI\ConsoleExtension
+        events: Kdyby\Events\DI\EventsExtension
+        annotations: Kdyby\Annotations\DI\AnnotationsExtension
+        doctrine: Kdyby\Doctrine\DI\OrmExtension
+        translation: Kdyby\Translation\DI\TranslationExtension
 
 
 application:
@@ -27,6 +41,7 @@ services:
 	- App\Model\Reference
 	- App\Model\References
 	- App\Model\BlockFactory
+	- App\Model\Facades\UserFacade
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

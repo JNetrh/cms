@@ -42,6 +42,11 @@ class MembersPresenter extends SecuredBasePresenter {
     }
 
 
+    public function handleDeleteImg($id) {
+        $this->members[$id]->deleteImage();
+        $this->redirect('Members:edit', $id);
+    }
+
 
     public function actionEditMember($memberId, $blockId){
 

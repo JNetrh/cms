@@ -109,6 +109,10 @@ class Member
         $toDelete->delete();
     }
 
+    public function setDatabase($database){
+        $this->database = $database;
+    }
+
     /**
      * @return mixed
      */

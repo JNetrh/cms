@@ -19,7 +19,13 @@
 		"nette/security": "^2.4",
 		"nette/utils": "^2.4",
 		"latte/latte": "^2.4",
-		"tracy/tracy": "^2.4"
+		"tracy/tracy": "^2.4",
+		"doctrine/orm": "*",
+		"kdyby/annotations": "^2.2",
+		"kdyby/console": "^2.4",
+		"kdyby/events": "^2.4",
+		"kdyby/doctrine-cache": "^2.4",
+		"kdyby/doctrine": "~2.3.1"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0"
