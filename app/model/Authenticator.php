@@ -4,42 +4,55 @@ namespace App\Model;
 
 use Nette;
 use Nette\Security as NS;
+use App\Model\Entities\User as UserEntity;
+use App\Model\Services\UserService;
+
+
 
 class Authenticator implements NS\IAuthenticator
 {
+//    /** @var UserService @inject */
+    public $userService;
 
-    /** @var Nette\Database\Table\Selection */
-    private $database;
 
 
-    function __construct(Nette\Database\Context $database)
+    /** @var UserEntity Entita pro aktuálního uživatele. */
+    protected $userEntity;
+
+
+
+
+    function __construct(UserService $userService)
     {
-        $this->database = $database;
+        $this->userService = $userService;
     }
 
     function authenticate(array $credentials)
     {
         list($email, $password) = $credentials;
-        $row = $this->database->table('users')
-        ->where('email', $email)->fetch();
 
-        if (!$row) {
+
+        $row = $this->userService->findByEmail($email);
+
+
+        if ($row == null) {
             throw new NS\AuthenticationException('Špatný email.');
         }
 
-        if (!NS\Passwords::verify($password, $row->password)) {
+        if (!NS\Passwords::verify($password, $row->getPassword())) {
             throw new NS\AuthenticationException('Špatné heslo.');
         }
 
 
         $rights = [];
-        foreach ($this->database->table('userrights')->where('userId', $row->id) as $rightId){
-            $rights[] = $rightId->ref('rights', 'rightId')->name;
+
+        foreach ($row->getRights() as $item){
+            $rights[] = $item->getName();
         }
 
 
 
-        return new NS\Identity($row->id, $rights, ['email' => $row->email]);
+        return new NS\Identity($row->getId(), $rights, ['email' => $row->getEmail()]);
     }
 
 

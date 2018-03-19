@@ -17,7 +17,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Kdyby;
 use Kdyby\Persistence;
 use Nette;
-use Nette\Utils\ObjectMixin;
 
 
 
@@ -32,6 +31,8 @@ use Nette\Utils\ObjectMixin;
  */
 class EntityRepository extends Doctrine\ORM\EntityRepository implements Persistence\QueryExecutor, Persistence\Queryable //, Persistence\ObjectFactory
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
 	{
@@ -72,12 +73,15 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 
 
 
-	public function countBy(array $criteria = array())
+	/**
+	 * @param array $criteria
+	 * @return int
+	 */
+	public function countBy(array $criteria = [])
 	{
-		return $query = $this->createQueryBuilder('e')
+		return (int) $this->createQueryBuilder('e')
 			->whereCriteria($criteria)
 			->select('COUNT(e)')
-			->setMaxResults(1)
 			->getQuery()->getSingleScalarResult();
 	}
 
@@ -105,36 +109,36 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 	 *
 	 * @param array $criteria parameter can be skipped
 	 * @param string $value mandatory
-	 * @param array $orderBy parameter can be skipped
+	 * @param array|string $orderBy parameter can be skipped
 	 * @param string $key optional
 	 *
 	 * @throws QueryException
 	 * @return array
 	 */
-	public function findPairs($criteria, $value = NULL, $orderBy = array(), $key = NULL)
+	public function findPairs($criteria, $value = NULL, $orderBy = [], $key = NULL)
 	{
 		if (!is_array($criteria)) {
 			$key = $orderBy;
 			$orderBy = $value;
 			$value = $criteria;
-			$criteria = array();
+			$criteria = [];
 		}
 
 		if (!is_array($orderBy)) {
 			$key = $orderBy;
-			$orderBy = array();
+			$orderBy = [];
 		}
 
 		if (empty($key)) {
 			$key = $this->getClassMetadata()->getSingleIdentifierFieldName();
 		}
 
-		$query = $this->createQueryBuilder('e')
+		/** @var \Kdyby\Doctrine\QueryBuilder $qb */
+		$qb = $this->createQueryBuilder('e')
 			->whereCriteria($criteria)
-			->select("e.$value", "e.$key")
-			->resetDQLPart('from')->from($this->getEntityName(), 'e', 'e.' . $key)
-			->autoJoinOrderBy((array) $orderBy)
-			->getQuery();
+			->select(["e.$value", "e.$key"])
+			->resetDQLPart('from')->from($this->getEntityName(), 'e', 'e.' . $key);
+		$query = $qb->autoJoinOrderBy($orderBy)->getQuery();
 
 		try {
 			return array_map(function ($row) {
@@ -161,7 +165,7 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 	{
 		if (!is_array($criteria)) {
 			$key = $criteria;
-			$criteria = array();
+			$criteria = [];
 		}
 
 		$query = $this->createQueryBuilder('e')
@@ -245,13 +249,14 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 
 	/**
 	 * @param \Kdyby\Persistence\Query|\Kdyby\Doctrine\QueryObject $queryObject
+	 * @param int $hydrationMode
 	 * @throws QueryException
 	 * @return array|\Kdyby\Doctrine\ResultSet
 	 */
-	public function fetch(Persistence\Query $queryObject)
+	public function fetch(Persistence\Query $queryObject, $hydrationMode = AbstractQuery::HYDRATE_OBJECT)
 	{
 		try {
-			return $queryObject->fetch($this);
+			return $queryObject->fetch($this, $hydrationMode);
 
 		} catch (\Exception $e) {
 			throw $this->handleQueryException($e, $queryObject);
@@ -265,7 +270,7 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 	 *
 	 * @throws InvalidStateException
 	 * @throws QueryException
-	 * @return object
+	 * @return object|null
 	 */
 	public function fetchOne(Persistence\Query $queryObject)
 	{
@@ -287,11 +292,13 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 
 	/**
 	 * @param integer|array $id
-	 * @return \Doctrine\ORM\Proxy\Proxy
+	 * @return \Doctrine\ORM\Proxy\Proxy|null
 	 */
 	public function getReference($id)
 	{
-		return $this->getEntityManager()->getReference($this->_entityName, $id);
+		/** @var \Doctrine\ORM\Proxy\Proxy|null $reference */
+		$reference = $this->getEntityManager()->getReference($this->_entityName, $id);
+		return $reference;
 	}
 
 
@@ -299,8 +306,7 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 	/**
 	 * @param \Exception $e
 	 * @param \Kdyby\Persistence\Query $queryObject
-	 *
-	 * @throws \Exception
+	 * @return \Kdyby\Doctrine\QueryException
 	 */
 	private function handleQueryException(\Exception $e, Persistence\Query $queryObject)
 	{
@@ -315,6 +321,7 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 	 * @param \Exception $e
 	 * @param \Doctrine\ORM\Query $query
 	 * @param string $message
+	 * @return \Exception|\Kdyby\Doctrine\QueryException
 	 */
 	private function handleException(\Exception $e, Doctrine\ORM\Query $query = NULL, $message = NULL)
 	{
@@ -328,21 +335,25 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 
 
 	/**
-	 * @return Mapping\ClassMetadata
+	 * @return \Kdyby\Doctrine\Mapping\ClassMetadata
 	 */
 	public function getClassMetadata()
 	{
-		return parent::getClassMetadata();
+		/** @var \Kdyby\Doctrine\Mapping\ClassMetadata $classMetadata */
+		$classMetadata = parent::getClassMetadata();
+		return $classMetadata;
 	}
 
 
 
 	/**
-	 * @return EntityManager
+	 * @return \Kdyby\Doctrine\EntityManager
 	 */
 	public function getEntityManager()
 	{
-		return parent::getEntityManager();
+		/** @var \Kdyby\Doctrine\EntityManager $entityManager */
+		$entityManager = parent::getEntityManager();
+		return $entityManager;
 	}
 
 
@@ -357,143 +368,6 @@ class EntityRepository extends Doctrine\ORM\EntityRepository implements Persiste
 		$targetClass = $meta->getAssociationTargetClass($relation);
 
 		return $this->getEntityManager()->getDao($targetClass);
-	}
-
-
-
-	/*************************** Nette\Object ***************************/
-
-
-
-	/**
-	 * Access to reflection.
-	 *
-	 * @return \Nette\Reflection\ClassType
-	 */
-	public static function getReflection()
-	{
-		return new Nette\Reflection\ClassType(get_called_class());
-	}
-
-
-
-	/**
-	 * Call to undefined method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		if (strpos($name, 'findBy') === 0 || strpos($name, 'findOneBy') === 0) {
-			return parent::__call($name, $args);
-		}
-
-		return ObjectMixin::call($this, $name, $args);
-	}
-
-
-
-	/**
-	 * Call to undefined static method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public static function __callStatic($name, $args)
-	{
-		return ObjectMixin::callStatic(get_called_class(), $name, $args);
-	}
-
-
-
-	/**
-	 * Adding method to class.
-	 *
-	 * @param $name
-	 * @param null $callback
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return callable|null
-	 */
-	public static function extensionMethod($name, $callback = NULL)
-	{
-		if (strpos($name, '::') === FALSE) {
-			$class = get_called_class();
-		} else {
-			list($class, $name) = explode('::', $name);
-		}
-		if ($callback === NULL) {
-			return ObjectMixin::getExtensionMethod($class, $name);
-		} else {
-			ObjectMixin::setExtensionMethod($class, $name, $callback);
-		}
-	}
-
-
-
-	/**
-	 * Returns property value. Do not call directly.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function &__get($name)
-	{
-		return ObjectMixin::get($this, $name);
-	}
-
-
-
-	/**
-	 * Sets value of a property. Do not call directly.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __set($name, $value)
-	{
-		ObjectMixin::set($this, $name, $value);
-	}
-
-
-
-	/**
-	 * Is property defined?
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
-	{
-		return ObjectMixin::has($this, $name);
-	}
-
-
-
-	/**
-	 * Access to undeclared property.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __unset($name)
-	{
-		ObjectMixin::remove($this, $name);
 	}
 
 }

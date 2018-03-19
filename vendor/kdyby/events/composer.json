@@ -17,50 +17,48 @@
 		"issues": "https://github.com/kdyby/events/issues"
 	},
 	"require": {
-		"nette/di": "~2.3@dev",
-		"nette/utils": "~2.3@dev"
+		"php": "^5.6 || ^7.0",
+		"nette/di": "^2.4.8@dev",
+		"nette/utils": "^2.4.5@dev",
+		"nette/reflection": "^2.4@dev",
+		"kdyby/strict-objects": "^1.0"
 	},
 	"require-dev": {
-		"nette/application": "~2.3@dev",
-		"nette/bootstrap": "~2.3@dev",
-		"nette/caching": "~2.3@dev",
-		"nette/component-model": "~2.2@dev",
-		"nette/database": "~2.3@dev",
-		"nette/deprecated": "~2.3@dev",
-		"nette/di": "~2.3@dev",
-		"nette/finder": "~2.3@dev",
-		"nette/forms": "~2.3@dev",
-		"nette/http": "~2.3@dev",
-		"nette/mail": "~2.3@dev",
-		"nette/neon": "~2.3@dev",
-		"nette/php-generator": "~2.3@dev",
-		"nette/reflection": "~2.3@dev",
-		"nette/robot-loader": "~2.3@dev",
-		"nette/safe-stream": "~2.3@dev",
-		"nette/security": "~2.3@dev",
-		"nette/tokenizer": "~2.2@dev",
-		"latte/latte": "~2.3@dev",
-		"tracy/tracy": "~2.3@dev",
-		"nette/utils": "~2.3@dev",
+		"nette/application": "^2.4@dev",
+		"nette/bootstrap": "^2.4@dev",
+		"nette/caching": "^2.5@dev",
+		"nette/security": "^2.4@dev",
+		"nette/http": "^2.4.7@dev",
+		"tracy/tracy": "^2.4@dev",
 
-		"symfony/event-dispatcher": "~2.3",
+		"symfony/event-dispatcher": "^3.0 || ^4.0",
 
-		"nette/tester": "~1.4"
+		"nette/tester": "^2.0"
 	},
+	"minimum-stability": "dev",
 	"autoload": {
-		"psr-0": {
-			"Kdyby\\Events\\": "src/"
+		"psr-4": {
+			"Kdyby\\Events\\": "src/Events"
 		},
 		"classmap": [
-			"src/Kdyby/Events/exceptions.php"
+			"src/Events/exceptions.php"
 		],
 		"files": [
-			"src/Doctrine/compatibility.php"
+			"src/Doctrine/compatibility.php",
+			"src/Symfony/compatibility.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"KdybyTests\\": "tests/KdybyTests/"
+		},
+		"classmap": [
+			"tests/KdybyTests"
 		]
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "2.4-dev"
+			"dev-master": "3.1-dev"
 		}
 	}
 }

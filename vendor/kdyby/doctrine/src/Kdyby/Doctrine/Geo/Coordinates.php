@@ -18,8 +18,10 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class Coordinates extends Nette\Object
+class Coordinates
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @var float
@@ -44,8 +46,8 @@ class Coordinates extends Nette\Object
 
 
 	/**
-	 * @param float $lon
-	 * @param float $lat
+	 * @param float|string $lon
+	 * @param float|string $lat
 	 */
 	public function __construct($lon, $lat)
 	{

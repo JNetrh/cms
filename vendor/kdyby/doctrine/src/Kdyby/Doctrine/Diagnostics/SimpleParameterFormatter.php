@@ -18,8 +18,10 @@ use Nette;
 /**
  * @author Martin Štekl <martin.stekl@gmail.com>
  */
-class SimpleParameterFormatter extends Nette\Object
+class SimpleParameterFormatter
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @param mixed $param
@@ -40,14 +42,13 @@ class SimpleParameterFormatter extends Nette\Object
 			return $param ? "TRUE" : "FALSE";
 
 		} elseif (is_array($param)) {
-			$formatted = array();
+			$formatted = [];
 			foreach ($param as $value) {
 				$formatted[] = self::format($value);
 			}
 			return implode(', ', $formatted);
 
-		} elseif ($param instanceof \Datetime) {
-			/** @var \Datetime $param */
+		} elseif ($param instanceof \DateTime) {
 			return "'" . $param->format('Y-m-d H:i:s') . "'";
 
 		} elseif ($param instanceof Kdyby\Doctrine\Geo\Element) {

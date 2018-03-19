@@ -13,7 +13,6 @@ namespace Kdyby\Doctrine;
 use Doctrine;
 use Kdyby;
 use Nette;
-use Nette\Utils\ObjectMixin;
 
 
 
@@ -21,7 +20,7 @@ use Nette\Utils\ObjectMixin;
  * @author Filip Procházka <filip@prochazka.su>
  *
  * @method NativeQueryBuilder setParameter($key, $value, $type = null)
- * @method NativeQueryBuilder setParameters(array $params, array $types = array())
+ * @method NativeQueryBuilder setParameters(array $params, array $types = [])
  * @method NativeQueryBuilder setFirstResult($firstResult)
  * @method NativeQueryBuilder setMaxResults($maxResults)
  * @method NativeQueryBuilder select($select = NULL)
@@ -39,6 +38,8 @@ use Nette\Utils\ObjectMixin;
 class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
 	 * @var Mapping\ResultSetMappingBuilder
 	 */
@@ -48,6 +49,11 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 	 * @var Doctrine\ORM\EntityManager
 	 */
 	private $em;
+
+	/**
+	 * @var int
+	 */
+	private $defaultRenameMode = Doctrine\ORM\Query\ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT;
 
 
 
@@ -97,10 +103,26 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 
 
 
+	/**
+	 * @param int $defaultRenameMode
+	 * @return NativeQueryBuilder
+	 */
+	public function setDefaultRenameMode($defaultRenameMode)
+	{
+		if ($this->rsm !== NULL) {
+			throw new InvalidStateException("It's too late for changing rename mode for ResultSetMappingBuilder, it has already been created. Call this method earlier.");
+		}
+
+		$this->defaultRenameMode = $defaultRenameMode;
+		return $this;
+	}
+
+
+
 	public function getResultSetMapper()
 	{
 		if ($this->rsm === NULL) {
-			$this->rsm = new Mapping\ResultSetMappingBuilder($this->em);
+			$this->rsm = new Mapping\ResultSetMappingBuilder($this->em, $this->defaultRenameMode);
 		}
 
 		return $this->rsm;
@@ -165,7 +187,6 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 
 	/**
 	 * {@inheritdoc}
-	 * @return NativeQueryBuilder
 	 */
 	public function from($from, $alias = NULL)
 	{
@@ -180,7 +201,7 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 	 */
 	public function join($fromAlias, $join, $alias, $condition = null)
 	{
-		return call_user_func_array(array($this, 'innerJoin'), func_get_args());
+		return call_user_func_array([$this, 'innerJoin'], func_get_args());
 	}
 
 
@@ -232,7 +253,7 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 
 	/**
 	 * @param string $table
-	 * @param string $alias
+	 * @param string|null $alias
 	 * @param string $joinedFrom
 	 * @throws \Doctrine\ORM\Mapping\MappingException
 	 * @return string
@@ -249,7 +270,7 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 		} elseif (isset($rsm->aliasMap[$joinedFrom])) {
 			$fromClass = $this->em->getClassMetadata($rsm->aliasMap[$joinedFrom]);
 
-			foreach (array_merge(array($fromClass->getName()), $fromClass->subClasses) as $fromClass) {
+			foreach (array_merge([$fromClass->getName()], $fromClass->subClasses) as $fromClass) {
 				$fromClass = $this->em->getClassMetadata($fromClass);
 
 				if ($fromClass->hasAssociation($table)) {
@@ -284,10 +305,14 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 			return $table;
 		}
 
+		if ($alias === NULL && ($joinedFrom === NULL || $relation !== NULL)) {
+			throw new InvalidArgumentException('Parameter alias is required');
+		}
+
 		if ($joinedFrom === NULL) {
 			$rsm->addEntityResult($class->getName(), $alias);
 
-		} elseif ($relation) {
+		} elseif ($relation !== NULL) {
 			$rsm->addJoinedEntityResult($class->getName(), $alias, $joinedFrom, $relation);
 		}
 
@@ -327,135 +352,4 @@ class NativeQueryBuilder extends Doctrine\DBAL\Query\QueryBuilder
 		return call_user_func_array('parent::orWhere', Helpers::separateParameters($this, func_get_args()));
 	}
 
-
-
-	/*************************** Nette\Object ***************************/
-
-
-
-	/**
-	 * Access to reflection.
-	 * @return \Nette\Reflection\ClassType
-	 */
-	public static function getReflection()
-	{
-		return new Nette\Reflection\ClassType(get_called_class());
-	}
-
-
-
-	/**
-	 * Call to undefined method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		return ObjectMixin::call($this, $name, $args);
-	}
-
-
-
-	/**
-	 * Call to undefined static method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public static function __callStatic($name, $args)
-	{
-		return ObjectMixin::callStatic(get_called_class(), $name, $args);
-	}
-
-
-
-	/**
-	 * Adding method to class.
-	 *
-	 * @param $name
-	 * @param null $callback
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return callable|null
-	 */
-	public static function extensionMethod($name, $callback = NULL)
-	{
-		if (strpos($name, '::') === FALSE) {
-			$class = get_called_class();
-		} else {
-			list($class, $name) = explode('::', $name);
-		}
-		if ($callback === NULL) {
-			return ObjectMixin::getExtensionMethod($class, $name);
-		} else {
-			ObjectMixin::setExtensionMethod($class, $name, $callback);
-		}
-	}
-
-
-
-	/**
-	 * Returns property value. Do not call directly.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function &__get($name)
-	{
-		return ObjectMixin::get($this, $name);
-	}
-
-
-
-	/**
-	 * Sets value of a property. Do not call directly.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __set($name, $value)
-	{
-		ObjectMixin::set($this, $name, $value);
-	}
-
-
-
-	/**
-	 * Is property defined?
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
-	{
-		return ObjectMixin::has($this, $name);
-	}
-
-
-
-	/**
-	 * Access to undeclared property.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __unset($name)
-	{
-		ObjectMixin::remove($this, $name);
-	}
 }

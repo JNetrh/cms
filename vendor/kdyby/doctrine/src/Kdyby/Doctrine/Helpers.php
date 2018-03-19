@@ -18,8 +18,13 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class Helpers extends Nette\Object
+final class Helpers
 {
+
+	private function __construct()
+	{
+	}
+
 
 
 	/**
@@ -34,7 +39,7 @@ class Helpers extends Nette\Object
 				continue;
 			}
 
-			$repeatedArgs = array();
+			$repeatedArgs = [];
 			foreach ($m['name'] as $l => $name) {
 				if (isset($repeatedArgs[$name])) {
 					continue;
@@ -63,7 +68,7 @@ class Helpers extends Nette\Object
 
 	/**
 	 * @param \ReflectionProperty $property
-	 * @return int
+	 * @return int|NULL
 	 */
 	public static function getPropertyLine(\ReflectionProperty $property)
 	{
@@ -107,13 +112,13 @@ class Helpers extends Nette\Object
 	 */
 	public static function zipper(array $one, array $two)
 	{
-		$output = array();
+		$output = [];
 		while ($one && $two) {
 			$output[] = array_shift($one);
 			$output[] = array_shift($two);
 		}
 
-		return array_merge($output, $one ? : array(), $two ? : array());
+		return array_merge($output, $one ? : [], $two ? : []);
 	}
 
 
@@ -161,7 +166,7 @@ class Helpers extends Nette\Object
 					$query = substr($query, $offset);
 					$offset = 0;
 				} else { // find matching quote or comment end
-					while (preg_match('~' . ($found == '/*' ? '\\*/' : (preg_match('~-- |#~', $found) ? "\n" : "$found|\\\\.")) . '|$~s', $query, $match, PREG_OFFSET_CAPTURE, $offset)) { //! respect sql_mode NO_BACKSLASH_ESCAPES
+					while (preg_match('~' . ($found === '/*' ? '\\*/' : (preg_match('~-- |#~', $found) ? "\n" : "$found|\\\\.")) . '|$~s', $query, $match, PREG_OFFSET_CAPTURE, $offset)) { //! respect sql_mode NO_BACKSLASH_ESCAPES
 						$s = $match[0][0];
 						$offset = $match[0][1] + strlen($s);
 						if ($s[0] !== '\\') {

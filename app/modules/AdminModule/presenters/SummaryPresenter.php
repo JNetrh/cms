@@ -4,6 +4,7 @@ namespace App\AdminModule\Presenters;
 
 use Nette;
 use App\Model\BlockFactory as BF;
+use App\Model\Services\ReferenceService;
 
 class SummaryPresenter extends SecuredBasePresenter {
 
@@ -13,7 +14,10 @@ class SummaryPresenter extends SecuredBasePresenter {
     private $references;
     private $myBlocks;
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory)
+
+    private $referenceService;
+
+    public function __construct(Nette\Database\Context $database, BF $blockFactory, ReferenceService $referenceService)
     {
         $this->database = $database;
 
@@ -21,6 +25,16 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->headers = $blockFactory->getBlockHeader();
         $this->references = $blockFactory->getBlockReferences();
         $this->myBlocks = $blockFactory->getAllBlocks();
+
+
+        $this->referenceService = $referenceService;
+
+        bdump($this->referenceService->getEntities()[0]);
+
+        foreach ($this->referenceService->getEntities()[0]->getReferences() as $row) {
+            bdump($row);
+        }
+
     }
 
 

@@ -25,8 +25,10 @@ use Nette\Utils\Callback;
  *
  * @author Filip Procházka <filip@prochazka.su>
  */
-class DqlSelection extends Nette\Object implements \IteratorAggregate
+class DqlSelection implements \IteratorAggregate
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/* The query types. */
 	const SELECT = 0;
@@ -63,14 +65,14 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 	private $dql;
 
 	/**
-	 * @var integer The index of the first result to retrieve.
+	 * @var integer|NULL The index of the first result to retrieve.
 	 */
-	private $firstResult = NULL;
+	private $firstResult;
 
 	/**
-	 * @var integer The maximum number of results to retrieve.
+	 * @var integer|NULL The maximum number of results to retrieve.
 	 */
-	private $maxResults = NULL;
+	private $maxResults;
 
 
 
@@ -215,7 +217,7 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 	public function where($cond)
 	{
 		$this->state = self::STATE_DIRTY;
-		Callback::invokeArgs(array($this->builder->where, 'addAnd'), func_get_args());
+		Callback::invokeArgs([$this->builder->where, 'addAnd'], func_get_args());
 
 		return $this;
 	}
@@ -229,7 +231,7 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 	public function orWhere($cond)
 	{
 		$this->state = self::STATE_DIRTY;
-		Callback::invokeArgs(array($this->builder->where, 'addOr'), func_get_args());
+		Callback::invokeArgs([$this->builder->where, 'addOr'], func_get_args());
 
 		return $this;
 	}
@@ -257,7 +259,7 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 	public function having($cond)
 	{
 		$this->state = self::STATE_DIRTY;
-		Callback::invokeArgs(array($this->builder->having, 'addAnd'), func_get_args());
+		Callback::invokeArgs([$this->builder->having, 'addAnd'], func_get_args());
 
 		return $this;
 	}
@@ -271,7 +273,7 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 	public function orHaving($cond)
 	{
 		$this->state = self::STATE_DIRTY;
-		Callback::invokeArgs(array($this->builder->having, 'addOr'), func_get_args());
+		Callback::invokeArgs([$this->builder->having, 'addOr'], func_get_args());
 
 		return $this;
 	}
@@ -293,8 +295,8 @@ class DqlSelection extends Nette\Object implements \IteratorAggregate
 
 
 	/**
-	 * @param int $limit
-	 * @param int $offset
+	 * @param int|NULL $limit
+	 * @param int|NULL $offset
 	 * @return \Kdyby\Doctrine\DqlSelection
 	 */
 	public function limit($limit, $offset = NULL)

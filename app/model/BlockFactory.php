@@ -48,54 +48,89 @@ class BlockFactory
         $value_headers = $this->cache->load('headers');
         $value_references = $this->cache->load('references');
 
-        if ($value_members === null or
-            $value_headers === null or
-            $value_references === null
-        ){
-            $members = $this->database->table('block_members');
-            $headers = $this->database->table('block_header');
-            $references = $this->database->table('block_references');
+//        if ($value_members === null or
+//            $value_headers === null or
+//            $value_references === null
+//        ){
+//            $members = $this->database->table('block_members');
+//            $headers = $this->database->table('block_header');
+//            $references = $this->database->table('block_references');
+//
+//            foreach ($members as $member){
+//                $i = new Members($this->database);
+//                $i->initialize($member->id);
+//
+//                $i->setDatabase(null);
+//
+//                $this->block_members[$member->id] = $i;
+//            }
+//
+//
+//            foreach ($headers as $header){
+//                $i = new Headers($this->database);
+//                $i->initialize($header->id);
+//                $this->block_header[$header->id] = $i;
+//            }
+//
+//
+//            foreach ($references as $reference){
+//                $i = new References($this->database);
+//                $i->initialize($reference->id);
+//                $this->block_references[$reference->id] = $i;
+//            }
+//
+//
+//            bdump($this->block_members);
+//
+//
+//
+//            $this->cache->save('members', $this->block_members);
+//            $this->cache->save('headers', $this->block_header);
+//            $this->cache->save('references', $this->block_references);
+//        }
+//        else {
+//
+//            $this->block_members = $this->cache->load('members');
+//            $this->block_header = $this->cache->load('headers');
+//            $this->block_references = $this->cache->load('references');
+//
+//        }
 
-            foreach ($members as $member){
-                $i = new Members($this->database);
-                $i->initialize($member->id);
+        $members = $this->database->table('block_members');
+        $headers = $this->database->table('block_header');
+        $references = $this->database->table('block_references');
 
-                $i->setDatabase(null);
+        foreach ($members as $member){
+            $i = new Members($this->database);
+            $i->initialize($member->id);
 
-                $this->block_members[$member->id] = $i;
-            }
+            $i->setDatabase(null);
 
-
-            foreach ($headers as $header){
-                $i = new Headers($this->database);
-                $i->initialize($header->id);
-                $this->block_header[$header->id] = $i;
-            }
-
-
-            foreach ($references as $reference){
-                $i = new References($this->database);
-                $i->initialize($reference->id);
-                $this->block_references[$reference->id] = $i;
-            }
-
-
-            bdump($this->block_members);
-
-
-
-            $this->cache->save('members', $this->block_members);
-            $this->cache->save('headers', $this->block_header);
-            $this->cache->save('references', $this->block_references);
+            $this->block_members[$member->id] = $i;
         }
-        else {
 
-            $this->block_members = $this->cache->load('members');
-            $this->block_header = $this->cache->load('headers');
-            $this->block_references = $this->cache->load('references');
 
+        foreach ($headers as $header){
+            $i = new Headers($this->database);
+            $i->initialize($header->id);
+            $this->block_header[$header->id] = $i;
         }
 
+
+        foreach ($references as $reference){
+            $i = new References($this->database);
+            $i->initialize($reference->id);
+            $this->block_references[$reference->id] = $i;
+        }
+
+
+//        bdump($this->block_members);
+
+//
+//
+//        $this->cache->save('members', $this->block_members);
+//        $this->cache->save('headers', $this->block_header);
+//        $this->cache->save('references', $this->block_references);
 
 
 

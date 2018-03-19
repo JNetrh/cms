@@ -15,7 +15,6 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Driver;
 use Kdyby;
 use Nette;
-use Nette\Utils\ObjectMixin;
 use PDO;
 use Tracy;
 
@@ -26,6 +25,9 @@ use Tracy;
  */
 class Connection extends Doctrine\DBAL\Connection
 {
+
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
 	 * @var bool
 	 */
@@ -50,12 +52,12 @@ class Connection extends Doctrine\DBAL\Connection
 	/**
 	 * @var array
 	 */
-	private $schemaTypes = array();
+	private $schemaTypes = [];
 
 	/**
 	 * @var array
 	 */
-	private $dbalTypes = array();
+	private $dbalTypes = [];
 
 
 
@@ -93,9 +95,9 @@ class Connection extends Doctrine\DBAL\Connection
 	/**
 	 * {@inheritdoc}
 	 */
-	public function delete($tableExpression, array $identifier, array $types = array())
+	public function delete($tableExpression, array $identifier, array $types = [])
 	{
-		$fixedIdentifier = array();
+		$fixedIdentifier = [];
 		foreach ($identifier as $columnName => $value) {
 			$fixedIdentifier[$this->quoteIdentifier($columnName)] = $value;
 		}
@@ -108,14 +110,14 @@ class Connection extends Doctrine\DBAL\Connection
 	/**
 	 * {@inheritdoc}
 	 */
-	public function update($tableExpression, array $data, array $identifier, array $types = array())
+	public function update($tableExpression, array $data, array $identifier, array $types = [])
 	{
-		$fixedData = array();
+		$fixedData = [];
 		foreach ($data as $columnName => $value) {
 			$fixedData[$this->quoteIdentifier($columnName)] = $value;
 		}
 
-		$fixedIdentifier = array();
+		$fixedIdentifier = [];
 		foreach ($identifier as $columnName => $value) {
 			$fixedIdentifier[$this->quoteIdentifier($columnName)] = $value;
 		}
@@ -128,9 +130,9 @@ class Connection extends Doctrine\DBAL\Connection
 	/**
 	 * {@inheritdoc}
 	 */
-	public function insert($tableExpression, array $data, array $types = array())
+	public function insert($tableExpression, array $data, array $types = [])
 	{
-		$fixedData = array();
+		$fixedData = [];
 		foreach ($data as $columnName => $value) {
 			$fixedData[$this->quoteIdentifier($columnName)] = $value;
 		}
@@ -148,7 +150,7 @@ class Connection extends Doctrine\DBAL\Connection
 	 * @return \Doctrine\DBAL\Driver\Statement
 	 * @throws DBALException
 	 */
-	public function executeQuery($query, array $params = array(), $types = array(), Doctrine\DBAL\Cache\QueryCacheProfile $qcp = NULL)
+	public function executeQuery($query, array $params = [], $types = [], Doctrine\DBAL\Cache\QueryCacheProfile $qcp = NULL)
 	{
 		try {
 			return parent::executeQuery($query, $params, $types, $qcp);
@@ -167,7 +169,7 @@ class Connection extends Doctrine\DBAL\Connection
 	 * @return int
 	 * @throws DBALException
 	 */
-	public function executeUpdate($query, array $params = array(), array $types = array())
+	public function executeUpdate($query, array $params = [], array $types = [])
 	{
 		try {
 			return parent::executeUpdate($query, $params, $types);
@@ -318,13 +320,40 @@ class Connection extends Doctrine\DBAL\Connection
 
 
 
+	public function ping()
+	{
+		$conn = $this->getWrappedConnection();
+		if ($conn instanceof Driver\PingableConnection) {
+			return $conn->ping();
+		}
+
+		set_error_handler(function ($severity, $message) {
+			throw new \PDOException($message, $severity);
+		});
+
+		try {
+			$this->query($this->getDatabasePlatform()->getDummySelectSQL());
+			restore_error_handler();
+
+			return TRUE;
+
+		} catch (Doctrine\DBAL\DBALException $e) {
+			restore_error_handler();
+			return FALSE;
+
+		} catch (\Exception $e) {
+			restore_error_handler();
+			throw $e;
+		}
+	}
+
+
+
 	/**
 	 * @param array $params
 	 * @param \Doctrine\DBAL\Configuration $config
 	 * @param \Doctrine\Common\EventManager $eventManager
-	 * @param array $dbalTypes
-	 * @param array $schemaTypes
-	 * @return Connection
+	 * @return \Kdyby\Doctrine\Connection
 	 */
 	public static function create(array $params, Doctrine\DBAL\Configuration $config, EventManager $eventManager)
 	{
@@ -332,7 +361,9 @@ class Connection extends Doctrine\DBAL\Connection
 			$params['wrapperClass'] = get_called_class();
 		}
 
-		return Doctrine\DBAL\DriverManager::getConnection($params, $config, $eventManager);
+		/** @var \Kdyby\Doctrine\Connection $connection */
+		$connection = Doctrine\DBAL\DriverManager::getConnection($params, $config, $eventManager);
+		return $connection;
 	}
 
 
@@ -340,12 +371,12 @@ class Connection extends Doctrine\DBAL\Connection
 	/**
 	 * @deprecated
 	 * @internal
-	 * @param \Exception $e
+	 * @param \Exception|\Throwable $e
 	 * @param string $query
 	 * @param array $params
-	 * @return DBALException
+	 * @return \Kdyby\Doctrine\DBALException|\Exception|\Throwable
 	 */
-	public function resolveException(\Exception $e, $query = NULL, $params = array())
+	public function resolveException($e, $query = NULL, $params = [])
 	{
 		if ($this->throwOldKdybyExceptions !== TRUE) {
 			return $e;
@@ -363,15 +394,17 @@ class Connection extends Doctrine\DBAL\Connection
 
 		if ($this->getDriver() instanceof Doctrine\DBAL\Driver\PDOMySql\Driver) {
 			if ($info[0] == 23000 && $info[1] == self::MYSQL_ERR_UNIQUE) { // unique fail
-				$columns = array();
+				$columns = [];
 
 				try {
-					if (preg_match('~Duplicate entry .*? for key \'([^\']+)\'~', $info[2], $m)
-						&& ($table = self::resolveExceptionTable($e))
-						&& ($indexes = $this->getSchemaManager()->listTableIndexes($table))
-						&& isset($indexes[$m[1]])
-					) {
-						$columns[$m[1]] = $indexes[$m[1]]->getColumns();
+					if (preg_match('~Duplicate entry .*? for key \'([^\']+)\'~', $info[2], $m)) {
+						$table = self::resolveExceptionTable($e);
+						if ($table !== NULL) {
+							$indexes = $this->getSchemaManager()->listTableIndexes($table);
+							if (array_key_exists($m[1], $indexes)) {
+								$columns[$m[1]] = $indexes[$m[1]]->getColumns();
+							}
+						}
 					}
 
 				} catch (\Exception $e) { }
@@ -399,164 +432,22 @@ class Connection extends Doctrine\DBAL\Connection
 
 
 	/**
-	 * @param \Exception $e
+	 * @param \Exception|\Throwable $e
 	 * @return string|NULL
 	 */
-	private static function resolveExceptionTable(\Exception $e)
+	private static function resolveExceptionTable($e)
 	{
 		if (!$e instanceof Doctrine\DBAL\DBALException) {
 			return NULL;
 		}
 
-		if ($caused = Tracy\Helpers::findTrace($e->getTrace(), 'Doctrine\DBAL\DBALException::driverExceptionDuringQuery')) {
+		if ($caused = Tracy\Helpers::findTrace($e->getTrace(), Doctrine\DBAL\DBALException::class . '::driverExceptionDuringQuery')) {
 			if (preg_match('~(?:INSERT|UPDATE|REPLACE)(?:[A-Z_\s]*)`?([^\s`]+)`?\s*~', is_string($caused['args'][1]) ? $caused['args'][1] : $caused['args'][2], $m)) {
 				return $m[1];
 			}
 		}
 
 		return NULL;
-	}
-
-
-
-	/*************************** Nette\Object ***************************/
-
-
-
-	/**
-	 * Access to reflection.
-	 * @return \Nette\Reflection\ClassType
-	 */
-	public static function getReflection()
-	{
-		return new Nette\Reflection\ClassType(get_called_class());
-	}
-
-
-
-	/**
-	 * Call to undefined method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		return ObjectMixin::call($this, $name, $args);
-	}
-
-
-
-	/**
-	 * Call to undefined static method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public static function __callStatic($name, $args)
-	{
-		return ObjectMixin::callStatic(get_called_class(), $name, $args);
-	}
-
-
-
-	/**
-	 * Adding method to class.
-	 *
-	 * @param $name
-	 * @param null $callback
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return callable|null
-	 */
-	public static function extensionMethod($name, $callback = NULL)
-	{
-		if (strpos($name, '::') === FALSE) {
-			$class = get_called_class();
-		} else {
-			list($class, $name) = explode('::', $name);
-		}
-		if ($callback === NULL) {
-			return ObjectMixin::getExtensionMethod($class, $name);
-		} else {
-			ObjectMixin::setExtensionMethod($class, $name, $callback);
-		}
-	}
-
-
-
-	/**
-	 * Returns property value. Do not call directly.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function &__get($name)
-	{
-		return ObjectMixin::get($this, $name);
-	}
-
-
-
-	/**
-	 * Sets value of a property. Do not call directly.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __set($name, $value)
-	{
-		if ($name === '_conn') {
-			$this->_conn = $value;
-			return;
-		}
-
-		ObjectMixin::set($this, $name, $value);
-	}
-
-
-
-	/**
-	 * Is property defined?
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
-	{
-		return ObjectMixin::has($this, $name);
-	}
-
-
-
-	/**
-	 * Access to undeclared property.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __unset($name)
-	{
-		if ($name === '_conn') {
-			$this->$name = NULL;
-			return;
-		}
-
-		ObjectMixin::remove($this, $name);
 	}
 
 }

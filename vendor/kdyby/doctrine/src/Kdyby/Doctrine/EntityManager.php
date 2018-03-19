@@ -12,12 +12,15 @@ namespace Kdyby\Doctrine;
 
 use Doctrine;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Kdyby;
+use Kdyby\Doctrine\Diagnostics\EntityManagerUnitOfWorkSnapshotPanel;
+use Kdyby\Doctrine\QueryObject;
 use Kdyby\Doctrine\Tools\NonLockingUniqueInserter;
+use Kdyby\Persistence;
 use Nette;
-use Nette\Utils\ObjectMixin;
 
 
 
@@ -27,20 +30,27 @@ use Nette\Utils\ObjectMixin;
  * @method \Kdyby\Doctrine\Connection getConnection()
  * @method \Kdyby\Doctrine\Configuration getConfiguration()
  * @method \Kdyby\Doctrine\EntityRepository getRepository($entityName)
- * @method onDaoCreate(EntityManager $em, EntityDao $dao)
  */
-class EntityManager extends Doctrine\ORM\EntityManager
+class EntityManager extends Doctrine\ORM\EntityManager implements Persistence\QueryExecutor, Persistence\Queryable
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
+	 * @deprecated
 	 * @var array
 	 */
-	public $onDaoCreate = array();
+	public $onDaoCreate = [];
 
 	/**
 	 * @var NonLockingUniqueInserter
 	 */
 	private $nonLockingUniqueInserter;
+
+	/**
+	 * @var \Kdyby\Doctrine\Diagnostics\EntityManagerUnitOfWorkSnapshotPanel
+	 */
+	private $panel;
 
 
 
@@ -56,10 +66,32 @@ class EntityManager extends Doctrine\ORM\EntityManager
 
 
 	/**
+	 * @internal
+	 * @param EntityManagerUnitOfWorkSnapshotPanel $panel
+	 */
+	public function bindTracyPanel(EntityManagerUnitOfWorkSnapshotPanel $panel)
+	{
+		$this->panel = $panel;
+	}
+
+
+
+	/**
+	 * @throws NotSupportedException
 	 * @return \Kdyby\Doctrine\QueryBuilder
 	 */
-	public function createQueryBuilder()
+	public function createQueryBuilder($alias = NULL, $indexBy = NULL)
 	{
+		if ($alias !== NULL || $indexBy !== NULL) {
+			throw new NotSupportedException('Use EntityRepository for $alias and $indexBy arguments to work.');
+		}
+
+		$config = $this->getConfiguration();
+		if ($config instanceof Configuration) {
+			$class = $config->getQueryBuilderClassName();
+			return new $class($this);
+		}
+
 		return new QueryBuilder($this);
 	}
 
@@ -76,13 +108,12 @@ class EntityManager extends Doctrine\ORM\EntityManager
 
 
 	/**
-	 * {@inheritdoc}
-	 * @param string|array $entity
+	 * @param string|array|null $entityName if given, only entities of this type will get detached
 	 * @return EntityManager
 	 */
 	public function clear($entityName = null)
 	{
-		foreach (is_array($entityName) ? $entityName : (func_get_args() + array(0 => NULL)) as $item) {
+		foreach (is_array($entityName) ? $entityName : (func_get_args() + [0 => NULL]) as $item) {
 			parent::clear($item);
 		}
 
@@ -92,7 +123,6 @@ class EntityManager extends Doctrine\ORM\EntityManager
 
 
 	/**
-	 * {@inheritdoc}
 	 * @param object|array $entity
 	 * @return EntityManager
 	 */
@@ -108,7 +138,6 @@ class EntityManager extends Doctrine\ORM\EntityManager
 
 
 	/**
-	 * {@inheritdoc}
 	 * @param object|array $entity
 	 * @return EntityManager
 	 */
@@ -124,20 +153,46 @@ class EntityManager extends Doctrine\ORM\EntityManager
 
 
 	/**
-	 * {@inheritdoc}
-	 * @param object|array $entity
+	 * @param object|array|NULL $entity
 	 * @return EntityManager
 	 */
 	public function flush($entity = null)
 	{
-		parent::flush($entity);
+		try {
+			parent::flush($entity);
+
+		} catch (\Exception $e) {
+			if ($this->panel) {
+				$this->panel->markExceptionOwner($this, $e);
+			}
+
+			throw $e;
+		}
+
 		return $this;
 	}
 
 
 
+	public function close()
+	{
+		if ($this->panel) {
+			$this->panel->snapshotUnitOfWork($this);
+		}
+
+		parent::close();
+	}
+
+
+
 	/**
-	 * @param $entity
+	 * Tries to persist the given entity and returns FALSE if an unique
+	 * constaint was violated.
+	 *
+	 * Warning: On success you must NOT use the passed entity further
+	 * in your application. Use the returned one instead!
+	 *
+	 * @param mixed $entity
 	 * @throws \Doctrine\DBAL\DBALException
 	 * @throws \Exception
 	 * @return bool|object
@@ -157,29 +212,25 @@ class EntityManager extends Doctrine\ORM\EntityManager
 	 * @deprecated Use the EntityManager::getRepository(), this is a useless alias.
 	 *
 	 * @param string $entityName
-	 * @return EntityDao
+	 * @return \Kdyby\Doctrine\EntityDao
 	 */
 	public function getDao($entityName)
 	{
-		return $this->getRepository($entityName);
+		/** @var \Kdyby\Doctrine\EntityDao $entityDao */
+		$entityDao = $this->getRepository($entityName);
+		return $entityDao;
 	}
 
 
 
 	/**
 	 * @param int $hydrationMode
-	 * @return Doctrine\ORM\Internal\Hydration\AbstractHydrator|Hydration\ObjectHydrator|Hydration\SimpleObjectHydrator
+	 * @return Doctrine\ORM\Internal\Hydration\AbstractHydrator
 	 * @throws \Doctrine\ORM\ORMException
 	 */
 	public function newHydrator($hydrationMode)
 	{
 		switch ($hydrationMode) {
-			case Query::HYDRATE_OBJECT:
-				return new Hydration\ObjectHydrator($this);
-
-			case Query::HYDRATE_SIMPLEOBJECT:
-				return new Hydration\SimpleObjectHydrator($this);
-
 			case Hydration\HashHydrator::NAME:
 				return new Hydration\HashHydrator($this);
 
@@ -207,157 +258,94 @@ class EntityManager extends Doctrine\ORM\EntityManager
 			throw ORMException::missingMappingDriverImpl();
 		}
 
-		switch (TRUE) {
-			case (is_array($conn)):
-				$conn = DriverManager::getConnection(
-					$conn, $config, ($eventManager ? : new Doctrine\Common\EventManager())
-				);
-				break;
-
-			case ($conn instanceof Doctrine\DBAL\Connection):
-				if ($eventManager !== NULL && $conn->getEventManager() !== $eventManager) {
-					throw ORMException::mismatchedEventManager();
-				}
-				break;
-
-			default:
-				throw new \InvalidArgumentException("Invalid connection");
-		}
-
-		return new EntityManager($conn, $config, $conn->getEventManager());
-	}
-
-
-
-	/*************************** Nette\Object ***************************/
-
-
-
-	/**
-	 * Access to reflection.
-	 *
-	 * @return \Nette\Reflection\ClassType
-	 */
-	public static function getReflection()
-	{
-		return new Nette\Reflection\ClassType(get_called_class());
-	}
-
-
-
-	/**
-	 * Call to undefined method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		return ObjectMixin::call($this, $name, $args);
-	}
-
-
-
-	/**
-	 * Call to undefined static method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public static function __callStatic($name, $args)
-	{
-		return ObjectMixin::callStatic(get_called_class(), $name, $args);
-	}
-
-
-
-	/**
-	 * Adding method to class.
-	 *
-	 * @param $name
-	 * @param null $callback
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return callable|null
-	 */
-	public static function extensionMethod($name, $callback = NULL)
-	{
-		if (strpos($name, '::') === FALSE) {
-			$class = get_called_class();
+		if (is_array($conn)) {
+			$connection = DriverManager::getConnection(
+				$conn, $config, ($eventManager ?: new Doctrine\Common\EventManager())
+			);
+		} elseif ($conn instanceof Doctrine\DBAL\Connection) {
+			if ($eventManager !== null && $conn->getEventManager() !== $eventManager) {
+				throw ORMException::mismatchedEventManager();
+			}
+			$connection = $conn;
 		} else {
-			list($class, $name) = explode('::', $name);
+			throw new \InvalidArgumentException("Invalid connection");
 		}
-		if ($callback === NULL) {
-			return ObjectMixin::getExtensionMethod($class, $name);
-		} else {
-			ObjectMixin::setExtensionMethod($class, $name, $callback);
+
+		return new EntityManager($connection, $config, $connection->getEventManager());
+	}
+
+
+
+	/**
+	 * @deprecated
+	 */
+	public function onDaoCreate(EntityManager $em, Doctrine\Common\Persistence\ObjectRepository $dao)
+	{
+		foreach ($this->onDaoCreate as $callback) {
+			call_user_func_array($callback, func_get_args());
+		}
+	}
+
+
+
+	/****************** Kdyby\Persistence\QueryExecutor *****************/
+
+
+
+	/**
+	 * @param \Kdyby\Persistence\Query|\Kdyby\Doctrine\QueryObject $queryObject
+	 * @param int $hydrationMode
+	 * @throws QueryException
+	 * @return array|\Kdyby\Doctrine\ResultSet
+	 */
+	public function fetch(Persistence\Query $queryObject, $hydrationMode = AbstractQuery::HYDRATE_OBJECT)
+	{
+		try {
+			return $queryObject->fetch($this, $hydrationMode);
+
+		} catch (\Exception $e) {
+			throw $this->handleQueryException($e, $queryObject);
 		}
 	}
 
 
 
 	/**
-	 * Returns property value. Do not call directly.
+	 * @param \Kdyby\Persistence\Query|\Kdyby\Doctrine\QueryObject $queryObject
 	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
+	 * @throws InvalidStateException
+	 * @throws QueryException
+	 * @return object|NULL
 	 */
-	public function &__get($name)
+	public function fetchOne(Persistence\Query $queryObject)
 	{
-		return ObjectMixin::get($this, $name);
+		try {
+			return $queryObject->fetchOne($this);
+
+		} catch (Doctrine\ORM\NoResultException $e) {
+			return NULL;
+
+		} catch (Doctrine\ORM\NonUniqueResultException $e) { // this should never happen!
+			throw new InvalidStateException("You have to setup your query calling ->setMaxResult(1).", 0, $e);
+
+		} catch (\Exception $e) {
+			throw $this->handleQueryException($e, $queryObject);
+		}
 	}
 
 
 
 	/**
-	 * Sets value of a property. Do not call directly.
+	 * @param \Exception $e
+	 * @param \Kdyby\Persistence\Query $queryObject
 	 *
-	 * @param string $name
-	 * @param mixed $value
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
+	 * @throws \Exception
 	 */
-	public function __set($name, $value)
+	private function handleQueryException(\Exception $e, Persistence\Query $queryObject)
 	{
-		ObjectMixin::set($this, $name, $value);
-	}
+		$lastQuery = $queryObject instanceof QueryObject ? $queryObject->getLastQuery() : NULL;
 
-
-
-	/**
-	 * Is property defined?
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
-	{
-		return ObjectMixin::has($this, $name);
-	}
-
-
-
-	/**
-	 * Access to undeclared property.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __unset($name)
-	{
-		ObjectMixin::remove($this, $name);
+		return new QueryException($e, $lastQuery, '['.get_class($queryObject).'] '.$e->getMessage());
 	}
 
 }

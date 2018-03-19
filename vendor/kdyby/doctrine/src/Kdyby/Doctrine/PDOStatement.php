@@ -23,9 +23,7 @@ class PDOStatement extends Statement
 {
 
 	/**
-	 * @param null $params
-	 * @throws DBALException
-	 * @return bool
+	 * {@inheritdoc}
 	 */
 	public function execute($params = NULL)
 	{
@@ -33,9 +31,9 @@ class PDOStatement extends Statement
 			return parent::execute($params);
 
 		} catch (\Exception $e) {
+			/** @var \Kdyby\Doctrine\Connection $conn */
 			$conn = $this->conn;
-			/** @var Connection $conn */
-			throw $conn->resolveException($e, $this->sql, (is_array($params) ? $params : array()) + $this->params);
+			throw $conn->resolveException($e, $this->sql, (is_array($params) ? $params : []) + $this->params);
 		}
 	}
 

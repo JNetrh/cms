@@ -19,6 +19,12 @@ class Members extends BaseBlock implements IBlock
 
     protected $table = 'block_members';
 
+    /**
+     * @inject
+     * @var \Kdyby\Doctrine\EntityManager
+     */
+    public $EntityManager;
+
     private $heading;
     private $members = [];
 

@@ -7,10 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
+    'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
     'Symfony\\Component\\Debug\\' => array($vendorDir . '/symfony/debug'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Symfony\\Component\\Config\\' => array($vendorDir . '/symfony/config'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Kdyby\\StrictObjects\\' => array($vendorDir . '/kdyby/strict-objects/src'),
+    'Kdyby\\Events\\' => array($vendorDir . '/kdyby/events/src/Events'),
     'Kdyby\\DoctrineCache\\' => array($vendorDir . '/kdyby/doctrine-cache/src'),
     'Kdyby\\Console\\' => array($vendorDir . '/kdyby/console/src'),
     'Kdyby\\Annotations\\' => array($vendorDir . '/kdyby/annotations/src'),

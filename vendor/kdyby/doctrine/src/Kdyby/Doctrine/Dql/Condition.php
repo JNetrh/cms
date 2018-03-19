@@ -22,21 +22,23 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class Condition extends Nette\Object
+class Condition
 {
 
-	const COND_AND = 'Doctrine\ORM\Query\Expr\Andx';
-	const COND_OR = 'Doctrine\ORM\Query\Expr\Orx';
+	use \Kdyby\StrictObjects\Scream;
+
+	const COND_AND = Doctrine\ORM\Query\Expr\Andx::class;
+	const COND_OR = Doctrine\ORM\Query\Expr\Orx::class;
 
 	/**
 	 * @var array
 	 */
-	public $conds = array();
+	public $conds = [];
 
 	/**
 	 * @var array
 	 */
-	public $params = array();
+	public $params = [];
 
 	/**
 	 * @var string
@@ -51,23 +53,23 @@ class Condition extends Nette\Object
 
 
 	/**
-	 * @param string $cond
+	 * @param array|string $cond
 	 */
 	public function addAnd($cond)
 	{
 		if ($this->last === self::COND_OR) {
 			$tmp = implode(' OR ', $this->conds);
-			$this->conds = array(count($this->conds) > 1 ? '(' . $tmp . ')' : $tmp);
+			$this->conds = [count($this->conds) > 1 ? '(' . $tmp . ')' : $tmp];
 		}
 		$this->last = self::COND_AND;
 
 		if (!is_array($cond)) {
 			$args = func_get_args();
-			call_user_func_array(array($this, 'where'), $args);
+			call_user_func_array([$this, 'where'], $args);
 			return;
 		}
 
-		foreach ($cond as $key => $val) { // where(array('column1' => 1, 'column2 > ?' => 2))
+		foreach ($cond as $key => $val) { // where(['column1' => 1, 'column2 > ?' => 2])
 			if (is_int($key)) {
 				$this->addAnd($val); // where('full condition')
 				continue;
@@ -80,23 +82,23 @@ class Condition extends Nette\Object
 
 
 	/**
-	 * @param string $cond
+	 * @param array|string $cond
 	 */
 	public function addOr($cond)
 	{
 		if ($this->last === self::COND_AND) {
 			$tmp = implode(' AND ', $this->conds);
-			$this->conds = array(count($this->conds) > 1 ? '(' . $tmp . ')' : $tmp);
+			$this->conds = [count($this->conds) > 1 ? '(' . $tmp . ')' : $tmp];
 		}
 		$this->last = self::COND_OR;
 
 		if (!is_array($cond)) {
 			$args = func_get_args();
-			call_user_func_array(array($this, 'where'), $args);
+			call_user_func_array([$this, 'where'], $args);
 			return;
 		}
 
-		foreach ($cond as $key => $val) { // where(array('column1' => 1, 'column2 > ?' => 2))
+		foreach ($cond as $key => $val) { // where(['column1' => 1, 'column2 > ?' => 2])
 			if (is_int($key)) {
 				$this->addOr($val); // where('full condition')
 				continue;
@@ -109,17 +111,17 @@ class Condition extends Nette\Object
 
 
 	/**
-	 * @param $cond
-	 * @param array $params
+	 * @param string $cond
+	 * @param Kdyby\Doctrine\DqlSelection|Doctrine\ORM\Query|array|NULL $params
 	 */
-	protected function where($cond, $params = array())
+	protected function where($cond, $params = [])
 	{
 		if ($this->rootAlias !== NULL) {
 			$cond = self::prefixWithAlias($cond, $this->rootAlias);
 		}
 
 		$args = func_get_args();
-		if (count($args) !== 2 || strpbrk($cond, '?:')) { // where('column < ? OR column > ?', array(1, 2))
+		if (count($args) !== 2 || strpbrk($cond, '?:')) { // where('column < ? OR column > ?', [1, 2])
 			if (count($args) !== 2 || !is_array($params)) { // where('column < ? OR column > ?', 1, 2)
 				$params = $args;
 				array_shift($params);
@@ -142,7 +144,7 @@ class Condition extends Nette\Object
 			$cond .= ' = ?';
 			$this->params[] = $params;
 
-		} else { // where('column', array(1, 2))
+		} else { // where('column', [1, 2])
 			if ($params) {
 				$cond .= " IN (?)";
 				$this->params[] = $params;
@@ -171,8 +173,8 @@ class Condition extends Nette\Object
 
 		$result = array_shift($cond);
 		foreach ($this->params as $i => $value) {
-			$placeholders = array();
-			foreach (is_array($value) ? $value : array($value) as $l => $item) {
+			$placeholders = [];
+			foreach (is_array($value) ? $value : [$value] as $l => $item) {
 				$placeholders[] = ':' . ($param = $prefix . '_' . $i . '_' . $l);
 				$parameters[':' . $param] = new Parameter($param, $item);
 			}

@@ -30,16 +30,23 @@ use Nette;
 class Registry extends AbstractManagerRegistry
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
 	 * @var Nette\DI\Container
 	 */
 	private $serviceLocator;
 
-
-
+	/**
+	 * @param array $connections
+	 * @param array $managers
+	 * @param string $defaultConnection
+	 * @param string $defaultManager
+	 * @param \Nette\DI\Container $serviceLocator
+	 */
 	public function __construct(array $connections, array $managers, $defaultConnection, $defaultManager, Nette\DI\Container $serviceLocator)
 	{
-		parent::__construct('ORM', $connections, $managers, $defaultConnection, $defaultManager, 'Doctrine\ORM\Proxy\Proxy');
+		parent::__construct('ORM', $connections, $managers, $defaultConnection, $defaultManager, \Doctrine\ORM\Proxy\Proxy::class);
 		$this->serviceLocator = $serviceLocator;
 	}
 
@@ -89,7 +96,9 @@ class Registry extends AbstractManagerRegistry
 	{
 		foreach (array_keys($this->getManagers()) as $name) {
 			try {
-				return $this->getManager($name)->getConfiguration()->getEntityNamespace($alias);
+				/** @var \Doctrine\ORM\EntityManager $entityManager */
+				$entityManager = $this->getManager($name);
+				return $entityManager->getConfiguration()->getEntityNamespace($alias);
 			} catch (ORMException $e) {
 			}
 		}

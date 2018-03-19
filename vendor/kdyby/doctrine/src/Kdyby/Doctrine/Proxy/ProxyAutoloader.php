@@ -18,8 +18,10 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
+class ProxyAutoloader
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @var string
@@ -34,7 +36,7 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 	/**
 	 * @var array list of registered loaders
 	 */
-	static private $loaders = array();
+	static private $loaders = [];
 
 
 
@@ -46,20 +48,6 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 	{
 		$this->dir = $proxyDir;
 		$this->namespace = ltrim($proxyNamespace, "\\");
-	}
-
-
-
-	/**
-	 * Returns an array of events this subscriber wants to listen to.
-	 *
-	 * @return array
-	 */
-	public function getSubscribedEvents()
-	{
-		return array(
-			'Nette\DI\Container::onInitialize' => 'initialize',
-		);
 	}
 
 
@@ -77,17 +65,6 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 
 
 	/**
-	 * @internal
-	 */
-	public function initialize()
-	{
-		// Needs to be called without arguments.
-		$this->register();
-	}
-
-
-
-	/**
 	 * Register autoloader.
 	 * @param bool $prepend prepend autoloader?
 	 * @throws \Nette\NotSupportedException
@@ -99,7 +76,7 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 			throw new Nette\NotSupportedException('spl_autoload does not exist in this PHP installation.');
 		}
 
-		spl_autoload_register(array($this, 'tryLoad'), TRUE, (bool) $prepend);
+		spl_autoload_register([$this, 'tryLoad'], TRUE, $prepend);
 		self::$loaders[spl_object_hash($this)] = $this;
 	}
 
@@ -112,7 +89,7 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 	public function unregister()
 	{
 		unset(self::$loaders[spl_object_hash($this)]);
-		return spl_autoload_unregister(array($this, 'tryLoad'));
+		return spl_autoload_unregister([$this, 'tryLoad']);
 	}
 
 
@@ -124,7 +101,7 @@ class ProxyAutoloader extends Nette\Object implements Kdyby\Events\Subscriber
 	 * 2. Remove namespace seperators from remaining class name.
 	 * 3. Return PHP filename from proxy-dir with the result from 2.
 	 *
-	 * @param  string
+	 * @param  string $type
 	 * @return void
 	 */
 	public function tryLoad($type)

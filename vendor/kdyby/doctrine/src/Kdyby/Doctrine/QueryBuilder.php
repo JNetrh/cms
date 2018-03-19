@@ -14,111 +14,28 @@ use Doctrine;
 use Doctrine\ORM\Query\Expr;
 use Kdyby;
 use Nette;
-use Nette\Utils\ObjectMixin;
 
 
 
 /**
  * @author Filip Procházka <filip@prochazka.su>
  *
- * @method QueryBuilder select($select = null)
- * @method QueryBuilder addSelect($select = null)
- * @method QueryBuilder from($from, $alias, $indexBy = null)
- * @method QueryBuilder setMaxResults($maxResults)
- * @method QueryBuilder setFirstResult($maxResults)
- * @method QueryBuilder resetDQLPart($parts = null)
+ * @method \Kdyby\Doctrine\QueryBuilder select(array|string $select = null)
+ * @method \Kdyby\Doctrine\QueryBuilder addSelect(array|string $select = null)
+ * @method \Kdyby\Doctrine\QueryBuilder from($from, $alias, $indexBy = null)
+ * @method \Kdyby\Doctrine\QueryBuilder setMaxResults(int|NULL $maxResults)
+ * @method \Kdyby\Doctrine\QueryBuilder setFirstResult(int|NULL $maxResults)
+ * @method \Kdyby\Doctrine\QueryBuilder resetDQLPart(string $part)
  */
 class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggregate
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
 	 * @var array
 	 */
-	private $criteriaJoins = array();
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function join($join, $alias, $conditionType = null, $condition = null, $indexBy = null)
-	{
-		return call_user_func_array(array($this, 'innerJoin'), func_get_args());
-	}
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function innerJoin($join, $alias, $conditionType = null, $condition = null, $indexBy = null)
-	{
-		if ($condition !== NULL) {
-			$beforeArgs = array_slice(func_get_args(), 3);
-			$args = array_values(Helpers::separateParameters($this, $beforeArgs));
-			if (count($beforeArgs) > count($args)) {
-				$indexBy = count($args) === 2 ? $args[1] : NULL;
-				$condition = $args[0];
-			}
-		}
-
-		return parent::innerJoin($join, $alias, $conditionType, $condition, $indexBy);
-	}
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function leftJoin($join, $alias, $conditionType = null, $condition = null, $indexBy = null)
-	{
-		if ($condition !== NULL) {
-			$beforeArgs = array_slice(func_get_args(), 3);
-			$args = array_values(Helpers::separateParameters($this, $beforeArgs));
-			if (count($beforeArgs) > count($args)) {
-				$indexBy = count($args) === 2 ? $args[1] : NULL;
-				$condition = $args[0];
-			}
-		}
-
-		return parent::leftJoin($join, $alias, $conditionType, $condition, $indexBy);
-	}
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function where($predicates)
-	{
-		return call_user_func_array('parent::where', Helpers::separateParameters($this, func_get_args()));
-	}
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function andWhere($where)
-	{
-		return call_user_func_array('parent::andWhere', Helpers::separateParameters($this, func_get_args()));
-	}
-
-
-
-	/**
-	 * {@inheritdoc}
-	 * @return QueryBuilder
-	 */
-	public function orWhere($where)
-	{
-		return call_user_func_array('parent::orWhere', Helpers::separateParameters($this, func_get_args()));
-	}
+	private $criteriaJoins = [];
 
 
 
@@ -134,14 +51,14 @@ class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggrega
 			$operator = '=';
 			if (preg_match('~(?P<key>[^\\s]+)\\s+(?P<operator>.+)\\s*~', $key, $m)) {
 				$key = $m['key'];
-				$operator = strtr(strtolower($m['operator']), array(
+				$operator = strtr(strtolower($m['operator']), [
 					'neq' => '!=',
 					'eq' => '=',
 					'lt' => '<',
 					'lte' => '<=',
 					'gt' => '>',
 					'gte' => '>=',
-				));
+				]);
 			}
 
 			$not = substr($operator, 0, 1) === '!';
@@ -172,7 +89,7 @@ class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggrega
 
 	/**
 	 * @internal
-	 * @param string $sort
+	 * @param string|array $sort
 	 * @param string $order
 	 * @return Doctrine\ORM\QueryBuilder
 	 */
@@ -191,13 +108,26 @@ class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggrega
 		}
 
 		if (is_string($sort)) {
-			$alias = $this->autoJoin($sort);
-			$sort = $alias . '.' . $sort;
+			$reg = '~[^()]+(?=\))~';
+			if (preg_match($reg, $sort, $matches)) {
+				$sortMix = $sort;
+				$sort = $matches[0];
+				$alias = $this->autoJoin($sort, 'leftJoin');
+				$hiddenAlias = $alias . $sort . count($this->getDQLPart('orderBy'));
+
+				$this->addSelect(preg_replace($reg, $alias . '.' . $sort, $sortMix) . ' as HIDDEN ' . $hiddenAlias);
+				$rootAliases = $this->getRootAliases();
+				$this->addGroupBy(reset($rootAliases) . '.id');
+				$sort = $hiddenAlias;
+
+			} else {
+				$alias = $this->autoJoin($sort);
+				$sort = $alias . '.' . $sort;
+			}
 		}
 
 		return $this->addOrderBy($sort, $order);
 	}
-
 
 
 	/**
@@ -210,7 +140,7 @@ class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggrega
 
 
 
-	private function autoJoin(&$key)
+	private function autoJoin(&$key, $methodJoin = "innerJoin")
 	{
 		$rootAliases = $this->getRootAliases();
 		$alias = reset($rootAliases);
@@ -238,146 +168,14 @@ class QueryBuilder extends Doctrine\ORM\QueryBuilder implements \IteratorAggrega
 			do {
 				$joinAs = substr($property, 0, 1) . (string) $j++;
 			} while (isset($this->criteriaJoins[$joinAs]));
-			$this->criteriaJoins[$joinAs] = array();
+			$this->criteriaJoins[$joinAs] = [];
 
-			$this->innerJoin("$alias.$property", $joinAs);
+			$this->{$methodJoin}("$alias.$property", $joinAs);
 			$this->criteriaJoins[$alias][$property] = $joinAs;
 			$alias = $joinAs;
 		}
 
 		return $alias;
-	}
-
-
-
-	/*************************** Nette\Object ***************************/
-
-
-
-	/**
-	 * Access to reflection.
-	 * @return \Nette\Reflection\ClassType
-	 */
-	public static function getReflection()
-	{
-		return new Nette\Reflection\ClassType(get_called_class());
-	}
-
-
-
-	/**
-	 * Call to undefined method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		return ObjectMixin::call($this, $name, $args);
-	}
-
-
-
-	/**
-	 * Call to undefined static method.
-	 *
-	 * @param string $name
-	 * @param array $args
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public static function __callStatic($name, $args)
-	{
-		return ObjectMixin::callStatic(get_called_class(), $name, $args);
-	}
-
-
-
-	/**
-	 * Adding method to class.
-	 *
-	 * @param $name
-	 * @param null $callback
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return callable|null
-	 */
-	public static function extensionMethod($name, $callback = NULL)
-	{
-		if (strpos($name, '::') === FALSE) {
-			$class = get_called_class();
-		} else {
-			list($class, $name) = explode('::', $name);
-		}
-		if ($callback === NULL) {
-			return ObjectMixin::getExtensionMethod($class, $name);
-		} else {
-			ObjectMixin::setExtensionMethod($class, $name, $callback);
-		}
-	}
-
-
-
-	/**
-	 * Returns property value. Do not call directly.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return mixed
-	 */
-	public function &__get($name)
-	{
-		return ObjectMixin::get($this, $name);
-	}
-
-
-
-	/**
-	 * Sets value of a property. Do not call directly.
-	 *
-	 * @param string $name
-	 * @param mixed $value
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __set($name, $value)
-	{
-		ObjectMixin::set($this, $name, $value);
-	}
-
-
-
-	/**
-	 * Is property defined?
-	 *
-	 * @param string $name
-	 *
-	 * @return bool
-	 */
-	public function __isset($name)
-	{
-		return ObjectMixin::has($this, $name);
-	}
-
-
-
-	/**
-	 * Access to undeclared property.
-	 *
-	 * @param string $name
-	 *
-	 * @throws \Nette\MemberAccessException
-	 * @return void
-	 */
-	public function __unset($name)
-	{
-		ObjectMixin::remove($this, $name);
 	}
 
 }

@@ -20,8 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class ColoredSqlOutput extends Nette\Object implements OutputInterface
+class ColoredSqlOutput implements OutputInterface
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @var \Symfony\Component\Console\Output\OutputInterface
@@ -117,6 +119,46 @@ class ColoredSqlOutput extends Nette\Object implements OutputInterface
 	public function isDecorated()
 	{
 		return $this->output->isDecorated();
+	}
+
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isQuiet()
+	{
+		return $this->output->isQuiet();
+	}
+
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isVerbose()
+	{
+		return $this->output->isVerbose();
+	}
+
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isVeryVerbose()
+	{
+		return $this->output->isVeryVerbose();
+	}
+
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isDebug()
+	{
+		return $this->output->isDebug();
 	}
 
 

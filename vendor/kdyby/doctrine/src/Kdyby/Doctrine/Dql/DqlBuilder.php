@@ -21,28 +21,30 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class DqlBuilder extends Nette\Object
+class DqlBuilder
 {
 
-	/**
-	 * @var array
-	 */
-	public $select = array();
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @var array
 	 */
-	public $from = array();
+	public $select = [];
 
 	/**
 	 * @var array
 	 */
-	public $join = array();
+	public $from = [];
 
 	/**
 	 * @var array
 	 */
-	public $set = array();
+	public $join = [];
+
+	/**
+	 * @var array
+	 */
+	public $set = [];
 
 	/**
 	 * @var Condition
@@ -62,7 +64,7 @@ class DqlBuilder extends Nette\Object
 	/**
 	 * @var array
 	 */
-	public $orderBy = array();
+	public $orderBy = [];
 
 	/**
 	 * The query parameters.
@@ -108,10 +110,11 @@ class DqlBuilder extends Nette\Object
 	 */
 	public function buildUpdateDQL()
 	{
-		$set = array();
+		$set = [];
 		foreach ($this->set as $alias => $values) {
 			foreach ($values as $column => $value) {
-				$this->parameters[$param = $alias . '_' . $column] = $value;
+				$param = $alias . '_' . $column;
+				$this->parameters[$param] = $value;
 				$set[] = new Expr\Comparison($alias . '.' . $column, Expr\Comparison::EQ, ':' . $param);
 			}
 		}

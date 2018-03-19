@@ -10,6 +10,7 @@
 
 namespace Kdyby\Doctrine;
 
+use ArrayIterator;
 use Doctrine;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -29,7 +30,7 @@ use Nette;
  * Don't be afraid to use them in presenters
  *
  * <code>
- * $this->template->articles = $this->articlesDao->fetch(new ArticlesQuery());
+ * $this->template->articles = $this->articlesRepository->fetch(new ArticlesQuery());
  * </code>
  *
  * or in more complex ways
@@ -46,13 +47,22 @@ use Nette;
  * $this->template->products = $this->productsDao->fetch($productsQuery);
  * </code>
  *
+ * @method onPostFetch(QueryObject $self, Queryable $repository, \Iterator $iterator)
+ *
  * @author Filip Procházka <filip@prochazka.su>
  */
-abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Query
+abstract class QueryObject implements Kdyby\Persistence\Query
 {
 
+	use Nette\SmartObject;
+
 	/**
-	 * @var \Doctrine\ORM\Query
+	 * @var array
+	 */
+	public $onPostFetch = [];
+
+	/**
+	 * @var \Doctrine\ORM\Query|NativeQueryWrapper|null
 	 */
 	private $lastQuery;
 
@@ -84,13 +94,14 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 	 * @param \Kdyby\Persistence\Queryable $repository
 	 *
 	 * @throws UnexpectedValueException
-	 * @return \Doctrine\ORM\Query
+	 * @return \Doctrine\ORM\Query|NativeQueryWrapper
 	 */
-	private function getQuery(Queryable $repository)
+	protected function getQuery(Queryable $repository)
 	{
 		$query = $this->toQuery($this->doCreateQuery($repository));
 
-		if ($this->lastQuery && $this->lastQuery->getDQL() === $query->getDQL()) {
+		if ($this->lastQuery instanceof Doctrine\ORM\Query && $query instanceof Doctrine\ORM\Query &&
+			$this->lastQuery->getDQL() === $query->getDQL()) {
 			$query = $this->lastQuery;
 		}
 
@@ -139,8 +150,8 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 			->setFirstResult(NULL)
 			->setMaxResults(NULL);
 
-		$paginatedQuery = new Paginator($query, $resultSet ? $resultSet->getFetchJoinCollection() : TRUE);
-		$paginatedQuery->setUseOutputWalkers($resultSet ? $resultSet->getUseOutputWalkers() : NULL);
+		$paginatedQuery = new Paginator($query, ($resultSet !== NULL) ? $resultSet->getFetchJoinCollection() : TRUE);
+		$paginatedQuery->setUseOutputWalkers(($resultSet !== NULL) ? $resultSet->getUseOutputWalkers() : NULL);
 
 		return $paginatedQuery->count();
 	}
@@ -167,6 +178,11 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 
 
 	/**
+	 * If You encounter a problem with the LIMIT 1 here,
+	 * you should instead of fetching toMany relations just use postFetch.
+	 *
+	 * And if you really really need to hack it, just override this method and remove the limit.
+	 *
 	 * @param \Kdyby\Persistence\Queryable $repository
 	 * @return object
 	 */
@@ -176,7 +192,17 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 			->setFirstResult(NULL)
 			->setMaxResults(1);
 
-		return $query->getSingleResult();
+		// getResult has to be called to have consistent result for the postFetch
+		// this is the only way to main the INDEX BY value
+		$singleResult = $query->getResult();
+
+		if (!$singleResult) {
+			throw new Doctrine\ORM\NoResultException(); // simulate getSingleResult()
+		}
+
+		$this->postFetch($repository, new ArrayIterator($singleResult));
+
+		return array_shift($singleResult);
 	}
 
 
@@ -188,22 +214,24 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 	 */
 	public function postFetch(Queryable $repository, \Iterator $iterator)
 	{
-
+		$this->onPostFetch($this, $repository, $iterator);
 	}
 
 
 
 	/**
 	 * @internal For Debugging purposes only!
-	 * @return \Doctrine\ORM\Query
+	 * @return \Doctrine\ORM\Query|NativeQueryWrapper|null
 	 */
 	public function getLastQuery()
 	{
 		return $this->lastQuery;
 	}
 
-
-
+	/**
+	 * @param \Doctrine\ORM\QueryBuilder|DqlSelection|AbstractQuery|NativeQueryBuilder $query
+	 * @return Doctrine\ORM\Query|NativeQueryWrapper
+	 */
 	private function toQuery($query)
 	{
 		if ($query instanceof Doctrine\ORM\QueryBuilder) {
@@ -219,12 +247,15 @@ abstract class QueryObject extends Nette\Object implements Kdyby\Persistence\Que
 			$query = $query->getQuery();
 		}
 
-		if (!$query instanceof Doctrine\ORM\AbstractQuery) {
-			throw new UnexpectedValueException(
-				"Method " . $this->getReflection()->getMethod('doCreateQuery') . " must return " .
-				"instanceof Doctrine\\ORM\\Query or Kdyby\\Doctrine\\QueryBuilder or Kdyby\\Doctrine\\DqlSelection, " .
-				(is_object($query) ? 'instance of ' . get_class($query) : gettype($query)) . " given."
-			);
+		if (!$query instanceof Doctrine\ORM\Query && !$query instanceof NativeQueryWrapper) {
+			throw new UnexpectedValueException(sprintf(
+				"Method " . get_called_class() . "::doCreateQuery must return " .
+				"instanceof %s or %s or %s, " .
+				(is_object($query) ? 'instance of ' . get_class($query) : gettype($query)) . " given.",
+				\Doctrine\ORM\Query::class,
+				\Kdyby\Doctrine\QueryBuilder::class,
+				\Kdyby\Doctrine\DqlSelection::class
+			));
 		}
 
 		return $query;

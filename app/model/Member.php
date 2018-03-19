@@ -10,27 +10,54 @@ namespace App\Model;
 
 use Nette;
 
+
+/**
+ * Doctrine entita pro tabulku user.
+ * @package App\Model
+ * @ORM\Entity
+ * @ORM\Table(name="members")
+ */
 class Member
 {
-    public  $database;
-
+//    public  $database;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
     private $id;
+
+    /**
+     * @ORM\name(type="string")
+     */
     private $name;
+    /**
+     * @ORM\name(type="text")
+     */
     private $text;
+    /**
+     * @ORM\name(type="string")
+     */
     private $image;
+    /**
+     * @ORM\name(type="bigint")
+     */
     private $owner;
+    /**
+     * @ORM\name(type="tinyint")
+     */
     private $active;
 
 
-    /**
-     * Members constructor.
-     * @param Nette\Database\Context $database
-     * @param $id
-     */
-    public function __construct(Nette\Database\Context $database)
-    {
-        $this->database = $database;
-    }
+//    /**
+//     * Members constructor.
+//     * @param Nette\Database\Context $database
+//     * @param $id
+//     */
+//    public function __construct(Nette\Database\Context $database)
+//    {
+//        $this->database = $database;
+//    }
 
 
     public function initialize($id = -1){

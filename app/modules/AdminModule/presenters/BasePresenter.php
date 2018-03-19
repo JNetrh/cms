@@ -16,6 +16,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public $authenticator;
 
 
+
     public function startup()
     {
         parent::startup();

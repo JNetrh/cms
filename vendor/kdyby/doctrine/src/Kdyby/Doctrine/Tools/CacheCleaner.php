@@ -10,7 +10,9 @@
 
 namespace Kdyby\Doctrine\Tools;
 
+use Doctrine;
 use Doctrine\Common\Cache\CacheProvider;
+use Doctrine\Common\Cache\ClearableCache;
 use Kdyby;
 use Nette;
 
@@ -19,19 +21,33 @@ use Nette;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class CacheCleaner extends Nette\Object
+class CacheCleaner
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
-	 * @var \Kdyby\Doctrine\EntityManager
+	 * @var \Doctrine\ORM\EntityManager
 	 */
 	private $entityManager;
 
+	/**
+	 * @var (ClearableCache|Doctrine\Common\Cache\Cache|null)[]
+	 */
+	private $cacheStorages = [];
 
 
-	public function __construct(Kdyby\Doctrine\EntityManager $entityManager)
+
+	public function __construct(Doctrine\ORM\EntityManager $entityManager)
 	{
 		$this->entityManager = $entityManager;
+	}
+
+
+
+	public function addCacheStorage(ClearableCache $storage)
+	{
+		$this->cacheStorages[] = $storage;
 	}
 
 
@@ -41,16 +57,15 @@ class CacheCleaner extends Nette\Object
 		$ormConfig = $this->entityManager->getConfiguration();
 		$dbalConfig = $this->entityManager->getConnection()->getConfiguration();
 
-		$cache = array(
-			$ormConfig->getHydrationCacheImpl(),
-			$ormConfig->getMetadataCacheImpl(),
-			$ormConfig->getQueryCacheImpl(),
-			$ormConfig->getResultCacheImpl(),
-			$dbalConfig->getResultCacheImpl(),
-		);
+		$cache = $this->cacheStorages;
+		$cache[] = $ormConfig->getHydrationCacheImpl();
+		$cache[] = $ormConfig->getMetadataCacheImpl();
+		$cache[] = $ormConfig->getQueryCacheImpl();
+		$cache[] = $ormConfig->getResultCacheImpl();
+		$cache[] = $dbalConfig->getResultCacheImpl();
 
 		foreach ($cache as $impl) {
-			if (!$impl instanceof CacheProvider) {
+			if (!$impl instanceof ClearableCache) {
 				continue;
 			}
 

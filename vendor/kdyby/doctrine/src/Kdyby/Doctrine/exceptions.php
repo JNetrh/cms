@@ -116,7 +116,7 @@ class UnexpectedValueException extends \UnexpectedValueException implements Exce
 	{
 		$class = is_object($class) ? get_class($class) : $class;
 
-		return new static("Class property $class::\$$property is not an instance of Doctrine\\Common\\Collections\\Collection.");
+		return new static(sprintf("Class property $class::\$$property is not an instance of %s.", \Doctrine\Common\Collections\Collection::class));
 	}
 
 
@@ -131,7 +131,10 @@ class UnexpectedValueException extends \UnexpectedValueException implements Exce
 	{
 		$class = is_object($class) ? get_class($class) : $class;
 
-		return new static("Class property $class::\$$property is an instance of Doctrine\\Common\\Collections\\Collection. Use add<property>() and remove<property>() methods to manipulate it or declare your own.");
+		return new static(sprintf(
+			"Class property $class::\$$property is an instance of %s. Use add<property>() and remove<property>() methods to manipulate it or declare your own.",
+			\Doctrine\Common\Collections\Collection::class
+		));
 	}
 
 }
@@ -243,30 +246,30 @@ class DBALException extends \RuntimeException implements Exception
 {
 
 	/**
-	 * @var string
+	 * @var string|NULL
 	 */
 	public $query;
 
 	/**
 	 * @var array
 	 */
-	public $params = array();
+	public $params = [];
 
 	/**
-	 * @var \Doctrine\DBAL\Connection
+	 * @var \Doctrine\DBAL\Connection|NULL
 	 */
 	public $connection;
 
 
 
 	/**
-	 * @param \Exception $previous
-	 * @param string $query
+	 * @param \Exception|\Throwable $previous
+	 * @param string|NULL $query
 	 * @param array $params
-	 * @param \Doctrine\DBAL\Connection $connection
-	 * @param string $message
+	 * @param \Doctrine\DBAL\Connection|NULL $connection
+	 * @param string|NULL $message
 	 */
-	public function __construct(\Exception $previous, $query = NULL, $params = array(), Doctrine\DBAL\Connection $connection = NULL, $message = NULL)
+	public function __construct($previous, $query = NULL, $params = [], Doctrine\DBAL\Connection $connection = NULL, $message = NULL)
 	{
 		parent::__construct($message ?: $previous->getMessage(), $previous->getCode(), $previous);
 		$this->query = $query;
@@ -283,7 +286,7 @@ class DBALException extends \RuntimeException implements Exception
 	 */
 	public function __sleep()
 	{
-		return array('message', 'code', 'file', 'line', 'errorInfo', 'query', 'params');
+		return ['message', 'code', 'file', 'line', 'errorInfo', 'query', 'params'];
 	}
 
 }
@@ -305,13 +308,13 @@ class DuplicateEntryException extends DBALException
 
 
 	/**
-	 * @param \Exception $previous
+	 * @param \Exception|\Throwable $previous
 	 * @param array $columns
 	 * @param string $query
 	 * @param array $params
 	 * @param \Doctrine\DBAL\Connection $connection
 	 */
-	public function __construct(\Exception $previous, $columns = array(), $query = NULL, $params = array(), Doctrine\DBAL\Connection $connection = NULL)
+	public function __construct($previous, $columns = [], $query = NULL, $params = [], Doctrine\DBAL\Connection $connection = NULL)
 	{
 		parent::__construct($previous, $query, $params, $connection);
 		$this->columns = $columns;
@@ -324,7 +327,7 @@ class DuplicateEntryException extends DBALException
 	 */
 	public function __sleep()
 	{
-		return array_merge(parent::__sleep(), array('columns'));
+		return array_merge(parent::__sleep(), ['columns']);
 	}
 
 }
@@ -339,20 +342,20 @@ class EmptyValueException extends DBALException
 {
 
 	/**
-	 * @var string
+	 * @var string|NULL
 	 */
 	public $column;
 
 
 
 	/**
-	 * @param \Exception $previous
-	 * @param string $column
+	 * @param \Exception|\Throwable $previous
+	 * @param string|NULL $column
 	 * @param string $query
 	 * @param array $params
 	 * @param \Doctrine\DBAL\Connection $connection
 	 */
-	public function __construct(\Exception $previous, $column = NULL, $query = NULL, $params = array(), Doctrine\DBAL\Connection $connection = NULL)
+	public function __construct($previous, $column = NULL, $query = NULL, $params = [], Doctrine\DBAL\Connection $connection = NULL)
 	{
 		parent::__construct($previous, $query, $params, $connection);
 		$this->column = $column;
@@ -365,7 +368,7 @@ class EmptyValueException extends DBALException
 	 */
 	public function __sleep()
 	{
-		return array_merge(parent::__sleep(), array('column'));
+		return array_merge(parent::__sleep(), ['column']);
 	}
 
 }
@@ -379,18 +382,18 @@ class QueryException extends \RuntimeException implements Exception
 {
 
 	/**
-	 * @var \Doctrine\ORM\Query
+	 * @var \Doctrine\ORM\AbstractQuery|NULL
 	 */
 	public $query;
 
 
 
 	/**
-	 * @param \Exception $previous
-	 * @param \Doctrine\ORM\AbstractQuery $query
-	 * @param string $message
+	 * @param \Exception|\Throwable $previous
+	 * @param \Doctrine\ORM\AbstractQuery|NULL $query
+	 * @param string|NULL $message
 	 */
-	public function __construct(\Exception $previous, Doctrine\ORM\AbstractQuery $query = NULL, $message = "")
+	public function __construct($previous, Doctrine\ORM\AbstractQuery $query = NULL, $message = NULL)
 	{
 		parent::__construct($message ?: $previous->getMessage(), 0, $previous);
 		$this->query = $query;

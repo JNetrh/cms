@@ -9,8 +9,8 @@ doctrine:
         App: %appDir%
 
 database:
-#    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
-    dsn: 'mysql:host=192.168.64.2;dbname=d950521_cms'
+    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
+#    dsn: 'mysql:host=192.168.64.2;dbname=d950521_cms'
     user: jakub
     password: 1234
 
@@ -19,8 +19,6 @@ extensions:
         events: Kdyby\Events\DI\EventsExtension
         annotations: Kdyby\Annotations\DI\AnnotationsExtension
         doctrine: Kdyby\Doctrine\DI\OrmExtension
-        translation: Kdyby\Translation\DI\TranslationExtension
-
 
 application:
 	errorPresenter: App\FrontModule\Presenters\Error
@@ -41,7 +39,9 @@ services:
 	- App\Model\Reference
 	- App\Model\References
 	- App\Model\BlockFactory
-	- App\Model\Facades\UserFacade
+	- App\Model\Services\UserService
+	- App\Model\Services\RightsService
+	- App\Model\Services\ReferenceService
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

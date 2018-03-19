@@ -20,8 +20,10 @@ use Tracy\Debugger;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
-class FileLogger extends Nette\Object implements SQLLogger
+class FileLogger implements SQLLogger
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	/**
 	 * @var string
@@ -52,7 +54,7 @@ class FileLogger extends Nette\Object implements SQLLogger
 		$formatted = preg_replace('#^[\t ]+#m', '', Nette\Utils\Strings::normalize($formatted));
 
 		$message =
-			'-- process ' . getmypid() . '; ' . Debugger::$source . "\n" .
+			'-- process ' . getmypid() . "\n" .
 			$formatted . "\n\n";
 
 		file_put_contents($this->file, $message, FILE_APPEND);

@@ -16,8 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @author Martin Štekl <martin.stekl@gmail.com>
- *
- * @property-read int $id
  */
 trait Identifier
 {
@@ -35,7 +33,7 @@ trait Identifier
 	/**
 	 * @return integer
 	 */
-	public function getId()
+	final public function getId()
 	{
 		return $this->id;
 	}

@@ -25,20 +25,23 @@ use Nette\Utils\Callback;
 /**
  * @author Filip Procházka <filip@prochazka.su>
  *
+ * @deprecated
  * @ORM\MappedSuperclass()
  */
-abstract class BaseEntity extends Nette\Object implements \Serializable
+abstract class BaseEntity implements \Serializable
 {
 
-	/**
-	 * @var array
-	 */
-	private static $properties = array();
+	use Nette\SmartObject;
 
 	/**
 	 * @var array
 	 */
-	private static $methods = array();
+	private static $properties = [];
+
+	/**
+	 * @var array
+	 */
+	private static $methods = [];
 
 
 
@@ -191,7 +194,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 			/** @var \Nette\Callback $cb */
 			array_unshift($args, $this);
 
-			return $cb->invokeArgs($args);
+			return call_user_func_array($cb, $args);
 		}
 
 		throw MemberAccessException::undefinedMethodCall($this, $name);
@@ -214,6 +217,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 		}
 
 		// property getter support
+		$originalName = $name;
 		$name[0] = $name[0] & "\xDF"; // case-sensitive checking, capitalize first character
 		$m = 'get' . $name;
 
@@ -236,7 +240,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 
 		// protected attribute support
 		$properties = $this->listObjectProperties();
-		if (isset($properties[$name = func_get_arg(0)])) {
+		if (isset($properties[$name = $originalName])) {
 			if ($this->$name instanceof Collection) {
 				$coll = $this->$name->toArray();
 
@@ -250,7 +254,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 		}
 
 		$type = isset($methods['set' . $name]) ? 'a write-only' : 'an undeclared';
-		throw MemberAccessException::propertyNotReadable($type, $this, func_get_arg(0));
+		throw MemberAccessException::propertyNotReadable($type, $this, $originalName);
 	}
 
 
@@ -271,6 +275,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 		}
 
 		// property setter support
+		$originalName = $name;
 		$name[0] = $name[0] & "\xDF"; // case-sensitive checking, capitalize first character
 
 		$methods = $this->listObjectMethods();
@@ -283,7 +288,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 
 		// protected attribute support
 		$properties = $this->listObjectProperties();
-		if (isset($properties[$name = func_get_arg(0)])) {
+		if (isset($properties[$name = $originalName])) {
 			if ($this->$name instanceof Collection) {
 				throw UnexpectedValueException::collectionCannotBeReplaced($this, $name);
 			}
@@ -294,7 +299,7 @@ abstract class BaseEntity extends Nette\Object implements \Serializable
 		}
 
 		$type = isset($methods['get' . $name]) || isset($methods['is' . $name]) ? 'a read-only' : 'an undeclared';
-		throw MemberAccessException::propertyNotWritable($type, $this, func_get_arg(0));
+		throw MemberAccessException::propertyNotWritable($type, $this, $originalName);
 	}
 
 

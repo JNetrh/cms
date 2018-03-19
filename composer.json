@@ -1,7 +1,7 @@
 {
-	"name": "nette/web-project",
-	"description": "Nette: Standard Web Project",
-	"keywords": ["nette"],
+	"name": "BlockyCMS",
+	"description": "CMS for one page web representation",
+	"keywords": ["nette, cms, onePage"],
 	"type": "project",
 	"license": ["MIT", "BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"require": {
@@ -20,12 +20,13 @@
 		"nette/utils": "^2.4",
 		"latte/latte": "^2.4",
 		"tracy/tracy": "^2.4",
-		"doctrine/orm": "*",
+		"doctrine/orm": "^2.5",
+		"kdyby/doctrine": "^3.3",
 		"kdyby/annotations": "^2.2",
 		"kdyby/console": "^2.4",
-		"kdyby/events": "^2.4",
+		"kdyby/events": "^3.1.1",
 		"kdyby/doctrine-cache": "^2.4",
-		"kdyby/doctrine": "~2.3.1"
+		"symfony/config": "~2.7"
 	},
 	"require-dev": {
 		"nette/tester": "^2.0"

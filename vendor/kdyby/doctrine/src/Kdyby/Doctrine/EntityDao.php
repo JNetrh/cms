@@ -78,7 +78,7 @@ class EntityDao extends EntityRepository implements Persistence\ObjectDao
 	 * @param object|array|\Traversable $entity
 	 * @param object|array|\Traversable $relations
 	 * @throws InvalidArgumentException
-	 * @return array
+	 * @return object|array
 	 */
 	public function save($entity = NULL, $relations = NULL)
 	{
@@ -90,7 +90,7 @@ class EntityDao extends EntityRepository implements Persistence\ObjectDao
 		}
 
 		$this->flush();
-		return array();
+		return [];
 	}
 
 
@@ -167,7 +167,7 @@ class EntityDao extends EntityRepository implements Persistence\ObjectDao
 		return array_merge(
 			$UoW->getScheduledEntityDeletions(),
 			$UoW->getScheduledEntityInsertions(),
-			!empty($im[$this->_entityName]) ? Arrays::flatten($im[$this->_entityName]) : array()
+			!empty($im[$this->_entityName]) ? Arrays::flatten($im[$this->_entityName]) : []
 		);
 	}
 
@@ -193,7 +193,7 @@ class EntityDao extends EntityRepository implements Persistence\ObjectDao
 			return $return ? : TRUE;
 
 		} catch (\Exception $e) {
-			$connection->rollback();
+			$connection->rollBack();
 			throw $e;
 		}
 	}
@@ -201,16 +201,16 @@ class EntityDao extends EntityRepository implements Persistence\ObjectDao
 
 
 	/**
-	 * @param array|string|\Traversable $args
+	 * @param array|object|string|\Traversable|NULL $args
 	 * @return array|\Traversable
 	 */
 	private static function iterableArgs($args)
 	{
-		if (empty($args)) {
-			return array();
+		if ($args === NULL) {
+			return [];
 		}
 
-		return !is_array($args) && !$args instanceof \Traversable ? array($args) : $args;
+		return !is_array($args) && !$args instanceof \Traversable ? [$args] : $args;
 	}
 
 }

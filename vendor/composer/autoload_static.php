@@ -12,14 +12,17 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'e7a6fd2e7a869bb207158e9416bdd9b0' => __DIR__ . '/..' . '/nette/application/src/compatibility.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '9d08842a2aa0dc42ee93aa591835610d' => __DIR__ . '/..' . '/kdyby/events/src/Doctrine/compatibility.php',
+        '008cd93dcb0b82bbe8079d06dedffb8f' => __DIR__ . '/..' . '/kdyby/events/src/Symfony/compatibility.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\Console\\' => 26,
+            'Symfony\\Component\\Config\\' => 25,
         ),
         'P' => 
         array (
@@ -28,6 +31,7 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'K' => 
         array (
             'Kdyby\\StrictObjects\\' => 20,
+            'Kdyby\\Events\\' => 13,
             'Kdyby\\DoctrineCache\\' => 20,
             'Kdyby\\Console\\' => 14,
             'Kdyby\\Annotations\\' => 18,
@@ -46,6 +50,10 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
+        'Symfony\\Component\\Filesystem\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/filesystem',
+        ),
         'Symfony\\Component\\Debug\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/debug',
@@ -54,6 +62,10 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Symfony\\Component\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/config',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -61,6 +73,10 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'Kdyby\\StrictObjects\\' => 
         array (
             0 => __DIR__ . '/..' . '/kdyby/strict-objects/src',
+        ),
+        'Kdyby\\Events\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kdyby/events/src/Events',
         ),
         'Kdyby\\DoctrineCache\\' => 
         array (
@@ -99,15 +115,7 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
             array (
                 0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
             ),
-            'Kdyby\\Events\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/kdyby/events/src',
-            ),
             'Kdyby\\Doctrine\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
-            ),
-            'Kdyby\\DibiBridge\\' => 
             array (
                 0 => __DIR__ . '/..' . '/kdyby/doctrine/src',
             ),
@@ -161,13 +169,14 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         'Kdyby\\Doctrine\\ReadOnlyCollectionException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
         'Kdyby\\Doctrine\\StaticClassException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
         'Kdyby\\Doctrine\\UnexpectedValueException' => __DIR__ . '/..' . '/kdyby/doctrine/src/Kdyby/Doctrine/exceptions.php',
-        'Kdyby\\Events\\Exception' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\InvalidListenerException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\NotSupportedException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
-        'Kdyby\\Events\\OutOfRangeException' => __DIR__ . '/..' . '/kdyby/events/src/Kdyby/Events/exceptions.php',
+        'Kdyby\\Events\\Exception' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidListenerException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\NotSupportedException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\OutOfRangeException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
+        'Kdyby\\Events\\UnexpectedValueException' => __DIR__ . '/..' . '/kdyby/events/src/Events/exceptions.php',
         'Kdyby\\StrictObjects\\Exception' => __DIR__ . '/..' . '/kdyby/strict-objects/src/exceptions.php',
         'Kdyby\\StrictObjects\\MemberAccessException' => __DIR__ . '/..' . '/kdyby/strict-objects/src/exceptions.php',
         'Latte\\CompileException' => __DIR__ . '/..' . '/latte/latte/src/Latte/exceptions.php',

@@ -160,7 +160,7 @@ class Question
      *
      * @return $this
      */
-    public function setValidator($validator)
+    public function setValidator(callable $validator = null)
     {
         $this->validator = $validator;
 
@@ -220,7 +220,7 @@ class Question
      *
      * @return $this
      */
-    public function setNormalizer($normalizer)
+    public function setNormalizer(callable $normalizer)
     {
         $this->normalizer = $normalizer;
 
