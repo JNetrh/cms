@@ -32,6 +32,16 @@ class MemberService
         $this->entities = $this->entityManager->getRepository(BlockMembers::class);
     }
 
+    public function newEntity(){
+        $entity = new BlockMembers;
+        return $entity;
+    }
+
+    public function saveEntity($entity){
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
     public function createEntity($style, $bgType, $image, $position, $active, $heading)
     {
         $entity = new BlockMembers;

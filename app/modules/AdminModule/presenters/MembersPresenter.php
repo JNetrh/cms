@@ -84,13 +84,26 @@ class MembersPresenter extends SecuredBasePresenter {
 
     public function membersFormSucceeded($form, $values){
 
-        $data = $form->getHttpData();
-        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
         $blockId = $this->id;
+        if(isset($blockId)){
+            $entity = $this->members->findById($blockId);
+        }
+        else {
+            $entity = $this->members->newEntity();
+        }
+
+
+
+        $data = $form->getHttpData();
+        $file = $data['image'];
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
+
+        $entity->setActive($data['active']);
+
         $hardData = [];
         $metaData = [];
-        $path = is_int($blockId) ? $this->members[$blockId]->getImage() : null;
-        $file = $data['image'];
+        $path = $this->members->findById($blockId)->getImage();
+
         $arrayKeys = [];
 
 
@@ -100,13 +113,17 @@ class MembersPresenter extends SecuredBasePresenter {
         $hardData['position'] = $data['position'];
 
         if($file != null){
-            $hardData['bg_type'] = 'image';
+            $entity->setBgType('image');
             if(!$file->isImage() and !$file->isOk())
                 $form['image']->addError('Image was not ok');
         }
         else{
-            $hardData['bg_type'] = 'color';
+            $entity->setBgType('color');
         }
+
+        $entity->setHeading($data['heading_1']);
+        $entity->setActive($data['active']);
+        $entity->setPosition($data['position']);
 
         unset($data['heading_1'], $data['active'], $data['position'], $data['image']);
 
@@ -123,37 +140,30 @@ class MembersPresenter extends SecuredBasePresenter {
 
         }
 
-        $hardData['style'] = json_encode($metaData);
+        $entity->setStyle(json_encode($metaData));
 
-        if(isset($blockId)){
-            $member = $this->members[$blockId];
-        }
-        else{
-            $member = new Members($this->database);
-        }
+
 
         if($file != null){
             $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
-
-            if($blockId){
-                $oldImg = $member->getImage();
-                if(file_exists($oldImg)){
-                    unlink($oldImg);
-                }
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
             }
 
+            $entity->setImage($newPath);
 
-            $file->move($path);
+            $file->move($newPath);
         }
 
 
 
         if(!$form->hasErrors()){
-            $member->setData($hardData['style'], $hardData['bg_type'], $hardData['heading_1'], $hardData['active'], $hardData['position'], $path);
-            $member->saveToDb();
-            $id = $member->getId();
-            $this->members[$id] = $member;
+//            $member->setData($hardData['style'], $hardData['bg_type'], $hardData['heading_1'], $hardData['active'], $hardData['position'], $path);
+//            $member->saveToDb();
+            $entity->saveEntity();
+//            $id = $member->getId();
+//            $this->members[$id] = $member;
             $this->redirect('Summary:');
         }
 

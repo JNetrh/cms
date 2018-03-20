@@ -16,11 +16,19 @@ class ReferenceService
     /**
      * @var EntityManager
      */
+    private $entityManager;
+
+    /**
+     * @var EntityManager
+     */
     private $entities;
 
     public function __construct(EntityManager $entityManager)
     {
-        $this->entities = $entityManager->getRepository(BlockReferences::class);
+//        TODO: udělat stejně ostatní,
+//        TODO: nastavit v sql ondelete cascade!
+        $this->entityManager = $entityManager;
+        $this->entities = $this->entityManager->getRepository(BlockReferences::class);
     }
 
     public function createEntity($style, $bgType, $image, $position, $active, $heading)
@@ -39,9 +47,17 @@ class ReferenceService
 
     public function createSubEntity($id){
 
-        $entity = $this->findById($id)->createEntity();
+        $entity = $this->entityManager->findById($id)->createEntity();
 
         $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
+    public function delete($id){
+        bdump($this->entityManager);
+        $toDel = $this->findById($id);
+        bdump($toDel);
+        $this->entityManager->remove($toDel);
         $this->entityManager->flush();
     }
 
