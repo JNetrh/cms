@@ -9,133 +9,58 @@
 namespace App\Model;
 
 use Nette;
-use App\Model\Members as Members;
-use App\Model\Headers as Headers;
-use App\Model\References as References;
-use Nette\Caching\Cache;
+//use App\Model\Members as Members;
+//use App\Model\Headers as Headers;
+//use App\Model\References as References;
+//use Nette\Caching\Cache;
+
+
+
+use App\Model\Services\ReferenceService;
+use App\Model\Services\MemberService;
+use App\Model\Services\HeaderService;
+
 
 class BlockFactory
 {
-    public $database;
+//    public $database;
+//
+//    private $cache;
+//
+//    private $block_members = [];
+//    private $block_header = [];
+//    private $block_references = [];
 
-    private $cache;
 
-    private $block_members = [];
-    private $block_header = [];
-    private $block_references = [];
+    private $references;
+    private $members;
+    private $headers;
 
-    public function __construct(Nette\Database\Context $database)
+
+    public function __construct(ReferenceService $references, MemberService $members, HeaderService $headers)
     {
-        $this->database = $database;
+//        $this->database = $database;
 
-        $storage = new Nette\Caching\Storages\FileStorage('../temp');
-        $this->cache = new Cache($storage);
-
-
-
-        $this->loadData();
+//        $storage = new Nette\Caching\Storages\FileStorage('../temp');
+//        $this->cache = new Cache($storage);
 
 
 
+        // TODO: tohle už vrací pole, musí to bejt bez toho getteru!!!
+        $this->references = $references;
+        $this->members = $members;
+        $this->headers = $headers;
 
 
-    }
 
+//        $this->loadData();
 
-    private function loadData(){
-
-        $value_members = $this->cache->load('members');
-        $value_headers = $this->cache->load('headers');
-        $value_references = $this->cache->load('references');
-
-//        if ($value_members === null or
-//            $value_headers === null or
-//            $value_references === null
-//        ){
-//            $members = $this->database->table('block_members');
-//            $headers = $this->database->table('block_header');
-//            $references = $this->database->table('block_references');
-//
-//            foreach ($members as $member){
-//                $i = new Members($this->database);
-//                $i->initialize($member->id);
-//
-//                $i->setDatabase(null);
-//
-//                $this->block_members[$member->id] = $i;
-//            }
-//
-//
-//            foreach ($headers as $header){
-//                $i = new Headers($this->database);
-//                $i->initialize($header->id);
-//                $this->block_header[$header->id] = $i;
-//            }
-//
-//
-//            foreach ($references as $reference){
-//                $i = new References($this->database);
-//                $i->initialize($reference->id);
-//                $this->block_references[$reference->id] = $i;
-//            }
-//
-//
-//            bdump($this->block_members);
-//
-//
-//
-//            $this->cache->save('members', $this->block_members);
-//            $this->cache->save('headers', $this->block_header);
-//            $this->cache->save('references', $this->block_references);
-//        }
-//        else {
-//
-//            $this->block_members = $this->cache->load('members');
-//            $this->block_header = $this->cache->load('headers');
-//            $this->block_references = $this->cache->load('references');
-//
-//        }
-
-        $members = $this->database->table('block_members');
-        $headers = $this->database->table('block_header');
-        $references = $this->database->table('block_references');
-
-        foreach ($members as $member){
-            $i = new Members($this->database);
-            $i->initialize($member->id);
-
-            $i->setDatabase(null);
-
-            $this->block_members[$member->id] = $i;
-        }
-
-
-        foreach ($headers as $header){
-            $i = new Headers($this->database);
-            $i->initialize($header->id);
-            $this->block_header[$header->id] = $i;
-        }
-
-
-        foreach ($references as $reference){
-            $i = new References($this->database);
-            $i->initialize($reference->id);
-            $this->block_references[$reference->id] = $i;
-        }
-
-
-//        bdump($this->block_members);
-
-//
-//
-//        $this->cache->save('members', $this->block_members);
-//        $this->cache->save('headers', $this->block_header);
-//        $this->cache->save('references', $this->block_references);
 
 
 
 
     }
+
 
 
     /**
@@ -143,7 +68,7 @@ class BlockFactory
      */
     public function getBlockMembers()
     {
-        return $this->block_members;
+        return $this->members;
     }
 
 
@@ -152,7 +77,7 @@ class BlockFactory
      */
     public function getBlockHeader()
     {
-        return $this->block_header;
+        return $this->headers;
     }
 
     /**
@@ -160,7 +85,7 @@ class BlockFactory
      */
     public function getBlockReferences()
     {
-        return $this->block_references;
+        return $this->references;
     }
 
 
@@ -169,9 +94,9 @@ class BlockFactory
     }
 
     private function mergeBlocks(){
-        $merged = array_merge($this->block_members, $this->block_header, $this->block_references);
+        $merged = array_merge($this->getBlockMembers()->getEntities(), $this->getBlockHeader()->getEntities(), $this->getBlockReferences()->getEntities());
 
-        $sorted = usort($merged, function ($a, $b) {
+        usort($merged, function ($a, $b) {
             if($a->getPosition() == $b->getPosition()){ return 0 ; }
             return ($a->getPosition() < $b->getPosition()) ? -1 : 1;
         });

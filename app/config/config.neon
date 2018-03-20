@@ -42,6 +42,8 @@ services:
 	- App\Model\Services\UserService
 	- App\Model\Services\RightsService
 	- App\Model\Services\ReferenceService
+	- App\Model\Services\MemberService
+	- App\Model\Services\HeaderService
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

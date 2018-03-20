@@ -80,7 +80,7 @@ create TABLE members
    owner                 BIGINT UNSIGNED,
    active                TINYINT not null DEFAULT 0,
    primary key (id),
-   foreign key (owner) references block_members (id) on delete set null
+   foreign key (owner) references block_members (id) on delete CASCADE
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 

@@ -5,8 +5,10 @@ namespace App\AdminModule\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
-use App\Model\Member as Member;
-use App\Model\Members as Members;
+//use App\Model\Member as Member;
+//use App\Model\Members as Members;
+use App\Model\Entities\BlockMembers as Members;
+use App\Model\Entities\Member as Member;
 
 class MembersPresenter extends SecuredBasePresenter {
 
@@ -27,13 +29,14 @@ class MembersPresenter extends SecuredBasePresenter {
 
     public function actionEdit($blockId){
 
-        $defaults = $this->members[$blockId]->getFormProperties();
+        bdump($this->members);
+        $defaults = $this->members->findById($blockId)->getFormProperties();
         $this->id = $defaults['id'];
-        $defaultColors = $this->members[$blockId]->getColorProperties();
+        $defaultColors = $this->members->findById($blockId)->getColorProperties();
         $this['membersForm']->setDefaults($defaults);
         $this->template->data = $defaults;
         $this->template->colors = $defaultColors;
-        $this->template->members = $this->members[$blockId]->getMembers();
+        $this->template->members = $this->members->findById($blockId);
     }
 
     public function handleDeleteMember($memberId, $blockId){

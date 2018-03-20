@@ -3,94 +3,75 @@
  * Created by PhpStorm.
  * User: Kuba
  * Date: 18.3.2018
- * Time: 17:39
+ * Time: 17:40
  */
 
 namespace App\Model\Entities;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
-use App\Model\Entities\Reference;
+use App\Model\Entities\Member;
 
 /**
  * Doctrine entita
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="block_references")
+ * @ORM\Table(name="block_members")
  */
-class BlockReferences
+class BlockMembers
 {
 
 
     use Identifier;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reference", mappedBy="ref")
+     * @ORM\OneToMany(targetEntity="Member", mappedBy="ref")
      */
-    private $references;
-
-
+    private $members;
 
     /**
-     * Default constructor, initializes collections
-     */
-    public function __construct()
-    {
-        $this->references = new ArrayCollection();
-    }
-
-
-    public function getReferences(){
-        return $this->references;
-    }
-
-    public function referencesCount() {
-        return count($this->references);
-    }
-
-    /**
-     * references name column
+     * right name column
      * @ORM\Column(type="text")
      */
     protected $style;
 
 
     /**
-     * references name column
+     * right name column
      * @ORM\Column(type="string")
      */
     protected $bg_type;
 
+
     /**
-     * references name column
+     * right name column
      * @ORM\Column(type="string")
      */
-    protected $heading;
-
+    protected $heading_1;
 
 
     /**
-     * references name column
+     * right name column
      * @ORM\Column(type="string")
      */
     protected $image;
 
 
-
     /**
-     * references name column
+     * right name column
      * @ORM\Column(type="boolean")
      */
     protected $active;
 
 
-
     /**
-     * references name column
+     * right name column
      * @ORM\Column(type="integer")
      */
     protected $position;
+
 
 
 
@@ -100,7 +81,7 @@ class BlockReferences
 
         return [
             'id' => $this->getId(),
-            'heading' => $this->getHeading(),
+            'heading_1' => $this->getHeading(),
             'position' => $this->getPosition(),
             'active' => $this->getActive(),
             'image' => $this->getImage()
@@ -112,39 +93,38 @@ class BlockReferences
 
 
         return [
-            'heading_color' => $style->heading_color,
+            'heading_1_color' => $style->heading_1_color,
             'text_color' => $style->text_color,
             'name_color' => $style->name_color,
-            'background_color' => $style->background_color,
-            'block_background_color' => $style->block_background_color
+            'background_color' => $style->background_color
         ];
     }
 
 
 
-    public function createEntity($name, $text, $image, $owner, $active, $reference)
+    public function createEntity($name, $text, $image, $owner, $active)
     {
-        $entity = new Reference();
+        $entity = new Member();
         $entity->setName($name);
         $entity->setText($text);
         $entity->setImage($image);
         $entity->setOwner($owner);
         $entity->setActive($active);
-        $entity->setReference($reference);
 
-//        $this->references[] = $entity;
+//        $this->members[] = $entity;
 
         return $entity;
     }
 
-
-
-
-
-
-
-
-
+    /**
+     * @return mixed
+     */
+    public function membersCount()
+    {
+        return count($this->members);
+//        TODO: změnit
+//        return 2;
+    }
 
 
 
@@ -185,15 +165,15 @@ class BlockReferences
      */
     public function getHeading()
     {
-        return $this->heading;
+        return $this->heading_1;
     }
 
     /**
-     * @param mixed $heading
+     * @param mixed $heading_1
      */
-    public function setHeading($heading)
+    public function setHeading($heading_1)
     {
-        $this->heading = $heading;
+        $this->heading_1 = $heading_1;
     }
 
     /**
@@ -257,11 +237,14 @@ class BlockReferences
      * @return string
      */
     public function toString(){
-        return 'references';
+        return 'members';
     }
 
 
 
+    public function setMember (Member $member){
+
+    }
 
 
 }

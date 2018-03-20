@@ -7,11 +7,17 @@
  */
 namespace App\Model\Services;
 
-use App\Model\Entities\BlockReferences;
+use App\Model\Entities\BlockMembers;
+use App\Model\Entities\Member;
 use Kdyby\Doctrine\EntityManager;
 
-class ReferenceService
+class MemberService
 {
+
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
 
     /**
      * @var EntityManager
@@ -20,12 +26,15 @@ class ReferenceService
 
     public function __construct(EntityManager $entityManager)
     {
-        $this->entities = $entityManager->getRepository(BlockReferences::class);
+//        TODO: udělat stejně ostatní,
+//        TODO: nastavit v sql ondelete cascade!
+        $this->entityManager = $entityManager;
+        $this->entities = $this->entityManager->getRepository(BlockMembers::class);
     }
 
     public function createEntity($style, $bgType, $image, $position, $active, $heading)
     {
-        $entity = new BlockReferences;
+        $entity = new BlockMembers;
         $entity->setStyle($style);
         $entity->setBgType($bgType);
         $entity->setImage($image);
@@ -39,9 +48,17 @@ class ReferenceService
 
     public function createSubEntity($id){
 
-        $entity = $this->findById($id)->createEntity();
+        $entity = $this->entityManager->findById($id)->createEntity();
 
         $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
+    public function delete($id){
+        bdump($this->entityManager);
+        $toDel = $this->findById($id);
+        bdump($toDel);
+        $this->entityManager->remove($toDel);
         $this->entityManager->flush();
     }
 

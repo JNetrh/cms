@@ -9,6 +9,7 @@
 namespace App\Model\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kdyby\Doctrine\Entities\Attributes\Identifier;
 
 /**
  * Doctrine entita
@@ -20,14 +21,15 @@ class Member
 {
 
 
-    /**
-     * Id column
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
+    use Identifier;
 
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="BlockMembers", inversedBy="members")
+     * @ORM\JoinColumn(name="owner", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $ref;
 
     /**
      * right name column
@@ -53,7 +55,7 @@ class Member
 
     /**
      * right name column
-     * @ORM\Column(type="tinyint")
+     * @ORM\Column(type="integer")
      */
     protected $owner;
 
@@ -64,6 +66,121 @@ class Member
      * @ORM\Column(type="boolean")
      */
     protected $active;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+//    /**
+//     * @return mixed
+//     */
+//    public function getRef()
+//    {
+//        return $this->ref;
+//    }
+//
+//    /**
+//     * @param mixed $ref
+//     */
+//    public function setRef($ref)
+//    {
+//        $this->ref = $ref;
+//    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param mixed $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param mixed $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+
+
 
 
 
