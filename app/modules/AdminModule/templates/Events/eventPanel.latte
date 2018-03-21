@@ -1,0 +1,44 @@
+{block content}
+    <div class="panel equal-height-panel divSummaryPanel">
+        <div class="col-md-12 myFlex">
+
+            <div class="col-md-4 equal">
+                <img class="img-responsive" src="{$basePath."/".$row->getImage()|noescape}" alt="event-image">
+                {*<div class="divAvatarImg" style="background-image: url('{$basePath."/".$row->getImage()|noescape}');"></div>*}
+            </div>
+            <div class="col-md-6 equal divPanelTable">
+                <table class="tableSummary">
+                    <tr>
+                        <td class="tdHeading">Heading</td>
+                        <td class="">{$row->getHeading()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Time</td>
+                        <td class="">{$row->getEventTime()->format('d/m/Y')}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Text</td>
+                        <td class="">{$row->getText()|striptags|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Link</td>
+                        <td class="">{$row->getLink()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Position</td>
+                        <td class="">{$row->getPosition()}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Visible</td>
+                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="divSummButtons col-md-2 equal">
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Events:editEvent $row->getId(), $row->getOwner()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteEvent! $row->getId(), $row->getOwner()">Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
+            </div>
+        </div>
+    </div>
+{/block}

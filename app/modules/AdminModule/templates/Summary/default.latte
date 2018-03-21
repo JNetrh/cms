@@ -11,11 +11,10 @@
         <div id="expandNew" class="divSummaryExpand panel-body" style="height: 0">
             <div class="divNewBlock"><a n:href="Header:new" ><span class="glyphicon glyphicon-header" aria-hidden="true"></span> Header</a></div>
             <div class="divNewBlock"><a n:href="Members:new" ><i class="fa fa-address-card"></i> Members</a></div>
+            <div class="divNewBlock"><a n:href="Events:new" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Events</a></div>
             <div class="divNewBlock"><a n:href="References:new" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> References</a></div>
         </div>
     </div>
-
-    {*<h2>Headers</h2>*}
 
     {foreach $myBlocks as $row}
         {if $row->toString() == 'headers'}
@@ -26,6 +25,9 @@
 
         {elseif $row->toString() == 'references'}
             {include './referencesPanel.latte', row => $row}
+
+        {elseif $row->toString() == 'events'}
+            {include './eventsPanel.latte', row => $row}
 
         {/if}
     {/foreach}

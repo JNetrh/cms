@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <td class="tdHeading">Reference</td>
-                        <td class="">{$row->getReference()|truncate:25}</td>
+                        <td class="">{$row->getReference()|striptags|truncate:25}</td>
                     </tr>
                 </table>
             </div>

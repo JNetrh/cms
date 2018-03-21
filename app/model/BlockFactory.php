@@ -9,58 +9,28 @@
 namespace App\Model;
 
 use Nette;
-//use App\Model\Members as Members;
-//use App\Model\Headers as Headers;
-//use App\Model\References as References;
-//use Nette\Caching\Cache;
-
-
-
 use App\Model\Services\ReferenceService;
 use App\Model\Services\MemberService;
 use App\Model\Services\HeaderService;
+use App\Model\Services\EventService;
 
 
 class BlockFactory
 {
-//    public $database;
-//
-//    private $cache;
-//
-//    private $block_members = [];
-//    private $block_header = [];
-//    private $block_references = [];
-
 
     private $references;
     private $members;
     private $headers;
+    private $events;
 
 
-    public function __construct(ReferenceService $references, MemberService $members, HeaderService $headers)
+    public function __construct(ReferenceService $references, MemberService $members, HeaderService $headers, EventService $events)
     {
-//        $this->database = $database;
-
-//        $storage = new Nette\Caching\Storages\FileStorage('../temp');
-//        $this->cache = new Cache($storage);
-
-
-
-        // TODO: tohle už vrací pole, musí to bejt bez toho getteru!!!
         $this->references = $references;
         $this->members = $members;
         $this->headers = $headers;
-
-
-
-//        $this->loadData();
-
-
-
-
-
+        $this->events = $events;
     }
-
 
 
     /**
@@ -88,13 +58,21 @@ class BlockFactory
         return $this->references;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBlockEvents()
+    {
+        return $this->events;
+    }
+
 
     public function getAllBlocks(){
         return $this->mergeBlocks();
     }
 
     private function mergeBlocks(){
-        $merged = array_merge($this->getBlockMembers()->getEntities(), $this->getBlockHeader()->getEntities(), $this->getBlockReferences()->getEntities());
+        $merged = array_merge($this->getBlockMembers()->getEntities(), $this->getBlockHeader()->getEntities(), $this->getBlockReferences()->getEntities(), $this->getBlockEvents()->getEntities());
 
         usort($merged, function ($a, $b) {
             if($a->getPosition() == $b->getPosition()){ return 0 ; }
@@ -103,7 +81,6 @@ class BlockFactory
 
         return $merged;
     }
-
 
 
 

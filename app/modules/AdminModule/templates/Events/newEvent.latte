@@ -1,0 +1,107 @@
+{block content}
+
+
+    <form n:name=oneEventForm>
+        <div class="container odsaditBottom-50">
+            <h1>New event</h1>
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Event photography</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
+                            <div class="col-md-7 inputGroupContainer">
+
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Event data</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Name</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="heading" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError heading}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Time</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="event_time" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError event_time}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Description</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <textarea n:name="text" class="form-control"></textarea>
+                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Link</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="link" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError link}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Position</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
+                                <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="checkbox" n:name="active" class="" >
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <input type="hidden"  name="block_id" value="{$blockId}" />
+                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+
+
+    </form>
+
+{/block}
+
+{block scripts}
+    <script type="text/javascript">
+
+        tinymce.init({
+        selector: 'textarea',
+        entity_encoding : "raw",
+        init_instance_callback : function tinyInstance (editor) {
+        }
+        });
+    </script>
+
+{/block}

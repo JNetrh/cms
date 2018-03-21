@@ -1,28 +1,70 @@
-# Apache configuration file (see https://httpd.apache.org/docs/current/mod/quickreference.html)
+## Apache configuration file (see https://httpd.apache.org/docs/current/mod/quickreference.html)
+#Allow from all
+#
+## disable directory listing
+#<IfModule mod_autoindex.c>
+#	Options -Indexes
+#</IfModule>
+#
+## enable cool URL
+#<IfModule mod_rewrite.c>
+#	RewriteEngine On
+#	# RewriteBase /
+#
+#	# prevents files starting with dot to be viewed by browser
+#	RewriteRule /\.|^\.(?!well-known/) - [F]
+#
+#	# front controller
+#	RewriteCond %{REQUEST_FILENAME} !-f
+#	RewriteCond %{REQUEST_FILENAME} !-d
+#	RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz|map)$ index.php [L]
+#</IfModule>
+#
+## enable gzip compression
+#<IfModule mod_deflate.c>
+#	<IfModule mod_filter.c>
+#		AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
+#	</IfModule>
+#</IfModule>
+# Apache configuration file (see httpd.apache.org/docs/current/mod/quickreference.html)
 Allow from all
 
 # disable directory listing
 <IfModule mod_autoindex.c>
-	Options -Indexes
+    Options -Indexes
 </IfModule>
 
 # enable cool URL
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	# RewriteBase /
+    RewriteEngine On
+    # RewriteBase /
 
-	# prevents files starting with dot to be viewed by browser
-	RewriteRule /\.|^\.(?!well-known/) - [F]
+    # prevents files starting with dot to be viewed by browser
+    RewriteRule /\.|^\. - [F]
 
-	# front controller
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz|map)$ index.php [L]
+    # front controller
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz|map)$ index.php [L]
 </IfModule>
 
 # enable gzip compression
+#<IfModule mod_deflate.c>
+#    <IfModule mod_filter.c>
+#        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
+#    </IfModule>
+#</IfModule>
+
+# mod deflate
 <IfModule mod_deflate.c>
-	<IfModule mod_filter.c>
-		AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json application/xml image/svg+xml
-	</IfModule>
+   AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+   AddOutputFilterByType DEFLATE application/javascript
+   AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+   AddOutputFilterByType DEFLATE application/xhtml+xml application/rss+xml application/atom+xml
+   AddOutputFilterByType DEFLATE image/x-icon image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype
 </IfModule>
+
+#ukládání statickéh obsahu
+#<FilesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+#    Header set Cache-C/ontrol "max-age=2628000, public"
+#</FilesMatch>

@@ -18,6 +18,7 @@ class AuthorizatorFactory {
         $permission->addRole('header');
         $permission->addRole('members');
         $permission->addRole('references');
+        $permission->addRole('events');
         $permission->addRole('authenticated');
 
         /* seznam zdrojů */
@@ -25,11 +26,12 @@ class AuthorizatorFactory {
         $permission->addResource('Admin:Header');
         $permission->addResource('Admin:Members');
         $permission->addResource('Admin:References');
+        $permission->addResource('Admin:Events');
         $permission->addResource('Admin:Summary');
         $permission->addResource('Admin:');
 
         /* zákldní pole zdrojů */
-        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary');
+        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events');
 
         /* základní pole práv */
         $defaultPrivileges = array('default', 'detail', 'logout');
@@ -37,6 +39,9 @@ class AuthorizatorFactory {
         /* přiřazení základních oprávnění */
         $permission->allow('admin', $basicArray, $defaultPrivileges);
         $permission->allow('header', $basicArray, $defaultPrivileges);
+        $permission->allow('members', $basicArray, $defaultPrivileges);
+        $permission->allow('references', $basicArray, $defaultPrivileges);
+        $permission->allow('events', $basicArray, $defaultPrivileges);
 
         /* pole privilegií k úpravám */
         $managePrivileges = array('create','delete','edit', 'handle', 'new');
@@ -49,6 +54,9 @@ class AuthorizatorFactory {
 
         //muze upravovat reference
         $permission->allow('references', 'Admin:References', $managePrivileges);
+
+        //muze upravovat eventy
+        $permission->allow('events', 'Admin:Events', $managePrivileges);
 
         /* ADMIN má práva na všechno */
         $permission->allow('admin', $basicArray, $managePrivileges);

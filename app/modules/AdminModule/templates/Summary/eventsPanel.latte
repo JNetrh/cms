@@ -1,0 +1,53 @@
+
+{block header}
+
+<div class="panel equal-height-panel divSummaryPanel">
+        <div class="col-md-12">
+
+            <div class="divSummImg col-md-4 equal" style="background-image: url('{$basePath."/".$row->getImage()|noescape}'); background-color: {$row->getColorProperties()['background_color']|noescape} ">
+
+                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+            </div>
+            <div class="col-md-6 equal divPanelTable">
+                <table class="tableSummary">
+                    <tr>
+                        <td class="tdHeading">Position</td>
+                        <td class="">{$row->getPosition()}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Heading</td>
+                        <td class="">{$row->getHeading()|striptags}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Members count</td>
+                        <td class="">{$row->EventsCount()|striptags}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Visible</td>
+                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">General colors</td>
+                        <td>
+                            <div n:foreach="$row->getColorProperties() as $color" style="background-color: {$color|noescape}" class="divColor">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="divSummButtons col-md-2 equal">
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Events:edit $row->getId()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteEvent! $row->getId()">Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
+                <a class="buttonCisty buttonAdd buttonBlockSummary" n:href="Events:newEvent $row->getId()">Add</a>
+            </div>
+            {*<div class=" panel">*}
+            {*</div>*}
+        </div>
+</div>
+{/block}
+
+{block bordel}
+
+{/block}

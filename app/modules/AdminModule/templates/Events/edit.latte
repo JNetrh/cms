@@ -1,11 +1,10 @@
 {block content}
 
 
-    <form n:name=referencesForm>
+    <form n:name=eventsForm>
         <div class="container odsaditBottom-50">
-            <h1>Edit references block</h1>
+            <h1>Edit events block</h1>
 
-            {* /START\ Heading formPart *}
             <div class="col-md-12">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -15,7 +14,8 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input n:name="heading" class="form-control">
+                                {*<textarea n:name="heading" class="form-control"></textarea>*}
+                                <input type="text" n:name="heading" class="form-control">
                                 <span class="formError red" n:ifcontent>{inputError heading}</span> {* error *}
                             </div>
                         </div>
@@ -25,7 +25,7 @@
 
                             <div class="col-md-5 inputGroupContainer">
                                 <div class="input-group">
-                                    <input n:name="heading_color" class="form-control" id="color_2" value="transparent">
+                                    <input n:name="heading_color" class="form-control" id="color_1" value="transparent">
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                     <div class="divColpick well">
                                         <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
@@ -37,10 +37,9 @@
                         </div>
                     </div>
                 </div>
-            </div> {*end col-md*}
-            {* /END\ Heading formPart *}
 
-            {* /START\ Background formPart *}
+            </div> {*end col-md*}
+
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -56,10 +55,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="checkbox" n:name="active" {$data->getActive() == 1 ? 'checked'}>
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <div class="input-group">
-                                    <input n:name="background_color" class="form-control" id="color_1" value="transparent">
+                                    <input n:name="background_color" class="form-control" id="color_2" value="transparent">
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                     <div class="divColpick well">
                                         <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
@@ -94,8 +100,7 @@
                     </div>
                 </div>
             </div> {*end col-md*}
-            {* /End\ Background formPart *}
-            {* /START\ General text formPart *}
+
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -118,40 +123,40 @@
                             </div>
                         </div>
 
-
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">The names color</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="name_color" class="form-control" id="color_4" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_name"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError name_color}</span> {* error *}
-                            </div>
-                        </div>
-
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <div class="input-group">
-                                    <input n:name="block_background_color" class="form-control" id="color_5" value="transparent">
+                                    <input n:name="block_background_color" class="form-control" id="color_4" value="transparent">
                                     <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
                                     <div class="divColpick well">
                                         <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
                                         <div id="colpick_block_background"></div>
                                     </div>
                                 </div>
-                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                                <span class="formError red" n:ifcontent>{inputError block_background_color}</span> {* error *}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Time color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="time_color" class="form-control" id="color_5" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_time"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError time_color}</span> {* error *}
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div> {*end col-md*}
-            {* /END\ General text formPart *}
 
 
             <div class="col-md-12">
@@ -167,49 +172,35 @@
     </div>
 
     <div class="col-md-12">
-        <a class="buttonCisty buttonAdd" n:href="References:newReference $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+        <a class="buttonCisty buttonAdd" n:href="Events:newEvent $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
     </div>
 
     <div class="col-md-12 odsaditBottom-150 odsaditTop-50">
         <div class="container">
-            {foreach $references as $row}
-                {include './referencePanel.latte', row => $row}
+            {foreach $events as $row}
+                {include './eventPanel.latte', row => $row}
             {/foreach}
         </div>
     </div>
 
-    {*<div class="container odsaditBottom-150">*}
-        {*<h2>Members</h2>*}
-        {*<table class="tableSummary table table-responsive">*}
-            {*<tr>*}
-                {*<th>Name</th>*}
-                {*<th>Description</th>*}
-                {*<th>Visible</th>*}
-                {*<th>Profile photo</th>*}
-                {*<th>Edit</th>*}
-                {*<th>Delete</th>*}
-            {*</tr>*}
-            {*{foreach $references as $row}*}
-                {*<tr>*}
-                    {*<td class="col">{$row->getName()}</td>*}
-                    {*<td class="col">{$row->getText()}</td>*}
-                    {*<td class="col">{$row->getActive() == 1 ? "yes" : "no"}</td>*}
-                    {*<td class="col">{strlen($row->getImage()) > 5 ? "yes" : "no"}</td>*}
-                    {*<td class="col"><a n:href="References:editReference, $row->getId(), $row->getOwner()" >edit</a></td>*}
-                    {*<td class="col"><a n:href="deleteReference! $row->getId(), $row->getOwner()" >delete</a></td>*}
-                    {*<td class="col"><a href="#" >edit</a></td>*}
-                {*</tr>*}
-            {*{/foreach}*}
-        {*</table>*}
-    {*</div>*}
+
+
+
 
 {/block}
 
 {block bordel}
     <script type="text/javascript">
 
+        {*tinymce.init({*}
+            {*selector: 'textarea',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function tinyInstance (editor) {*}
+                {*editor.setContent({$data->getHeading()});*}
+            {*}*}
+        {*});*}
         $(document).ready(function(){
-            var pickers = [['heading', '#color_2'], ['background', '#color_1'], ['text', '#color_3'], ['name', '#color_4'], ['block_background', '#color_5']];
+            var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['text', '#color_3'], ['block_background', '#color_4'], ['time', '#color_5']];
             var colors = {$colors};
             pickers.forEach(function (name) {
                 var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
@@ -218,8 +209,7 @@
                     $(name[1]).val(color)
                     $(name[1]).next('.openColpick').css('background-color', color)
                 }); //link to callback
-            })
-            console.log(colors)
+            });
 
             setTimeout(function () {
                 pickers.forEach(function (name) {
@@ -228,6 +218,11 @@
                 })
             }, 100)
 
+
+
         });
+
+
     </script>
+
 {/block}

@@ -11,7 +11,7 @@ use App\Model\Services\UserService;
 
 class Authenticator implements NS\IAuthenticator
 {
-    
+
     public $userService;
 
 

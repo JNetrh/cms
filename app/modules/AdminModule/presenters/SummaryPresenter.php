@@ -13,6 +13,7 @@ class SummaryPresenter extends SecuredBasePresenter {
     private $members;
     private $headers;
     private $references;
+    private $events;
     private $myBlocks;
 
 
@@ -23,6 +24,7 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->members = $blockFactory->getBlockMembers();
         $this->headers = $blockFactory->getBlockHeader();
         $this->references = $blockFactory->getBlockReferences();
+        $this->events = $blockFactory->getBlockEvents();
         $this->myBlocks = $blockFactory;
     }
 
@@ -31,6 +33,7 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->template->members = $this->members->getEntities();
         $this->template->headers = $this->headers->getEntities();
         $this->template->references = $this->references->getEntities();
+        $this->template->events = $this->events->getEntities();
         $this->template->myBlocks = $this->myBlocks->getAllBlocks();
     }
 
@@ -47,6 +50,11 @@ class SummaryPresenter extends SecuredBasePresenter {
 
     public function handleDeleteReference($blockId){
        $this->references->delete($blockId);
+        $this->redirect('Summary:');
+    }
+
+    public function handleDeleteEvent($blockId){
+       $this->events->delete($blockId);
         $this->redirect('Summary:');
     }
 

@@ -16,7 +16,7 @@
                     </tr>
                     <tr>
                         <td class="tdHeading">Description</td>
-                        <td class="">{$row->getText()|truncate:21}</td>
+                        <td class="">{$row->getText()|striptags|truncate:21}</td>
                     </tr>
                     <tr>
                         <td class="tdHeading">Visible</td>
