@@ -1,0 +1,40 @@
+{block content}
+    <div class="panel equal-height-panel divSummaryPanel">
+        <div class="col-md-12 myFlex">
+
+            <div class="col-md-4 equal">
+                <div class="divAvatarImg" style="background-image: url('{$basePath."/".$row->getImage()|noescape}');"></div>
+            </div>
+            {*<div class="col-md-4 equal" >*}
+                {*<img class="imgAvatar img-responsive" src="{$basePath}/{$row->getImage()|noescape}" alt="profile image" />*}
+            {*</div>*}
+            <div class="col-md-6 equal divPanelTable">
+                <table class="tableSummary">
+                    <tr>
+                        <td class="tdHeading">Name</td>
+                        <td class="">{$row->getName()|truncate:13}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Description</td>
+                        <td class="">{$row->getText()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Visible</td>
+                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    </tr>
+                    {*<tr>*}
+                        {*<td class="tdHeading">Profile Photography</td>*}
+                        {*<td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>*}
+                    {*</tr>*}
+                </table>
+            </div>
+            <div class="divSummButtons col-md-2 equal">
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Members:editMember $row->getId(), $row->getOwner()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteMember! $row->getId(), $row->getOwner()">Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
+            </div>
+            {*<div class=" panel">*}
+            {*</div>*}
+        </div>
+    </div>
+{/block}

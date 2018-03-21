@@ -7,7 +7,7 @@ use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
 //use App\Model\Member as Member;
 //use App\Model\Members as Members;
-use App\Model\Entities\BlockMembers as Members;
+use App\Model\Services\MemberService;
 use App\Model\Entities\Member as Member;
 
 class MembersPresenter extends SecuredBasePresenter {
@@ -16,10 +16,12 @@ class MembersPresenter extends SecuredBasePresenter {
     public $members;
     public $id;
     public $mId;
+    public $service;
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory)
+    public function __construct(Nette\Database\Context $database, BF $blockFactory, MemberService $service)
     {
         $this->database = $database;
+        $this->service = $service;
         $this->members = $blockFactory->getBlockMembers();
     }
 
@@ -28,35 +30,49 @@ class MembersPresenter extends SecuredBasePresenter {
     }
 
     public function actionEdit($blockId){
-
-        bdump($this->members);
-        $defaults = $this->members->findById($blockId)->getFormProperties();
-        $this->id = $defaults['id'];
-        $defaultColors = $this->members->findById($blockId)->getColorProperties();
+        $entity = $this->members->findById($blockId);
+        $defaults = $entity->getFormProperties();
+        $this->id = $entity->getId();
+        $defaultColors = $entity->getColorProperties();
         $this['membersForm']->setDefaults($defaults);
-        $this->template->data = $defaults;
+        $this->template->data = $entity;
         $this->template->colors = $defaultColors;
-        $this->template->members = $this->members->findById($blockId);
+        $this->template->members = $entity->getMembers();
+    }
+
+    public function actionEditMember($memberId, $blockId){
+        $entity = $this->members->findSubById($blockId, $memberId);
+        $this->mId = $entity->getId();
+        $this['oneMemberForm']->setDefaults($entity->getFormProperties());
+        $this->template->blockId = $blockId;
+        $this->template->data = $entity;
+    }
+
+    public function handleDelete($blockId){
+        $this->members->delete($blockId);
+        $this->redirect('Summary:');
     }
 
     public function handleDeleteMember($memberId, $blockId){
-        $this->members[$blockId]->getMemberById($memberId)->delete();
+        $this->members->deleteMember($blockId, $memberId);
         $this->redirect('Members:edit', $blockId);
     }
 
 
     public function handleDeleteImg($id) {
-        $this->members[$id]->deleteImage();
+        $entity = $this->members->findById($id);
+        $entity->deleteImage();
+        $this->service->saveEntity($entity);
         $this->redirect('Members:edit', $id);
     }
 
 
-    public function actionEditMember($memberId, $blockId){
+    public function handleDeleteMemberImg($blockId, $id) {
 
-        $defaults = $this->members[$blockId]->getMemberById($memberId)->getFormProperties();
-        $this->mId = $defaults['id'];
-        $this['oneMemberForm']->setDefaults($defaults);
-        $this->template->blockId = $blockId;
+        $entity = $this->members->findSubById($blockId, $id);
+        $entity->deleteImage();
+        $this->service->saveEntity($entity);
+        $this->redirect('Members:editMember', $id, $blockId);
     }
 
     public function createComponentMembersForm(){
@@ -83,34 +99,24 @@ class MembersPresenter extends SecuredBasePresenter {
     }
 
     public function membersFormSucceeded($form, $values){
+        $data = $form->getHttpData();
 
-        $blockId = $this->id;
-        if(isset($blockId)){
-            $entity = $this->members->findById($blockId);
+        if(isset($this->id)){
+            $entity = $this->members->findById($this->id);
         }
         else {
             $entity = $this->members->newEntity();
         }
 
-
-
-        $data = $form->getHttpData();
         $file = $data['image'];
         isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
         $entity->setActive($data['active']);
+        $entity->setHeading($data['heading_1']);
+        $entity->setActive($data['active']);
+        $entity->setPosition($data['position']);
 
-        $hardData = [];
-        $metaData = [];
-        $path = $this->members->findById($blockId)->getImage();
-
-        $arrayKeys = [];
-
-
-
-        $hardData['heading_1'] = $data['heading_1'];
-        $hardData['active'] = $data['active'];
-        $hardData['position'] = $data['position'];
+        $path = $entity->getImage();
 
         if($file != null){
             $entity->setBgType('image');
@@ -121,60 +127,33 @@ class MembersPresenter extends SecuredBasePresenter {
             $entity->setBgType('color');
         }
 
-        $entity->setHeading($data['heading_1']);
-        $entity->setActive($data['active']);
-        $entity->setPosition($data['position']);
-
         unset($data['heading_1'], $data['active'], $data['position'], $data['image']);
 
-
-        $metaData = $data;
         $arrayKeys = array_keys($data);
         forEach($arrayKeys as $value){
             if(substr($value, 0, 1) != "_"){
-                if(!($metaData[$value] == 'transparent' || (strlen($metaData[$value]) == 7 and substr($metaData[$value], 0, 1) == "#"))){
+                if(!($data[$value] == 'transparent' || (strlen($data[$value]) == 7 and substr($data[$value], 0, 1) == "#"))){
                     $form[$value]->addError('Wrong color type');
                 }
-
             }
-
         }
 
-        $entity->setStyle(json_encode($metaData));
-
-
+        $entity->setStyle(json_encode($data));
 
         if($file != null){
-            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
             $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
             if(file_exists($path)){
                 unlink($path);
             }
-
             $entity->setImage($newPath);
-
             $file->move($newPath);
         }
 
-
-
         if(!$form->hasErrors()){
-//            $member->setData($hardData['style'], $hardData['bg_type'], $hardData['heading_1'], $hardData['active'], $hardData['position'], $path);
-//            $member->saveToDb();
-            $entity->saveEntity();
-//            $id = $member->getId();
-//            $this->members[$id] = $member;
+            $this->service->saveEntity($entity);
             $this->redirect('Summary:');
         }
-
-
-
-        bdump($data); //ZDE
-
-
-
-
-
 
     }
 
@@ -198,45 +177,41 @@ class MembersPresenter extends SecuredBasePresenter {
     }
 
     public function oneMemberFormSucceeded($form, $values){
+
         $data = $form->getHttpData();
-        $memberId = $this->mId;
-        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
+        if(isset($this->mId)){
+            $entity = $this->members->findSubById($data['block_id'], $this->mId);
+        }
+        else {
+            $entity = $this->members->newSubMember($data['block_id']);
+        }
 
-        $path = is_int($memberId) ? $this->members[$data['block_id']]->getMemberById($memberId)->getImage() : null;
         $file = $data['image'];
 
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
-        if(isset($memberId)){
-            $member = $this->members[$data['block_id']]->getMemberById($memberId);
-        }
-        else{
-            $member = new Member($this->database);
-        }
+        $entity->setName($data['name']);
+        $entity->setText($data['text']);
+        $entity->setOwner($this->members->findById($data['block_id']));
+        $entity->setActive($data['active']);
 
+        $path = $entity->getImage();
 
         if($file != null){
-            if(!$file->isImage() and !$file->isOk())
-                $form['image']->addError('Image was not ok');
-
-            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
-
-            if($memberId){
-                $oldImg = $this->database->table('members')->where('id', $memberId)->fetch()->image;
-                if(file_exists($oldImg)){
-                    unlink($oldImg);
-                }
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
             }
-
-            $file->move($path);
+            $entity->setImage($newPath);
+            $file->move($newPath);
         }
 
         if(!$form->hasErrors()){
-            $member->setData($data['name'], $data['text'], $path, $data['block_id'], $data['active']);
-            $member->saveToDb();
-            $id = $member->getId();
-            $this->members[$id] = $member;
+
+            $this->service->saveEntity($entity);
+            $this->redirect('Members:edit', $entity->getOwner());
         }
 
         $this->redirect('Members:edit', $data['block_id']);

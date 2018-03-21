@@ -202,6 +202,18 @@ div.divSummImg{
     background-origin: border-box;
     min-height: 150px;
 }
+
+div.divAvatarImg{
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+}
 div.divSummButtons{
     display: flex;
     flex-direction: column;
@@ -327,6 +339,11 @@ img.imgLogo
     margin: 0 auto 50px auto;
     padding: 0;
     width: 60%;
+}
+
+img.imgAvatar {
+
+    border-radius: 50%;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -611,16 +628,26 @@ iframe /*----NEMAZAT----*/
 /* OSTATNÍ: */
 
 .odsaditTop-50{
-    margin-top: 50px;
+    padding-top: 50px;
+}
+.odsaditTop-100{
+    padding-top: 100px;
+}
+.odsaditTop-150{
+    padding-top: 150px;
 }
 .odsaditBottom-50{
-    margin-bottom: 50px;
+    padding-bottom: 50px;
 }
 .odsaditBottom-100{
-    margin-bottom: 100px;
+    padding-bottom: 100px;
 }
 .odsaditBottom-150{
-    margin-bottom: 150px;
+    padding-bottom: 150px;
+}
+
+.myFlex {
+    display: flex;
 }
 
 button.closeColpick{

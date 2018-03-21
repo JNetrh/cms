@@ -67,6 +67,38 @@ class Member
      */
     protected $active;
 
+
+
+
+
+
+
+
+    public function deleteImage(){
+        if(is_file($this->getImage())){
+            unlink($this->getImage());
+        }
+        $this->setImage(null);
+    }
+
+
+
+
+    public function getFormProperties(){
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'text' => $this->getText(),
+            'image' => $this->getImage(),
+            'owner' => $this->getOwner(),
+            'active' => $this->getActive()
+        ];
+    }
+
+
+
+
     /**
      * @return int
      */
@@ -83,21 +115,21 @@ class Member
         $this->id = $id;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getRef()
-//    {
-//        return $this->ref;
-//    }
-//
-//    /**
-//     * @param mixed $ref
-//     */
-//    public function setRef($ref)
-//    {
-//        $this->ref = $ref;
-//    }
+    /**
+     * @return mixed
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
+
+    /**
+     * @param mixed $ref
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+    }
 
     /**
      * @return mixed
@@ -160,7 +192,8 @@ class Member
      */
     public function setOwner($owner)
     {
-        $this->owner = $owner;
+        $this->owner = $owner->getId();
+        $this->setRef($owner);
     }
 
     /**

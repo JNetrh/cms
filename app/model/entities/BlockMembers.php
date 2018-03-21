@@ -73,7 +73,10 @@ class BlockMembers
     protected $position;
 
 
-
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
 
 
@@ -122,10 +125,32 @@ class BlockMembers
     public function membersCount()
     {
         return count($this->members);
-//        TODO: změnit
-//        return 2;
     }
 
+    public function deleteImage(){
+        if(file_exists($this->getImage())){
+            unlink($this->getImage());
+        }
+        $this->setImage(null);
+    }
+
+    public function findById($id){
+        foreach ($this->members as $el){
+            if($el->getId() == $id){
+                return $el;
+            }
+        }
+    }
+
+
+    public function setMember (Member $member){
+        $this->members->add($member);
+    }
+
+    public function removeMember(Member $member){
+        $this->members->remove($member->getId());
+        return $member;
+    }
 
 
     /**
@@ -232,18 +257,22 @@ class BlockMembers
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+
+
 
     /**
      * @return string
      */
     public function toString(){
         return 'members';
-    }
-
-
-
-    public function setMember (Member $member){
-
     }
 
 

@@ -65,9 +65,18 @@ class MemberService
     }
 
     public function delete($id){
-        bdump($this->entityManager);
         $toDel = $this->findById($id);
-        bdump($toDel);
+        $toDel->getMembers()->map(function(Member $el){
+            $el->deleteImage();
+        });
+        $toDel->deleteImage();
+        $this->entityManager->remove($toDel);
+        $this->entityManager->flush();
+    }
+
+    public function deleteMember($blockId, $id){
+        $toDel = $this->findById($blockId)->removeMember($this->findSubById($blockId, $id));
+        $toDel->deleteImage();
         $this->entityManager->remove($toDel);
         $this->entityManager->flush();
     }
@@ -82,6 +91,21 @@ class MemberService
 
     public function getEntities() {
         return $this->entities->findAll();
+    }
+
+
+    public function findSubById($blockId, $subId){
+        return $this->findById($blockId)->findById($subId);
+
+    }
+
+    public function newSubMember($blockId){
+        $blockId = intval($blockId);
+        $entity = new Member();
+        bdump($blockId);
+        bdump($this->findById($blockId));
+        $this->findById($blockId)->setMember($entity);
+        return $entity;
     }
 
 }

@@ -97,7 +97,7 @@ create TABLE referencese
    active                TINYINT not null DEFAULT 0,
    reference             TEXT not null DEFAULT "",
    primary key (id),
-   foreign key (owner) references block_references (id) on delete set null
+   foreign key (owner) references block_references (id) on delete CASCADE
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 
