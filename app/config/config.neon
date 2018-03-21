@@ -32,12 +32,6 @@ session:
 
 
 services:
-	- App\Model\UploadFile
-	- App\Model\Members
-	- App\Model\Member
-	- App\Model\Headers
-	- App\Model\Reference
-	- App\Model\References
 	- App\Model\BlockFactory
 	- App\Model\Services\UserService
 	- App\Model\Services\RightsService

@@ -81,7 +81,7 @@ class BlockFactory
     }
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getBlockReferences()
     {
