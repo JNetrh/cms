@@ -5,50 +5,50 @@ namespace App\AdminModule\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
-use App\Model\Headers as Header;
+use App\Model\Services\HeaderService;
 
 class HeaderPresenter extends SecuredBasePresenter {
 
-    private $database;
     public $headers;
     public $id;
+    public $service;
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory)
+    public function __construct(BF $blockFactory, HeaderService $service)
     {
-        $this->database = $database;
+        $this->service = $service;
         $this->headers = $blockFactory->getBlockHeader();
-    }
-
-    public function renderDefault(){
-
-    }
-
-    public function handleDeleteImg($id) {
-        $this->headers[$id]->deleteImage();
-        $this->redirect('Header:edit', $id);
     }
 
 
     public function actionEdit($blockId){
-
-        $defaults = $this->headers[$blockId]->getFormProperties();
-        bdump($defaults);
-        $this->id = $defaults['id'];
-        $defaultColors = $this->headers[$blockId]->getColorProperties();
+        $entity = $this->headers->findById($blockId);
+        $defaults = $entity->getFormProperties();
+        $this->id = $entity->getId();
+        $defaultColors = $entity->getColorProperties();
         $this['headerForm']->setDefaults($defaults);
-        $this->template->data = $defaults;
+        $this->template->data = $entity;
         $this->template->colors = $defaultColors;
+    }
+
+    public function handleDelete($blockId){
+        $this->headers->delete($blockId);
+        $this->redirect('Summary:');
+    }
+
+    public function handleDeleteImg($id) {
+        $entity = $this->headers->findById($id);
+        $entity->deleteImage();
+        $this->service->saveEntity($entity);
+        $this->redirect('Header:edit', $id);
     }
 
     public function createComponentHeaderForm(){
         $form = new Form();
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
 
-//        $form -> addTextArea('heading_1');
         $form -> addText('heading_1');
         $form -> addText('heading_1_color');
         $form -> addText('heading_2');
-//        $form -> addTextArea('heading_2');
         $form -> addText('heading_2_color');
         $form -> addText('button_1');
         $form -> addText('button_1_link');
@@ -77,114 +77,67 @@ class HeaderPresenter extends SecuredBasePresenter {
     }
 
     public function headerFormSucceeded($form, $values){
-
         $data = $form->getHttpData();
-        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
-        $blockId = $this->id;
-        $hardData = [];
-        $metaData = [];
-        $path = is_int($blockId) ? $this->headers[$blockId]->getImage() : null;
+
+        if(isset($this->id)){
+            $entity = $this->headers->findById($this->id);
+        }
+        else {
+            $entity = $this->headers->newEntity();
+        }
+
         $file = $data['image'];
-        $arrayKeys = [];
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
-        $hardData = [
-            'heading_1' => $data['heading_1'],
-            'heading_2' => $data['heading_2'],
-            'button_1' => $data['button_1'],
-            'button_2' => $data['button_2'],
-            'button_1_link' => $data['button_1_link'],
-            'button_2_link' => $data['button_2_link'],
-            'active' => $data['active'],
-            'position' => $data['position']
-        ];
+        $entity->setActive($data['active']);
+        $entity->setHeading1($data['heading_1']);
+        $entity->setHeading2($data['heading_2']);
+        $entity->setButton1($data['button_1']);
+        $entity->setButton1Link($data['button_1_link']);
+        $entity->setButton2($data['button_2']);
+        $entity->setButton2Link($data['button_2_link']);
+        $entity->setPosition($data['position']);
 
+        $path = $entity->getImage();
 
         if($file != null){
-            $hardData['bg_type'] = 'image';
+            $entity->setBgType('image');
             if(!$file->isImage() and !$file->isOk())
                 $form['image']->addError('Image was not ok');
         }
         else{
-            $hardData['bg_type'] = 'color';
+            $entity->setBgType('color');
         }
 
-        if(strlen($data['button_1_link']) < 2)
-            $hardData['button_1_link'] = '#';
-        if(strlen($data['button_2_link']) < 2)
-            $hardData['button_2_link'] = '#';
+        unset($data['active'], $data['position'], $data['image']);
+        unset($data['heading_1'], $data['button_1'], $data['button_1_link']);
+        unset($data['heading_2'], $data['button_2'], $data['button_2_link']);
 
-        unset($data['heading_1'], $data['heading_2']);
-        unset($data['button_1'], $data['button_2']);
-        unset($data['button_1_link'], $data['button_2_link']);
-        unset($data['active']);
-        unset($data['image']);
-        unset($data['position']);
-
-        $metaData = $data;
         $arrayKeys = array_keys($data);
         forEach($arrayKeys as $value){
             if(substr($value, 0, 1) != "_"){
-                if(!($metaData[$value] == 'transparent' || (strlen($metaData[$value]) == 7 and substr($metaData[$value], 0, 1) == "#"))){
-
+                if(!($data[$value] == 'transparent' || (strlen($data[$value]) == 7 and substr($data[$value], 0, 1) == "#"))){
                     $form[$value]->addError('Wrong color type');
                 }
-
             }
-
         }
 
-        $hardData['style'] = json_encode($metaData);
-
-        if(isset($blockId)){
-            $header = $this->headers[$blockId];
-        }
-        else{
-            $header = new Header($this->database);
-        }
+        $entity->setStyle(json_encode($data));
 
         if($file != null){
-            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
-
-            if($blockId){
-                $oldImg = $this->database->table('block_header')->where('id', $blockId)->fetch()->image;
-                if(file_exists($oldImg)){
-                    unlink($oldImg);
-                }
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
             }
-
-
-            $file->move($path);
+            $entity->setImage($newPath);
+            $file->move($newPath);
         }
-
-        bdump($hardData);
-
 
         if(!$form->hasErrors()){
-            $header->setData($hardData['style'], $hardData['bg_type'], $hardData['heading_1'], $hardData['heading_2'], $hardData['button_1'], $hardData['button_1_link'], $hardData['button_2'], $hardData['button_2_link'], $path, $hardData['active'], $hardData['position']);
-            $header->saveToDb();
-            $id = $header->getId();
-            $this->headers[$id] = $header;
+            $this->service->saveEntity($entity);
             $this->redirect('Summary:');
         }
-
-
-
-
-        bdump($data); //ZDE
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 

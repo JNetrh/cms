@@ -75,6 +75,34 @@ class Reference
      */
     protected $reference;
 
+
+    /**
+     * deletes image that corresponds with this subBlock
+     */
+    public function deleteImage(){
+        if(is_file($this->getImage())){
+            unlink($this->getImage());
+        }
+        $this->setImage(null);
+    }
+
+
+    /**
+     * @return array of default form properties
+     */
+    public function getFormProperties(){
+
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'text' => $this->getText(),
+            'image' => $this->getImage(),
+            'owner' => $this->getOwner(),
+            'active' => $this->getActive(),
+            'reference' => $this->getReference()
+        ];
+    }
+
     /**
      * @return int
      */
@@ -91,24 +119,24 @@ class Reference
         $this->id = $id;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getRef()
-//    {
-//        return $this->ref;
-//    }
-//
-//    /**
-//     * @param mixed $ref
-//     */
-//    public function setRef($ref)
-//    {
-//        $this->ref = $ref;
-//    }
+    /**
+     * @return BlockReferences
+     */
+    public function getRef()
+    {
+        return $this->ref;
+    }
 
     /**
-     * @return mixed
+     * @param BlockReferences $ref
+     */
+    public function setRef($ref)
+    {
+        $this->ref = $ref;
+    }
+
+    /**
+     * @return string
      */
     public function getName()
     {
@@ -116,7 +144,7 @@ class Reference
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -124,7 +152,7 @@ class Reference
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getText()
     {
@@ -132,7 +160,7 @@ class Reference
     }
 
     /**
-     * @param mixed $text
+     * @param string $text
      */
     public function setText($text)
     {
@@ -140,7 +168,7 @@ class Reference
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getImage()
     {
@@ -148,7 +176,7 @@ class Reference
     }
 
     /**
-     * @param mixed $image
+     * @param string $image
      */
     public function setImage($image)
     {
@@ -156,7 +184,7 @@ class Reference
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOwner()
     {
@@ -164,15 +192,16 @@ class Reference
     }
 
     /**
-     * @param mixed $owner
+     * @param int $owner
      */
     public function setOwner($owner)
     {
-        $this->owner = $owner;
+        $this->owner = $owner->getId();
+        $this->setRef($owner);
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getActive()
     {
@@ -180,7 +209,7 @@ class Reference
     }
 
     /**
-     * @param mixed $active
+     * @param int $active
      */
     public function setActive($active)
     {
@@ -188,7 +217,7 @@ class Reference
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getReference()
     {
@@ -196,17 +225,11 @@ class Reference
     }
 
     /**
-     * @param mixed $reference
+     * @param string $reference
      */
     public function setReference($reference)
     {
         $this->reference = $reference;
     }
-
-
-
-
-
-
 
 }

@@ -20,21 +20,10 @@ class SummaryPresenter extends SecuredBasePresenter {
     public function __construct(Nette\Database\Context $database, BF $blockFactory, ReferenceService $references)
     {
         $this->database = $database;
-//        $this->references = $references->getEntities();
         $this->members = $blockFactory->getBlockMembers();
         $this->headers = $blockFactory->getBlockHeader();
         $this->references = $blockFactory->getBlockReferences();
         $this->myBlocks = $blockFactory;
-
-
-//        $this->referenceService = $referenceService;
-//
-//        bdump($this->referenceService->getEntities()[0]);
-//
-//        foreach ($this->referenceService->getEntities()[0]->getReferences() as $row) {
-//            bdump($row);
-//        }
-
     }
 
 
@@ -43,8 +32,6 @@ class SummaryPresenter extends SecuredBasePresenter {
         $this->template->headers = $this->headers->getEntities();
         $this->template->references = $this->references->getEntities();
         $this->template->myBlocks = $this->myBlocks->getAllBlocks();
-
-
     }
 
 
@@ -54,12 +41,12 @@ class SummaryPresenter extends SecuredBasePresenter {
     }
 
     public function handleDeleteHeader($blockId){
-       $this->headers[$blockId]->delete();
+       $this->headers->delete($blockId);
         $this->redirect('Summary:');
     }
 
     public function handleDeleteReference($blockId){
-       $this->references[$blockId]->delete();
+       $this->references->delete($blockId);
         $this->redirect('Summary:');
     }
 

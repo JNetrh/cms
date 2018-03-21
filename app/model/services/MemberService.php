@@ -26,8 +26,6 @@ class MemberService
 
     public function __construct(EntityManager $entityManager)
     {
-//        TODO: udělat stejně ostatní,
-//        TODO: nastavit v sql ondelete cascade!
         $this->entityManager = $entityManager;
         $this->entities = $this->entityManager->getRepository(BlockMembers::class);
     }
@@ -56,10 +54,15 @@ class MemberService
         $this->entityManager->flush();
     }
 
+    public function newSubEntity($blockId){
+        $blockId = intval($blockId);
+        $entity = new Member();
+        $this->findById($blockId)->setMember($entity);
+        return $entity;
+    }
+
     public function createSubEntity($id){
-
         $entity = $this->entityManager->findById($id)->createEntity();
-
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }
@@ -93,19 +96,9 @@ class MemberService
         return $this->entities->findAll();
     }
 
-
     public function findSubById($blockId, $subId){
         return $this->findById($blockId)->findById($subId);
 
-    }
-
-    public function newSubMember($blockId){
-        $blockId = intval($blockId);
-        $entity = new Member();
-        bdump($blockId);
-        bdump($this->findById($blockId));
-        $this->findById($blockId)->setMember($entity);
-        return $entity;
     }
 
 }

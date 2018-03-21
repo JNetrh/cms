@@ -68,12 +68,9 @@ class Member
     protected $active;
 
 
-
-
-
-
-
-
+    /**
+     * deletes image that corresponds with this subBlock
+     */
     public function deleteImage(){
         if(is_file($this->getImage())){
             unlink($this->getImage());
@@ -82,8 +79,9 @@ class Member
     }
 
 
-
-
+    /**
+     * @return array of default form properties
+     */
     public function getFormProperties(){
 
         return [
@@ -100,7 +98,7 @@ class Member
 
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +114,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return BlockMembers
      */
     public function getRef()
     {
@@ -124,7 +122,7 @@ class Member
     }
 
     /**
-     * @param mixed $ref
+     * @param BlockMembers $ref
      */
     public function setRef($ref)
     {
@@ -132,7 +130,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -140,7 +138,7 @@ class Member
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
@@ -148,7 +146,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getText()
     {
@@ -156,7 +154,7 @@ class Member
     }
 
     /**
-     * @param mixed $text
+     * @param string $text
      */
     public function setText($text)
     {
@@ -164,7 +162,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getImage()
     {
@@ -172,7 +170,7 @@ class Member
     }
 
     /**
-     * @param mixed $image
+     * @param string $image
      */
     public function setImage($image)
     {
@@ -180,7 +178,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOwner()
     {
@@ -188,7 +186,7 @@ class Member
     }
 
     /**
-     * @param mixed $owner
+     * @param int $owner
      */
     public function setOwner($owner)
     {
@@ -197,7 +195,7 @@ class Member
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getActive()
     {
@@ -205,17 +203,11 @@ class Member
     }
 
     /**
-     * @param mixed $active
+     * @param int $active
      */
     public function setActive($active)
     {
         $this->active = $active;
     }
-
-
-
-
-
-
 
 }

@@ -73,10 +73,10 @@
                             <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
                             <div class="col-md-7 inputGroupContainer">
 
-                                {if strlen($data['image']) > 5}
+                                {if strlen($data->getImage()) > 5}
                                     <div class="divEditImg">
-                                        <img class="img-responsive" src="{$basePath}/{$data['image']}" alt="background-img" />
-                                        <a n:href="deleteImg! $data['id']"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
+                                        <img class="img-responsive" src="{$basePath}/{$data->getImage()}" alt="background-img" />
+                                        <a n:href="deleteImg! $data->getId()"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
                                     </div>
                                 {/if}
 
@@ -166,30 +166,42 @@
         <a class="buttonCisty buttonView" n:href="Summary:"><i class="fa fa-chevron-circle-left"></i> Back</a>
     </div>
 
-    <div class="container odsaditBottom-150">
-        <h2>Members</h2>
-        <table class="tableSummary table table-responsive">
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Visible</th>
-                <th>Profile photo</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            {foreach $references as $row}
-                <tr>
-                    <td class="col">{$row->getName()}</td>
-                    <td class="col">{$row->getText()}</td>
-                    <td class="col">{$row->getActive() == 1 ? "yes" : "no"}</td>
-                    <td class="col">{strlen($row->getImage()) > 5 ? "yes" : "no"}</td>
-                    <td class="col"><a n:href="References:editReference, $row->getId(), $row->getOwner()" >edit</a></td>
-                    <td class="col"><a n:href="deleteReference! $row->getId(), $row->getOwner()" >delete</a></td>
-                    {*<td class="col"><a href="#" >edit</a></td>*}
-                </tr>
-            {/foreach}
-        </table>
+    <div class="col-md-12">
+        <a class="buttonCisty buttonAdd" n:href="References:newReference $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
     </div>
+
+    <div class="col-md-12 odsaditBottom-150 odsaditTop-50">
+        <div class="container">
+            {foreach $references as $row}
+                {include './referencePanel.latte', row => $row}
+            {/foreach}
+        </div>
+    </div>
+
+    {*<div class="container odsaditBottom-150">*}
+        {*<h2>Members</h2>*}
+        {*<table class="tableSummary table table-responsive">*}
+            {*<tr>*}
+                {*<th>Name</th>*}
+                {*<th>Description</th>*}
+                {*<th>Visible</th>*}
+                {*<th>Profile photo</th>*}
+                {*<th>Edit</th>*}
+                {*<th>Delete</th>*}
+            {*</tr>*}
+            {*{foreach $references as $row}*}
+                {*<tr>*}
+                    {*<td class="col">{$row->getName()}</td>*}
+                    {*<td class="col">{$row->getText()}</td>*}
+                    {*<td class="col">{$row->getActive() == 1 ? "yes" : "no"}</td>*}
+                    {*<td class="col">{strlen($row->getImage()) > 5 ? "yes" : "no"}</td>*}
+                    {*<td class="col"><a n:href="References:editReference, $row->getId(), $row->getOwner()" >edit</a></td>*}
+                    {*<td class="col"><a n:href="deleteReference! $row->getId(), $row->getOwner()" >delete</a></td>*}
+                    {*<td class="col"><a href="#" >edit</a></td>*}
+                {*</tr>*}
+            {*{/foreach}*}
+        {*</table>*}
+    {*</div>*}
 
 {/block}
 

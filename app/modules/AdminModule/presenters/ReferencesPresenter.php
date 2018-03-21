@@ -2,23 +2,21 @@
 
 namespace App\AdminModule\Presenters;
 
-use App\Model\Members;
-use Nette;
+
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
-use App\Model\Reference as Reference;
-use App\Model\References as References;
+use App\Model\Services\ReferenceService;
 
 class ReferencesPresenter extends SecuredBasePresenter {
 
-    private $database;
     public $references;
     public $id;
     public $rId;
+    public $service;
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory)
+    public function __construct(BF $blockFactory, ReferenceService $service)
     {
-        $this->database = $database;
+        $this->service = $service;
         $this->references = $blockFactory->getBlockReferences();
     }
 
@@ -27,34 +25,46 @@ class ReferencesPresenter extends SecuredBasePresenter {
     }
 
     public function actionEdit($blockId){
-        $defaults = $this->references[$blockId]->getFormProperties();
-        $this->id = $defaults['id'];
-        $defaultColors = $this->references[$blockId]->getColorProperties();
+        $entity = $this->references->findById($blockId);
+        $defaults = $entity->getFormProperties();
+        $this->id = $entity->getId();
+        $defaultColors = $entity->getColorProperties();
         $this['referencesForm']->setDefaults($defaults);
-        $this->template->data = $defaults;
+        $this->template->data = $entity;
         $this->template->colors = $defaultColors;
-        $this->template->references = $this->references[$blockId]->getReferences();
+        $this->template->references = $entity->getReferences();
+    }
+
+    public function actionEditReference($referenceId, $blockId){
+        $entity = $this->references->findSubById($blockId, $referenceId);
+        $this->rId = $entity->getId();
+        $this['oneReferenceForm']->setDefaults($entity->getFormProperties());
+        $this->template->blockId = $blockId;
+        $this->template->data = $entity;
+    }
+
+    public function handleDelete($blockId){
+        $this->references->delete($blockId);
+        $this->redirect('Summary:');
     }
 
     public function handleDeleteReference($referenceId, $blockId){
-        $this->references[$blockId]->getReferenceById($referenceId)->delete();
+        $this->references->deleteReference($blockId, $referenceId);
         $this->redirect('References:edit', $blockId);
     }
 
-
     public function handleDeleteImg($id) {
-        $this->references[$id]->deleteImage();
+        $entity = $this->references->findById($id);
+        $entity->deleteImage();
+        $this->service->saveEntity($entity);
         $this->redirect('References:edit', $id);
     }
 
-
-    public function actionEditReference($referenceId, $blockId){
-
-        $defaults = $this->references[$blockId]->getReferenceById($referenceId)->getFormProperties();
-        $this->rId = $defaults['id'];
-        $this['oneReferenceForm']->setDefaults($defaults);
-        $this->template->blockId = $blockId;
-        $this->template->data = $defaults;
+    public function handleDeleteReferenceImg($blockId, $id) {
+        $entity = $this->references->findSubById($blockId, $id);
+        $entity->deleteImage();
+        $this->service->saveEntity($entity);
+        $this->redirect('References:editReference', $id, $blockId);
     }
 
     public function createComponentReferencesForm(){
@@ -82,88 +92,60 @@ class ReferencesPresenter extends SecuredBasePresenter {
     }
 
     public function referencesFormSucceeded($form, $values){
-
         $data = $form->getHttpData();
-        bdump($data);
-        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
-        $blockId = $this->id;
-        $hardData = [];
-        $metaData = [];
-        $path = is_int($blockId) ? $this->references[$blockId]->getImage() : null;
-        $file = $data['image'];
-        $arrayKeys = [];
 
-        $hardData['heading'] = $data['heading'];
-        $hardData['active'] = $data['active'];
-        $hardData['position'] = $data['position'];
+        if(isset($this->id)){
+            $entity = $this->references->findById($this->id);
+        }
+        else {
+            $entity = $this->references->newEntity();
+        }
+
+        $file = $data['image'];
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
+
+        $entity->setActive($data['active']);
+        $entity->setHeading($data['heading']);
+        $entity->setPosition($data['position']);
+
+        $path = $entity->getImage();
 
         if($file != null){
-            $hardData['bg_type'] = 'image';
+            $entity->setBgType('image');
             if(!$file->isImage() and !$file->isOk())
                 $form['image']->addError('Image was not ok');
         }
         else{
-            $hardData['bg_type'] = 'color';
+            $entity->setBgType('color');
         }
-
-
 
         unset($data['heading'], $data['active'], $data['position'], $data['image']);
 
-        $metaData = $data;
         $arrayKeys = array_keys($data);
         forEach($arrayKeys as $value){
             if(substr($value, 0, 1) != "_"){
-                if(!($metaData[$value] == 'transparent' || (strlen($metaData[$value]) == 7 and substr($metaData[$value], 0, 1) == "#"))){
-
+                if(!($data[$value] == 'transparent' || (strlen($data[$value]) == 7 and substr($data[$value], 0, 1) == "#"))){
                     $form[$value]->addError('Wrong color type');
                 }
-
             }
-
         }
 
-        $hardData['style'] = json_encode($metaData);
-
-        if(isset($blockId)){
-            $reference = $this->references[$blockId];
-        }
-        else{
-            $reference = new References($this->database);
-        }
+        $entity->setStyle(json_encode($data));
 
         if($file != null){
-            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
-
-            if($blockId){
-                $oldImg = $this->database->table('block_references')->where('id', $blockId)->fetch()->image;
-                if(file_exists($oldImg)){
-                    unlink($oldImg);
-                }
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
             }
-
-            $hardData['image'] = $path;
-
-            $file->move($path);
+            $entity->setImage($newPath);
+            $file->move($newPath);
         }
-
 
         if(!$form->hasErrors()){
-            $reference->setData($hardData['style'], $hardData['bg_type'], $hardData['heading'], $hardData['active'], $hardData['position'], $path);
-            $reference->saveToDb();
-            $id = $reference->getId();
-            $this->references[$id] = $reference;
+            $this->service->saveEntity($entity);
             $this->redirect('Summary:');
         }
-
-
-        bdump($data); //ZDE
-
-
-
-
-
 
     }
 
@@ -173,6 +155,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
         $form -> addText('name');
         $form -> addTextArea('text');
+        $form -> addCheckbox('active');
         $form -> addText('content');
         $form ->addUpload('image')
             ->addCondition(Form::FILLED)
@@ -187,47 +170,45 @@ class ReferencesPresenter extends SecuredBasePresenter {
     }
 
     public function oneReferenceFormSucceeded($form, $values){
-        $data = $form->getHttpData();
-        $referenceId = $this->rId;
-        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
-        $path = is_int($referenceId) ? $this->references[$data['block_id']]->getReferenceById($referenceId)->getImage() : null;
+        $data = $form->getHttpData();
+
+        if(isset($this->mId)){
+            $entity = $this->references->findSubById($data['block_id'], $this->rId);
+        }
+        else {
+            $entity = $this->references->newSubEntity($data['block_id']);
+        }
+
         $file = $data['image'];
 
+        isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
-        if(isset($referenceId)){
-            $reference = $this->references[$data['block_id']]->getReferenceById($referenceId);
-        }
-        else{
-            $reference = new Reference($this->database);
-        }
+        $entity->setName($data['name']);
+        $entity->setText($data['text']);
+        $entity->setReference($data['content']);
+        $entity->setOwner($this->references->findById($data['block_id']));
+        $entity->setActive($data['active']);
 
+        $path = $entity->getImage();
 
         if($file != null){
-            if(!$file->isImage() and !$file->isOk())
-                $form['image']->addError('Image was not ok');
-
-            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
-            $path = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
-
-            if($referenceId){
-                $oldImg = $this->database->table('referencese')->where('id', $referenceId)->fetch()->image;
-                if(file_exists($oldImg)){
-                    unlink($oldImg);
-                }
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
             }
-
-            $file->move($path);
+            $entity->setImage($newPath);
+            $file->move($newPath);
         }
 
         if(!$form->hasErrors()){
-            $reference->setData($data['name'], $data['text'], $path, $data['block_id'], $data['active'], $data['content']);
-            $reference->saveToDb();
-            $id = $reference->getId();
-            $this->references[$id] = $reference;
+
+            $this->service->saveEntity($entity);
+            $this->redirect('References:edit', $entity->getOwner());
         }
 
-        $this->redirect('References:edit', $data['block_id']);
+//        $this->redirect('References', $entity->getOwner());
 
     }
 

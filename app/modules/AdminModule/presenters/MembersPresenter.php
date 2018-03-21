@@ -5,22 +5,17 @@ namespace App\AdminModule\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
-//use App\Model\Member as Member;
-//use App\Model\Members as Members;
 use App\Model\Services\MemberService;
-use App\Model\Entities\Member as Member;
 
 class MembersPresenter extends SecuredBasePresenter {
 
-    public $database;
     public $members;
     public $id;
     public $mId;
     public $service;
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory, MemberService $service)
+    public function __construct(BF $blockFactory, MemberService $service)
     {
-        $this->database = $database;
         $this->service = $service;
         $this->members = $blockFactory->getBlockMembers();
     }
@@ -66,9 +61,7 @@ class MembersPresenter extends SecuredBasePresenter {
         $this->redirect('Members:edit', $id);
     }
 
-
     public function handleDeleteMemberImg($blockId, $id) {
-
         $entity = $this->members->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
@@ -113,7 +106,6 @@ class MembersPresenter extends SecuredBasePresenter {
 
         $entity->setActive($data['active']);
         $entity->setHeading($data['heading_1']);
-        $entity->setActive($data['active']);
         $entity->setPosition($data['position']);
 
         $path = $entity->getImage();
@@ -184,7 +176,7 @@ class MembersPresenter extends SecuredBasePresenter {
             $entity = $this->members->findSubById($data['block_id'], $this->mId);
         }
         else {
-            $entity = $this->members->newSubMember($data['block_id']);
+            $entity = $this->members->newSubEntity($data['block_id']);
         }
 
         $file = $data['image'];
@@ -214,7 +206,7 @@ class MembersPresenter extends SecuredBasePresenter {
             $this->redirect('Members:edit', $entity->getOwner());
         }
 
-        $this->redirect('Members:edit', $data['block_id']);
+//        $this->redirect('Members:edit', $entity->getOwner());
 
     }
 

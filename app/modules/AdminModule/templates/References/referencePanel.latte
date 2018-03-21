@@ -22,15 +22,15 @@
                         <td class="tdHeading">Visible</td>
                         <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
                     </tr>
-                    {*<tr>*}
-                        {*<td class="tdHeading">Profile Photography</td>*}
-                        {*<td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>*}
-                    {*</tr>*}
+                    <tr>
+                        <td class="tdHeading">Reference</td>
+                        <td class="">{$row->getReference()|truncate:25}</td>
+                    </tr>
                 </table>
             </div>
             <div class="divSummButtons col-md-2 equal">
-                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Members:editMember $row->getId(), $row->getOwner()">Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteMember! $row->getId(), $row->getOwner()">Delete</a>
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="References:editReference $row->getId(), $row->getOwner()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteReference! $row->getId(), $row->getOwner()">Delete</a>
                 <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
             </div>
         </div>

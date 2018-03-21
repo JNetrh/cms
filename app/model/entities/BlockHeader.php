@@ -110,10 +110,9 @@ class BlockHeader
     protected $position;
 
 
-
-
-
-
+    /**
+     * @return array of form properties
+     */
     public function getFormProperties(){
 
         return [
@@ -129,6 +128,10 @@ class BlockHeader
             'image' => $this->getImage()
         ];
     }
+
+    /**
+     * @return array of colors dedicated to the block
+     */
     public function getColorProperties(){
 
         $style = json_decode($this->getStyle());
@@ -147,20 +150,20 @@ class BlockHeader
         ];
     }
 
-
-
-
-
-
-
-
-
-
+    /**
+     * Deletes image from server
+     */
+    public function deleteImage(){
+        if(file_exists($this->getImage())){
+            unlink($this->getImage());
+        }
+        $this->setImage(null);
+    }
 
 
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getStyle()
     {
@@ -168,7 +171,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $style
+     * @param string $style
      */
     public function setStyle($style)
     {
@@ -176,7 +179,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBgType()
     {
@@ -184,7 +187,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $bg_type
+     * @param string $bg_type
      */
     public function setBgType($bg_type)
     {
@@ -192,7 +195,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getHeading1()
     {
@@ -200,7 +203,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $heading_1
+     * @param string $heading_1
      */
     public function setHeading1($heading_1)
     {
@@ -208,7 +211,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getHeading2()
     {
@@ -216,7 +219,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $heading_2
+     * @param string $heading_2
      */
     public function setHeading2($heading_2)
     {
@@ -224,7 +227,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getButton1()
     {
@@ -232,7 +235,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $button_1
+     * @param string $button_1
      */
     public function setButton1($button_1)
     {
@@ -240,7 +243,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getButton2()
     {
@@ -248,7 +251,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $button_2
+     * @param string $button_2
      */
     public function setButton2($button_2)
     {
@@ -256,7 +259,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getButton1Link()
     {
@@ -264,7 +267,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $button_1_link
+     * @param string $button_1_link
      */
     public function setButton1Link($button_1_link)
     {
@@ -272,7 +275,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getButton2Link()
     {
@@ -280,7 +283,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $button_2_link
+     * @param string $button_2_link
      */
     public function setButton2Link($button_2_link)
     {
@@ -288,7 +291,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getImage()
     {
@@ -296,7 +299,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $image
+     * @param string $image
      */
     public function setImage($image)
     {
@@ -304,7 +307,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getActive()
     {
@@ -312,7 +315,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $active
+     * @param integer $active
      */
     public function setActive($active)
     {
@@ -320,7 +323,7 @@ class BlockHeader
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getPosition()
     {
@@ -328,7 +331,7 @@ class BlockHeader
     }
 
     /**
-     * @param mixed $position
+     * @param integer $position
      */
     public function setPosition($position)
     {
@@ -336,7 +339,7 @@ class BlockHeader
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {

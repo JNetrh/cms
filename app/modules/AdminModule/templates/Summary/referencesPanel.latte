@@ -4,8 +4,9 @@
 <div class="panel equal-height-panel divSummaryPanel">
         <div class="col-md-12">
 
-            <div class="divSummImg col-md-4 equal"  style=" background-color: {$row->getColorProperties()['background_color']|noescape}; background-image: url('{$basePath."/".$row->getImage()|noescape}');">
-                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-comment" aria-hidden="true"></span></div>
+            <div class="divSummImg col-md-4 equal" style="background-image: url('{$basePath."/".$row->getImage()|noescape}'); background-color: {$row->getColorProperties()['background_color']|noescape} ">
+
+                <div class="divBlockSign"><i class="fa fa-lg fa-comment"></i></div>
             </div>
             <div class="col-md-6 equal divPanelTable">
                 <table class="tableSummary">

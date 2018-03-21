@@ -73,13 +73,18 @@ class BlockMembers
     protected $position;
 
 
+    /**
+     * BlockMembers constructor, initializes collections
+     */
     public function __construct()
     {
         $this->members = new ArrayCollection();
     }
 
 
-
+    /**
+     * @return array of form properties
+     */
     public function getFormProperties(){
 
         return [
@@ -90,6 +95,10 @@ class BlockMembers
             'image' => $this->getImage()
         ];
     }
+
+    /**
+     * @return array of colors dedicated to the block
+     */
     public function getColorProperties(){
 
         $style = json_decode($this->getStyle());
@@ -104,7 +113,14 @@ class BlockMembers
     }
 
 
-
+    /**
+     * @param $name
+     * @param $text
+     * @param $image
+     * @param $owner
+     * @param $active
+     * @return \App\Model\Entities\Member
+     */
     public function createEntity($name, $text, $image, $owner, $active)
     {
         $entity = new Member();
@@ -120,13 +136,16 @@ class BlockMembers
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function membersCount()
     {
         return count($this->members);
     }
 
+    /**
+     * Deletes image from server
+     */
     public function deleteImage(){
         if(file_exists($this->getImage())){
             unlink($this->getImage());
@@ -134,6 +153,10 @@ class BlockMembers
         $this->setImage(null);
     }
 
+    /**
+     * @param $id of the searching member block
+     * @return Member
+     */
     public function findById($id){
         foreach ($this->members as $el){
             if($el->getId() == $id){
@@ -143,122 +166,26 @@ class BlockMembers
     }
 
 
+    /**
+     * set the member dedicated to this block
+     * @param \App\Model\Entities\Member $member
+     */
     public function setMember (Member $member){
         $this->members->add($member);
     }
 
+    /**
+     * remove member dedicated to this block and returns it back
+     * @param \App\Model\Entities\Member $member
+     * @return \App\Model\Entities\Member
+     */
     public function removeMember(Member $member){
         $this->members->remove($member->getId());
         return $member;
     }
 
-
     /**
-     * @return mixed
-     */
-    public function getStyle()
-    {
-        return $this->style;
-    }
-
-    /**
-     * @param mixed $style
-     */
-    public function setStyle($style)
-    {
-        $this->style = $style;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBgType()
-    {
-        return $this->bg_type;
-    }
-
-    /**
-     * @param mixed $bg_type
-     */
-    public function setBgType($bg_type)
-    {
-        $this->bg_type = $bg_type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHeading()
-    {
-        return $this->heading_1;
-    }
-
-    /**
-     * @param mixed $heading_1
-     */
-    public function setHeading($heading_1)
-    {
-        $this->heading_1 = $heading_1;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param mixed $image
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param mixed $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    /**
-     * @param mixed $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getMembers()
     {
@@ -266,6 +193,109 @@ class BlockMembers
     }
 
 
+    /**
+     * @return string
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
+     * @param string $style
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBgType()
+    {
+        return $this->bg_type;
+    }
+
+    /**
+     * @param string $bg_type
+     */
+    public function setBgType($bg_type)
+    {
+        $this->bg_type = $bg_type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeading()
+    {
+        return $this->heading_1;
+    }
+
+    /**
+     * @param string $heading_1
+     */
+    public function setHeading($heading_1)
+    {
+        $this->heading_1 = $heading_1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param integer $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param integer $position
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
     /**

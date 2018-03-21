@@ -30,25 +30,6 @@ class BlockReferences
      */
     private $references;
 
-
-
-    /**
-     * Default constructor, initializes collections
-     */
-    public function __construct()
-    {
-        $this->references = new ArrayCollection();
-    }
-
-
-    public function getReferences(){
-        return $this->references;
-    }
-
-    public function referencesCount() {
-        return count($this->references);
-    }
-
     /**
      * references name column
      * @ORM\Column(type="text")
@@ -94,8 +75,17 @@ class BlockReferences
 
 
 
+    /**
+     * Default constructor, initializes collections
+     */
+    public function __construct()
+    {
+        $this->references = new ArrayCollection();
+    }
 
-
+    /**
+     * @return array of form properties
+     */
     public function getFormProperties(){
 
         return [
@@ -106,6 +96,10 @@ class BlockReferences
             'image' => $this->getImage()
         ];
     }
+
+    /**
+     * @return array of colors dedicated to the block
+     */
     public function getColorProperties(){
 
         $style = json_decode($this->getStyle());
@@ -121,7 +115,15 @@ class BlockReferences
     }
 
 
-
+    /**
+     * @param $name
+     * @param $text
+     * @param $image
+     * @param $owner
+     * @param $active
+     * @param $reference
+     * @return \App\Model\Entities\Reference
+     */
     public function createEntity($name, $text, $image, $owner, $active, $reference)
     {
         $entity = new Reference();
@@ -137,19 +139,66 @@ class BlockReferences
         return $entity;
     }
 
+    /**
+     * @return integer
+     */
+    public function referencesCount()
+    {
+        return count($this->references);
+    }
 
+    /**
+     * Deletes image from server
+     */
+    public function deleteImage(){
+        if(file_exists($this->getImage())){
+            unlink($this->getImage());
+        }
+        $this->setImage(null);
+    }
 
-
-
-
-
-
-
-
+    /**
+     * @param $id of the Block
+     * @return BlockReferences
+     */
+    public function findById($id){
+        foreach ($this->references as $el){
+            if($el->getId() == $id){
+                return $el;
+            }
+        }
+    }
 
 
     /**
+     * set the reference dedicated to this block
+     * @param \App\Model\Entities\Reference $reference
+     */
+    public function setReference (Reference $reference){
+        $this->references->add($reference);
+    }
+
+    /**
+     * remove reference dedicated to this block and returns it back
+     * @param \App\Model\Entities\Reference $reference
+     * @return \App\Model\Entities\Reference
+     */
+    public function removeReference(Reference $reference){
+        $this->references->remove($reference->getId());
+        return $reference;
+    }
+
+    /**
+     * return all references dedicated to this block
      * @return mixed
+     */
+    public function getReferences()
+    {
+        return $this->references;
+    }
+
+    /**
+     * @return string
      */
     public function getStyle()
     {
@@ -157,7 +206,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $style
+     * @param string $style
      */
     public function setStyle($style)
     {
@@ -165,7 +214,7 @@ class BlockReferences
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getBgType()
     {
@@ -173,7 +222,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $bg_type
+     * @param string $bg_type
      */
     public function setBgType($bg_type)
     {
@@ -181,7 +230,7 @@ class BlockReferences
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getHeading()
     {
@@ -189,7 +238,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $heading
+     * @param string $heading
      */
     public function setHeading($heading)
     {
@@ -197,7 +246,7 @@ class BlockReferences
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getImage()
     {
@@ -205,7 +254,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $image
+     * @param string $image
      */
     public function setImage($image)
     {
@@ -213,7 +262,7 @@ class BlockReferences
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getActive()
     {
@@ -221,7 +270,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $active
+     * @param integer $active
      */
     public function setActive($active)
     {
@@ -229,7 +278,7 @@ class BlockReferences
     }
 
     /**
-     * @return mixed
+     * @return integer
      */
     public function getPosition()
     {
@@ -237,7 +286,7 @@ class BlockReferences
     }
 
     /**
-     * @param mixed $position
+     * @param integer $position
      */
     public function setPosition($position)
     {
@@ -245,7 +294,7 @@ class BlockReferences
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getId()
     {

@@ -8,6 +8,7 @@
 namespace App\Model\Services;
 
 use App\Model\Entities\BlockReferences;
+use App\Model\Entities\Reference;
 use Kdyby\Doctrine\EntityManager;
 
 class ReferenceService
@@ -25,10 +26,18 @@ class ReferenceService
 
     public function __construct(EntityManager $entityManager)
     {
-//        TODO: udělat stejně ostatní,
-//        TODO: nastavit v sql ondelete cascade!
         $this->entityManager = $entityManager;
         $this->entities = $this->entityManager->getRepository(BlockReferences::class);
+    }
+
+    public function newEntity(){
+        $entity = new BlockReferences();
+        return $entity;
+    }
+
+    public function saveEntity($entity){
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
     }
 
     public function createEntity($style, $bgType, $image, $position, $active, $heading)
@@ -45,18 +54,32 @@ class ReferenceService
         $this->entityManager->flush();
     }
 
+    public function newSubEntity($blockId){
+        $blockId = intval($blockId);
+        $entity = new Reference();
+        $this->findById($blockId)->setReference($entity);
+        return $entity;
+    }
+
     public function createSubEntity($id){
-
         $entity = $this->entityManager->findById($id)->createEntity();
-
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
     }
 
     public function delete($id){
-        bdump($this->entityManager);
         $toDel = $this->findById($id);
-        bdump($toDel);
+        $toDel->getReferences()->map(function(Reference $el){
+            $el->deleteImage();
+        });
+        $toDel->deleteImage();
+        $this->entityManager->remove($toDel);
+        $this->entityManager->flush();
+    }
+
+    public function deleteReference($blockId, $id){
+        $toDel = $this->findById($blockId)->removeReference($this->findSubById($blockId, $id));
+        $toDel->deleteImage();
         $this->entityManager->remove($toDel);
         $this->entityManager->flush();
     }
@@ -71,6 +94,11 @@ class ReferenceService
 
     public function getEntities() {
         return $this->entities->findAll();
+    }
+
+    public function findSubById($blockId, $subId){
+        return $this->findById($blockId)->findById($subId);
+
     }
 
 }

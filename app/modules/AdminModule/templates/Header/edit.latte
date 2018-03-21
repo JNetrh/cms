@@ -15,7 +15,6 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
                             <div class="col-md-12 inputGroupContainer">
-                                {*<textarea id="heading_1" n:name="heading_1" class="form-control"></textarea>*}
                                 <input type="text" id="heading_1" n:name="heading_1" class="form-control">
                                 <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
                             </div>
@@ -39,7 +38,6 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Sub heading</label>
                             <div class="col-md-12 inputGroupContainer">
-                                {*<textarea id="heading_2" n:name="heading_2" class="form-control"></textarea>*}
                                 <input type="text" id="heading_2" n:name="heading_2" class="form-control">
                                 <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
                             </div>
@@ -244,10 +242,10 @@
                             <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
                             <div class="col-md-7 inputGroupContainer">
 
-                                {if strlen($data['image']) > 5}
+                                {if strlen($data->getImage()) > 5}
                                     <div class="divEditImg">
-                                        <img class="img-responsive" src="{$basePath}/{$data['image']}" alt="background-img" />
-                                        <a n:href="deleteImg! $data['id']"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
+                                        <img class="img-responsive" src="{$basePath}/{$data->getImage()}" alt="background-img" />
+                                        <a n:href="deleteImg! $data->getId()"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
                                     </div>
                                 {/if}
 
