@@ -14,6 +14,7 @@
             <div class="divNewBlock"><a n:href="Events:new" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Events</a></div>
             <div class="divNewBlock"><a n:href="References:new" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> References</a></div>
             <div class="divNewBlock"><a n:href="Contacts:new" ><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Contacts</a></div>
+            <div class="divNewBlock"><a n:href="Articles:new" ><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Articles</a></div>
         </div>
     </div>
 
@@ -32,6 +33,9 @@
 
         {elseif $row->toString() == 'contacts'}
             {include './contactsPanel.latte', row => $row}
+
+        {elseif $row->toString() == 'articles'}
+            {include './articlesPanel.latte', row => $row}
 
         {/if}
     {/foreach}

@@ -15,9 +15,9 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
  * Doctrine entita
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="block_header")
+ * @ORM\Table(name="block_articles")
  */
-class BlockHeader
+class BlockArticles
 {
 
 
@@ -57,9 +57,9 @@ class BlockHeader
 
     /**
      * right name column
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="text")
      */
-    protected $button_1;
+    protected $text;
 
 
 
@@ -67,23 +67,7 @@ class BlockHeader
      * right name column
      * @ORM\Column(type="string")
      */
-    protected $button_2;
-
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="string")
-     */
-    protected $button_1_link;
-
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="string")
-     */
-    protected $button_2_link;
+    protected $image_article;
 
 
 
@@ -119,10 +103,8 @@ class BlockHeader
             'id' => $this->getId(),
             'heading_1' => $this->getHeading1(),
             'heading_2' => $this->getHeading2(),
-            'button_1' => $this->getButton1(),
-            'button_1_link' => $this->getButton1Link(),
-            'button_2' => $this->getButton2(),
-            'button_2_link' => $this->getButton2Link(),
+            'text' => $this->getText(),
+            'image_article' => $this->getImageArticle(),
             'active' => $this->getActive(),
             'position' => $this->getPosition(),
             'image' => $this->getImage()
@@ -140,12 +122,7 @@ class BlockHeader
         return [
             'heading_1_color' => $style->heading_1_color,
             'heading_2_color' => $style->heading_2_color,
-            'button_1_color' => $style->button_1_color,
-            'button_1_border_color' => $style->button_1_border,
-            'button_1_background_color' => $style->button_1_background,
-            'button_2_color' => $style->button_2_color,
-            'button_2_border_color' => $style->button_2_border,
-            'button_2_background_color' => $style->button_2_background,
+            'text_color' => $style->text_color,
             'background_color' => $style->background_color
         ];
     }
@@ -154,10 +131,14 @@ class BlockHeader
      * Deletes image from server
      */
     public function deleteImage(){
-        if(file_exists($this->getImage())){
-            unlink($this->getImage());
-        }
         $this->setImage(null);
+    }
+
+    /**
+     * Deletes article image from server
+     */
+    public function deleteImageArticle(){
+        $this->setImageArticle(null);
     }
 
 
@@ -229,70 +210,6 @@ class BlockHeader
     /**
      * @return string
      */
-    public function getButton1()
-    {
-        return $this->button_1;
-    }
-
-    /**
-     * @param string $button_1
-     */
-    public function setButton1($button_1)
-    {
-        $this->button_1 = $button_1;
-    }
-
-    /**
-     * @return string
-     */
-    public function getButton2()
-    {
-        return $this->button_2;
-    }
-
-    /**
-     * @param string $button_2
-     */
-    public function setButton2($button_2)
-    {
-        $this->button_2 = $button_2;
-    }
-
-    /**
-     * @return string
-     */
-    public function getButton1Link()
-    {
-        return $this->button_1_link;
-    }
-
-    /**
-     * @param string $button_1_link
-     */
-    public function setButton1Link($button_1_link)
-    {
-        $this->button_1_link = $button_1_link;
-    }
-
-    /**
-     * @return string
-     */
-    public function getButton2Link()
-    {
-        return $this->button_2_link;
-    }
-
-    /**
-     * @param string $button_2_link
-     */
-    public function setButton2Link($button_2_link)
-    {
-        $this->button_2_link = $button_2_link;
-    }
-
-    /**
-     * @return string
-     */
     public function getImage()
     {
         return $this->image;
@@ -303,7 +220,29 @@ class BlockHeader
      */
     public function setImage($image)
     {
+        if(file_exists($this->getImage())){
+            unlink($this->getImage());
+        }
         $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageArticle()
+    {
+        return $this->image_article;
+    }
+
+    /**
+     * @param mixed $image_article
+     */
+    public function setImageArticle($image_article)
+    {
+        if(file_exists($this->getImageArticle())){
+            unlink($this->getImageArticle());
+        }
+        $this->image_article = $image_article;
     }
 
     /**
@@ -346,12 +285,29 @@ class BlockHeader
         return $this->id;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param mixed $text
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
+
+
 
     /**
      * @return string
      */
     public function toString(){
-        return 'headers';
+        return 'articles';
     }
 
 

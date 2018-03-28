@@ -2,15 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: Kuba
- * Date: 18.3.2018
+ * Date: 28.3.2018
  * Time: 19:14
  */
 namespace App\Model\Services;
 
-use App\Model\Entities\BlockHeader;
+use App\Model\Entities\BlockArticles;
 use Kdyby\Doctrine\EntityManager;
 
-class HeaderService
+class ArticleService
 {
 
     /**
@@ -26,11 +26,11 @@ class HeaderService
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->entities = $this->entityManager->getRepository(BlockHeader::class);
+        $this->entities = $this->entityManager->getRepository(BlockArticles::class);
     }
 
     public function newEntity(){
-        $entity = new BlockHeader;
+        $entity = new BlockArticles;
         return $entity;
     }
 
@@ -39,17 +39,15 @@ class HeaderService
         $this->entityManager->flush();
     }
 
-    public function createEntity($style, $bgType, $heading1, $heading2, $button1, $button2, $button1Link, $button2Link, $image, $position, $active)
+    public function createEntity($style, $bgType, $heading1, $heading2, $text, $imageArticle, $image, $position, $active)
     {
-        $entity = new BlockHeader;
+        $entity = new BlockArticles;
         $entity->setStyle($style);
         $entity->setBgType($bgType);
         $entity->setHeading1($heading1);
         $entity->setHeading2($heading2);
-        $entity->setButton1($button1);
-        $entity->setButton2($button2);
-        $entity->setButton1Link($button1Link);
-        $entity->setButton2Link($button2Link);
+        $entity->setText($text);
+        $entity->setImageArticle($imageArticle);
         $entity->setImage($image);
         $entity->setPosition($position);
         $entity->setActive($active);

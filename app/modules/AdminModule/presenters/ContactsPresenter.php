@@ -115,6 +115,7 @@ class ContactsPresenter extends SecuredBasePresenter {
             $entity->setBgType('color');
         }
 
+//        TODO: validace pro GPS
         unset($data['heading_1'], $data['active'], $data['position'], $data['image']);
         unset($data['heading_2'], $data['email'], $data['phone'], $data['adress']);
         unset($data['instagram'], $data['facebook'], $data['twitter'], $data['linkedin']);

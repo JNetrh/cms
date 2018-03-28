@@ -5,7 +5,7 @@
         <div class="col-md-12">
 
             <div class="divSummImg col-md-4 equal"  style=" background-color: {$row->getColorProperties()['background_color']|noescape}; background-image: url('{$basePath."/".$row->getImage()|noescape}');">
-                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-header" aria-hidden="true"></span></div>
+                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-align-left" aria-hidden="true"></span></div>
             </div>
             <div class="col-md-6 equal divPanelTable">
                 <table class="tableSummary">
@@ -22,12 +22,8 @@
                         <td class="">{$row->getHeading2()|striptags}</td>
                     </tr>
                     <tr>
-                        <td class="tdHeading">First button</td>
-                        <td class="">{$row->getButton1()}</td>
-                    </tr>
-                    <tr>
-                        <td class="tdHeading">Second button</td>
-                        <td class="">{$row->getButton2()}</td>
+                        <td class="tdHeading">Text</td>
+                        <td class="">{$row->getText()|striptags|truncate:21}</td>
                     </tr>
                     <tr>
                         <td class="tdHeading">Visible</td>
@@ -44,13 +40,11 @@
                 </table>
             </div>
             <div class="divSummButtons col-md-2 equal">
-                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Header:edit $row->getId()">Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteHeader! $row->getId()">Delete</a>
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Articles:edit $row->getId()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteArticle! $row->getId()">Delete</a>
                 <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
                 {*<a class="buttonCisty buttonAdd buttonBlockSummary" href="#">Add</a>*}
             </div>
-            {*<div class=" panel">*}
-            {*</div>*}
         </div>
 </div>
 {/block}
