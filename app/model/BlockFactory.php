@@ -13,6 +13,7 @@ use App\Model\Services\ReferenceService;
 use App\Model\Services\MemberService;
 use App\Model\Services\HeaderService;
 use App\Model\Services\EventService;
+use App\Model\Services\ContactService;
 
 
 class BlockFactory
@@ -22,14 +23,16 @@ class BlockFactory
     private $members;
     private $headers;
     private $events;
+    private $contacts;
 
 
-    public function __construct(ReferenceService $references, MemberService $members, HeaderService $headers, EventService $events)
+    public function __construct(ReferenceService $references, MemberService $members, HeaderService $headers, EventService $events, ContactService $contacts)
     {
         $this->references = $references;
         $this->members = $members;
         $this->headers = $headers;
         $this->events = $events;
+        $this->contacts = $contacts;
     }
 
 
@@ -66,13 +69,21 @@ class BlockFactory
         return $this->events;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBlockContacts()
+    {
+        return $this->contacts;
+    }
+
 
     public function getAllBlocks(){
         return $this->mergeBlocks();
     }
 
     private function mergeBlocks(){
-        $merged = array_merge($this->getBlockMembers()->getEntities(), $this->getBlockHeader()->getEntities(), $this->getBlockReferences()->getEntities(), $this->getBlockEvents()->getEntities());
+        $merged = array_merge($this->getBlockMembers()->getEntities(), $this->getBlockHeader()->getEntities(), $this->getBlockReferences()->getEntities(), $this->getBlockEvents()->getEntities(), $this->getBlockContacts()->getEntities());
 
         usort($merged, function ($a, $b) {
             if($a->getPosition() == $b->getPosition()){ return 0 ; }

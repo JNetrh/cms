@@ -13,29 +13,32 @@
         {*<script src="{$basePath}/js/bootstrap.min.js"></script>*}
 
         {*<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" >*}
-
+        <!--STYLE Bootstrap stylesheet-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+        <!--STYLE Font general-->
         <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:300,400,500,600,700&amp;subset=latin-ext" rel="stylesheet">
-
-        <!--SCRIPT same height panel-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
-
-
-        <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
+        <!--STYLE Farbtastic colorPicker-->
         <link rel="stylesheet" href="{$basePath}/admin/js/farbtastic/farbtastic.css" type="text/css" />
-        <script src="{$basePath}/admin/js/tinymce/tinymce.min.js"></script>
-        <script src="{$basePath}/admin/js/js.js"></script>
-
+        <!--STYLE Bootstrap dateTimePicker-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+        <!--STYLE Custom stylesheet-->
         <link href="{$basePath}/admin/css/style.css" rel="stylesheet" >
 
-
-        {*<link href="{$basePath}/css/bootstrap-grid.min.css" rel="stylesheet" >*}
-        {*<link href="{$basePath}/css/bootstrap-reboot.min.css" rel="stylesheet" >*}
-
+        <!--SCRIPT jQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--SCRIPT Bootstrap-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--SCRIPT same height panel-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
+        <!-- Bootstrap Date-Picker Plugin -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+        <!--SCRIPT Farbtastic colorPicker-->
+        <script type="text/javascript" src="{$basePath}/admin/js/farbtastic/farbtastic.js"></script>
+        <!--SCRIPT tinyMCE textEditor-->
+        <script src="{$basePath}/admin/js/tinymce/tinymce.min.js"></script>
+        <!--SCRIPT custom scripts-->
+        <script src="{$basePath}/admin/js/js.js"></script>
 
     </head>
 
@@ -148,6 +151,7 @@
 
     {ifset bordel}{include bordel}{/ifset}
     {block scripts}
-        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>{/block}
+        <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+    {/block}
     </body>
 </html>

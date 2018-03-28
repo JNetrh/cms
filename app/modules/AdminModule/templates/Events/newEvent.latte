@@ -7,30 +7,6 @@
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h3 class="h3form">Event photography</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
-                            <div class="col-md-7 inputGroupContainer">
-
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-primary">
-                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> {*end col-md*}
-            <div class="col-md-6">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
                         <h3 class="h3form">Event data</h3>
                     </div>
                     <div class="panel-body">
@@ -44,15 +20,14 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Time</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <input n:name="event_time" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError event_time}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Description</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <textarea n:name="text" class="form-control"></textarea>
-                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                                {*eventTime*}
+                                <div class='input-group date' id='datepicker_event'>
+                                    <input n:name="event_time" class="form-control" />
+                                    <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                                    <span class="formError red" n:ifcontent>{inputError event_time}</span> {* error *}
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -78,7 +53,48 @@
                         </div>
                     </div>
                 </div>
+            </div> {*end col-md*}
 
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Event photography</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
+                            <div class="col-md-7 inputGroupContainer">
+
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Event Description</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <div class="col-md-12 inputGroupContainer">
+                                <textarea n:name="text" class="form-control"></textarea>
+                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div> {*end col-md*}
 
 
@@ -93,15 +109,22 @@
 
 {/block}
 
-{block scripts}
+{block styleExt}
+    {*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" />*}
+{/block}
+
+{block bordel}
+
     <script type="text/javascript">
 
         tinymce.init({
-        selector: 'textarea',
-        entity_encoding : "raw",
-        init_instance_callback : function tinyInstance (editor) {
-        }
+            selector: 'textarea',
+            entity_encoding : "raw",
+            init_instance_callback : function tinyInstance (editor) {}
         });
+
+        $('#datepicker_event').datetimepicker();
+
     </script>
 
 {/block}

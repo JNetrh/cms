@@ -183,6 +183,11 @@
         </div>
     </div>
 
+    {*TODO: tuto část implementovat všude*}
+    <div n:if="$data->eventsCount() > 0" class="col-md-12 odsaditBottom-50">
+        <a class="buttonCisty buttonAdd" n:href="Events:newEvent $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+    </div>
+
 
 
 

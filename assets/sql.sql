@@ -5,14 +5,16 @@
 
 DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS referencese;
+DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS block_header;
 DROP TABLE IF EXISTS block_members;
 DROP TABLE IF EXISTS block_references;
 DROP TABLE IF EXISTS block_events;
+DROP TABLE IF EXISTS block_contacts;
+DROP TABLE IF EXISTS block_articles;
 DROP TABLE IF EXISTS userrights;
 DROP TABLE IF EXISTS rights;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS events;
 
 
 
@@ -87,6 +89,51 @@ create TABLE block_events
 ;
 
 /*==============================================================*/
+/* Table: block_contacts                                        */
+/*==============================================================*/
+create TABLE block_contacts
+(
+  id                    SERIAL,
+  style                 TEXT,
+  bg_type               varchar(255) not null DEFAULT "color",
+  heading_1             varchar(255) not null DEFAULT "",
+  heading_2             varchar(255) not null DEFAULT "",
+  image                 VARCHAR(255) default null,
+  email                 VARCHAR(255) not null DEFAULT "",
+  phone                 VARCHAR(255) not null DEFAULT "",
+  adress                VARCHAR(255) not null DEFAULT "",
+  gpsx                  DOUBLE NOT NULL DEFAULT 0,
+  gpsy                  DOUBLE NOT NULL DEFAULT 0,
+  instagram             TEXT,
+  facebook              TEXT,
+  twitter               TEXT,
+  linkedin              TEXT,
+  active                SMALLINT DEFAULT 0,
+  position              INTEGER not NULL DEFAULT 696969,
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: block_articles                                          */
+/*==============================================================*/
+create TABLE block_articles
+(
+  id                    SERIAL,
+  style                 TEXT,
+  bg_type               varchar(255) not null DEFAULT "color",
+  heading_1             varchar(255) not null DEFAULT "",
+  heading_2             varchar(255) not null DEFAULT "",
+  text                  TEXT not null DEFAULT "",
+  image                 VARCHAR(255) default null,
+  image_article         VARCHAR(255) default null,
+  active                SMALLINT DEFAULT 0,
+  position              INTEGER not NULL DEFAULT 696969,
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
 /* Table: members                                               */
 /*==============================================================*/
 create TABLE members
@@ -137,6 +184,7 @@ create TABLE events
   foreign key (owner) references block_events (id) on delete CASCADE
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
+
 
 
 /*==============================================================*/

@@ -51,6 +51,7 @@ services:
 	- App\Model\Services\MemberService
 	- App\Model\Services\HeaderService
 	- App\Model\Services\EventService
+	- App\Model\Services\ContactService
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

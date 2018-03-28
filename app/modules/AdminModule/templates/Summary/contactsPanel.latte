@@ -1,0 +1,83 @@
+
+{block header}
+
+<div class="panel equal-height-panel divSummaryPanel">
+        <div class="col-md-12">
+
+            <div class="divSummImg col-md-4 equal" style="background-image: url('{$basePath."/".$row->getImage()|noescape}'); background-color: {$row->getColorProperties()['background_color']|noescape} ">
+
+                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></div>
+            </div>
+            <div class="col-md-6 equal divPanelTable">
+                <table class="tableSummary">
+                    <tr>
+                        <td class="tdHeading">Position</td>
+                        <td class="">{$row->getPosition()}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Heading</td>
+                        <td class="">{$row->getHeading1()|truncate:13}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Sub heading</td>
+                        <td class="">{$row->getHeading2()|truncate:13}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Email</td>
+                        <td class="">{$row->getEmail()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Phone</td>
+                        <td class="">{$row->getPhone()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Adress</td>
+                        <td class="">{$row->getAdress()|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">GPS</td>
+                        <td class="">x: {$row->getGpsx()|truncate:13} | y: {$row->getGpsy()|truncate:13}</td>
+                    </tr>
+                    {*<tr n:if="strlen($row->getInstagram()) > 5 || $row->getInstagram() != null">*}
+                        {*<td class="tdHeading">Instagram</td>*}
+                        {*<td class=""><a href="{$row->getInstagram()|noescape}" target="_blank">Show link</a></td>*}
+                    {*</tr>*}
+                    {*<tr n:if="strlen($row->getFacebook()) > 5 || $row->getFacebook() != null">*}
+                        {*<td class="tdHeading">Facebook</td>*}
+                        {*<td class=""><a href="{$row->getFacebook()|noescape}" target="_blank">Show link</a></td>*}
+                    {*</tr>*}
+                    {*<tr n:if="strlen($row->getTwitter()) > 5 || $row->getTwitter() != null">*}
+                        {*<td class="tdHeading">Twitter</td>*}
+                        {*<td class=""><a href="{$row->getTwitter()|noescape}" target="_blank">Show link</a></td>*}
+                    {*</tr>*}
+                    {*<tr n:if="strlen($row->getLinkedin()) > 5 || $row->getLinkedin() != null">*}
+                        {*<td class="tdHeading">Instagram</td>*}
+                        {*<td class=""><a href="{$row->getLinkedin()|noescape}" target="_blank">Show link</a></td>*}
+                    {*</tr>*}
+                    <tr>
+                        <td class="tdHeading">Visible</td>
+                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">General colors</td>
+                        <td>
+                            <div n:foreach="$row->getColorProperties() as $color" style="background-color: {$color|noescape}" class="divColor">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="divSummButtons col-md-2 equal">
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Contacts:edit $row->getId()">Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteContact! $row->getId()">Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
+            </div>
+            {*<div class=" panel">*}
+            {*</div>*}
+        </div>
+</div>
+{/block}
+
+{block bordel}
+
+{/block}

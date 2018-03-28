@@ -1,4 +1,5 @@
 app/config/config.local.neon
+app/config/config.neon
 temp/*
 www/img/repo/*
 temp/cache/*
