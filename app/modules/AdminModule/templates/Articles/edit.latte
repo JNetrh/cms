@@ -1,0 +1,308 @@
+{block content}
+
+
+    <form n:name=contactsForm>
+        <div class="container odsaditBottom-50">
+            <h1>Edit members block</h1>
+
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Heading text</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input type="text" n:name="heading_1" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Heading color</label>
+
+                            <div class="col-md-5 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="heading_1_color" class="form-control" id="color_1" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_heading_1"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError heading_1_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading text</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input n:name="heading_2" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading color</label>
+                            <div class="col-md-5 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="heading_2_color" class="form-control" id="color_5" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_heading_2"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError heading_2_color}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Contact info</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Email</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="email" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError email}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Phone</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="phone" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError phone}</span> {* error *}
+                            </div>
+                        </div>
+                        {*<div class="form-group row">*}
+                            {*<label for="inputCaption" class="col-md-5 col-form-label">Visible</label>*}
+                            {*<div class="col-md-7 inputGroupContainer">*}
+                                {*<input type="checkbox" n:name="active" class="" >*}
+                                {*<span class="formError red" n:ifcontent>{inputError active}</span> *}{* error *}
+                            {*</div>*}
+                        {*</div>*}
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Residence info</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Adress</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="adress" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError adress}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">GPS X</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="gpsx" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError gpsx}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">GPS Y</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="gpsy" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError gpsy}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Social networks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Instagram</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="instagram" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError instagram}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Facebook</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="facebook" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError facebook}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Twitter</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="twitter" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError twitter}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">LinkedIn</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input n:name="linkedin" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError linkedin}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Page settings</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Order</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
+                                <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="checkbox" n:name="active" {$data->getActive() == 1 ? 'checked'}>
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Paragraph color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="text_color" class="form-control" id="color_4" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_text"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError text_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="background_color" class="form-control" id="color_2" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_background"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <div class="input-group">
+                                    <input n:name="block_background_color" class="form-control" id="color_3" value="transparent">
+                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+                                    <div class="divColpick well">
+                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+                                        <div id="colpick_block_background"></div>
+                                    </div>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
+                            <div class="col-md-7 inputGroupContainer">
+
+                                {if strlen($data->getImage()) > 5}
+                                    <div class="divEditImg">
+                                        <img class="img-responsive" src="{$basePath}/{$data->getImage()}" alt="background-img" />
+                                        <a n:href="deleteImg! $data->getId()"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
+                                    </div>
+                                {/if}
+
+                                <div class="input-group">
+                                    <label class="input-group-btn">
+                                        <span class="btn btn-primary">
+                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
+                                        </span>
+                                    </label>
+                                    <input type="text" class="form-control" readonly>
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+
+
+    </form>
+
+    <div class="col-md-12">
+        <a class="buttonCisty buttonView" n:href="Summary:"><i class="fa fa-chevron-circle-left"></i> Back</a>
+    </div>
+
+
+
+
+
+{/block}
+
+{block bordel}
+    <script type="text/javascript">
+
+        {*tinymce.init({*}
+            {*selector: 'textarea',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function tinyInstance (editor) {*}
+                {*editor.setContent({$data->getHeading()});*}
+            {*}*}
+        {*});*}
+        $(document).ready(function(){
+            var pickers = [['heading_1', '#color_1'], ['background', '#color_2'], ['block_background', '#color_3'], ['text', '#color_4'], ['heading_2', '#color_5']];
+            var colors = {$colors};
+            pickers.forEach(function (name) {
+                var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
+                picker.setColor(colors[name[0] + '_color']); //set initial color
+                picker.linkTo(function (color) {
+                    $(name[1]).val(color)
+                    $(name[1]).next('.openColpick').css('background-color', color)
+                }); //link to callback
+            })
+            console.log(colors)
+
+            setTimeout(function () {
+                pickers.forEach(function (name) {
+                    $(name[1]).val(colors[name[0] + '_color'])
+                    $(name[1]).next('.openColpick').css('background-color', colors[name[0] + '_color'])
+                })
+            }, 100)
+
+
+
+        });
+
+
+    </script>
+
+{/block}
