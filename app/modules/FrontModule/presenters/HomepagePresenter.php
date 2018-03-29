@@ -8,11 +8,10 @@ use Nette\Application\UI\Form;
 
 class HomepagePresenter  extends BasePresenter
 {
-    private $database;
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct()
     {
-        $this->database = $database;
+        
     }
 
     public function renderDefault(){

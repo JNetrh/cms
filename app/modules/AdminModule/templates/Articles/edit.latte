@@ -97,21 +97,9 @@
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
-                            <div class="col-md-7 inputGroupContainer">
-
-                                {if strlen($data->getImage()) > 5}
-                                    <div class="divEditImg">
-                                        <img class="img-responsive" src="{$basePath}/{$data->getImage()}" alt="background-img" />
-                                        <a n:href="deleteImg! $data->getId()"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
-                                    </div>
-                                {/if}
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-primary">
-                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
+                            <div class="col-md-12">
+                                <div class="file-loading">
+                                    <input id="up_1" n:name="image" type="file">
                                 </div>
                                 <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
                             </div>
@@ -128,23 +116,11 @@
                     <div class="panel-body">
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
-                            <div class="col-md-7 inputGroupContainer">
-
-                                {if strlen($data->getImageArticle()) > 5}
-                                    <div class="divEditImg">
-                                        <img class="img-responsive" src="{$basePath}/{$data->getImageArticle()}" alt="background-img" />
-                                        <a n:href="deleteImgArticle! $data->getId()"><div class="divBlockDelete divBlockSign"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div></a>
-                                    </div>
-                                {/if}
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-primary">
-                                            Browse&hellip; <input n:name="image_article" type="file" style="display: none;" >
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
+                            <div class="col-md-12 ">
+                                <div class="file-loading">
+                                    <input id="up_2" n:name="image_article" type="file">
                                 </div>
-                                <span class="formError red" n:ifcontent>{inputError image_article}</span> {* error *}
+                                <span class="formError red" n:ifcontent>{inputError image_article}</span> {*error*}
                             </div>
                         </div>
                     </div>
@@ -179,6 +155,8 @@
 
         var pickers = [['heading_1', '#color_1'], ['heading_2', '#color_2'], ['text', '#color_3'], ['background', '#color_4']];
         setColors({$colors},pickers);
+        fileUpload('up_2', true, [{$basePath."/".$data->getImageArticle()}]);
+        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
     </script>
 
 {/block}

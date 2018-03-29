@@ -8,7 +8,6 @@ use App\Model\Services\ReferenceService;
 
 class SummaryPresenter extends SecuredBasePresenter {
 
-    public $database;
 
     private $members;
     private $headers;
@@ -20,9 +19,8 @@ class SummaryPresenter extends SecuredBasePresenter {
 
 
 
-    public function __construct(Nette\Database\Context $database, BF $blockFactory, ReferenceService $references)
+    public function __construct(BF $blockFactory, ReferenceService $references)
     {
-        $this->database = $database;
         $this->members = $blockFactory->getBlockMembers();
         $this->headers = $blockFactory->getBlockHeader();
         $this->references = $blockFactory->getBlockReferences();

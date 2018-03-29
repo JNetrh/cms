@@ -15,6 +15,9 @@ body, p, ul, ol, ul li, ol li, table, table td, span, div, a, a:hover, a:visited
     font-weight: normal;
     font-style: normal;
 }
+input {
+    font-size: 14px;
+}
 h1, h2, h3, h4, h5, h6, button /*----NEMAZAT----*/
 {
     font-weight: normal;
@@ -37,7 +40,9 @@ strong /*----NEMAZAT----*/
     line-height: inherit;
     text-transform: inherit;
 }
-
+span {
+    font-size: 14px;
+}
 span.formError{
     text-align: left;
     font-size: 13px;
@@ -382,7 +387,7 @@ img.imgLogo
     position: relative;
     left: 0;
     top: 23px;
-    margin: 0 auto;
+    margin: 0 auto 23px auto;
     padding: 0;
     width: 45%;
 }

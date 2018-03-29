@@ -1,7 +1,7 @@
+
 /*----------------------------------------------------------------------------*/
 /* SetColors colorpicker: */
 var setColors = function (clr,pick) {
-    console.log('hello');
     var colors = clr;
     var pickers = pick;
     pickers.forEach(function (name) {
@@ -23,6 +23,33 @@ var setColors = function (clr,pick) {
     }
 }
 
+/*----------------------------------------------------------------------------*/
+/* FileInput beautify: */
+var fileUpload = function (id, update, images){
+    var urls = false;
+    if (update === true){
+        urls = images;
+    }
+    var uploader = $("#" + id);
+    uploader.fileinput({
+        language: "en",
+        initialPreview: urls,
+        initialPreviewAsData: true,
+        // initialPreviewConfig: [
+        //     { caption: "Moon.jpg", size: 930321}
+        // ],
+        allowedFileExtensions: ['png', 'gif', 'jpg', 'jpeg', 'JPG'],
+        maxFileSize: 10240,
+        validateInitialCount: true,
+        browseClass: "btn btn-primary btn-block",
+        showCaption: false,
+        showRemove: false,
+        showUpload: false,
+        uploadAsync: false,
+        autoReplace: true
+    });
+};
+
 $(document).ready(function() {
 
 /*----------------------------------------------------------------------------*/
@@ -37,31 +64,32 @@ $(document).ready(function() {
 
 
 
-/*----------------------------------------------------------------------------*/
-/* FileInput beautify: */
-    // We can attach the `fileselect` event to all file inputs on the page
-    $(document).on('change', ':file', function() {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        input.trigger('fileselect', [numFiles, label]);
-    });
+// /*----------------------------------------------------------------------------*/
+// /* FileInput beautify: */
+//     // We can attach the `fileselect` event to all file inputs on the page
+//     $(document).on('change', ':file', function() {
+//         var input = $(this),
+//             numFiles = input.get(0).files ? input.get(0).files.length : 1,
+//             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+//         input.trigger('fileselect', [numFiles, label]);
+//     });
+//
+//     // We can watch for our custom `fileselect` event like this
+//     $(document).ready( function() {
+//         $(':file').on('fileselect', function(event, numFiles, label) {
+//
+//             var input = $(this).parents('.input-group').find(':text'),
+//                 log = numFiles > 1 ? numFiles + ' files selected' : label;
+//
+//             if( input.length ) {
+//                 input.val(log);
+//             } else {
+//                 if( log ) alert(log);
+//             }
+//
+//         });
+//     });
 
-    // We can watch for our custom `fileselect` event like this
-    $(document).ready( function() {
-        $(':file').on('fileselect', function(event, numFiles, label) {
-
-            var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-            if( input.length ) {
-                input.val(log);
-            } else {
-                if( log ) alert(log);
-            }
-
-        });
-    });
 
 
 

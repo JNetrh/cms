@@ -19,17 +19,23 @@
 	"require": {
 		"php": "^5.6 || ^7.0",
 		"doctrine/cache": "^1.5",
-		"nette/di": "^2.4@dev",
-		"nette/caching": "^2.4@dev",
+		"nette/di": "^2.4.7@dev",
+		"nette/caching": "^2.5@dev",
 		"kdyby/strict-objects": "^1.0"
 	},
 	"require-dev": {
 		"doctrine/orm": "^2.5",
-		"symfony/validator": "^2.5.3 || ^3.0",
-		"nette/bootstrap": "^2.4@dev",
-		"nette/tester": "^1.7"
+		"symfony/validator": "^2.5.3 || ^3.0 || ^4.0",
+		"nette/bootstrap": "^2.4.5@dev",
+		"nette/tester": "^2.0"
 	},
 	"minimum-stability": "dev",
+	"conflict": {
+		"nette/finder": "<2.4.1",
+		"nette/neon": "<2.4.2",
+		"nette/reflection": "<2.4.2",
+		"nette/utils": "<2.4.5"
+	},	
 	"autoload": {
 		"psr-4": {
 			"Kdyby\\DoctrineCache\\": "src/"
