@@ -1,5 +1,29 @@
-$(document).ready(function() {
+/*----------------------------------------------------------------------------*/
+/* SetColors colorpicker: */
+var setColors = function (clr,pick) {
+    console.log('hello');
+    var colors = clr;
+    var pickers = pick;
+    pickers.forEach(function (name) {
+        var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
+        colors != null ? picker.setColor(colors[name[0] + '_color']) : null //set initial color
+        picker.linkTo(function (color) {
+            $(name[1]).val(color)
+            $(name[1]).next('.openColpick').css('background-color', color)
+        }); //link to callback
+    })
 
+    if(colors != null){
+        setTimeout(function () {
+            pickers.forEach(function (name) {
+                $(name[1]).val(colors[name[0] + '_color'])
+                $(name[1]).next('.openColpick').css('background-color', colors[name[0] + '_color'])
+            })
+        }, 100)
+    }
+}
+
+$(document).ready(function() {
 
 /*----------------------------------------------------------------------------*/
 /* Toggle colorpicker: */
@@ -10,6 +34,8 @@ $(document).ready(function() {
     $(".closeColpick").click(function () {
         $(this).closest('.divColpick').hide()
     })
+
+
 
 /*----------------------------------------------------------------------------*/
 /* FileInput beautify: */

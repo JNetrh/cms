@@ -6,7 +6,7 @@
 
             <div class="divSummImg col-md-4 equal" style="background-image: url('{$basePath."/".$row->getImage()|noescape}'); background-color: {$row->getColorProperties()['background_color']|noescape} ">
 
-                <div class="divBlockSign"><span style="font-size:1.5em;" class="glyphicon glyphicon-calendar" aria-hidden="true"></span></div>
+                <div class="divBlockSign"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span><p>{$row->toString()|firstUpper}</p></div>
             </div>
             <div class="col-md-6 equal divPanelTable">
                 <table class="tableSummary">

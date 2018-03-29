@@ -141,11 +141,11 @@ class BlockHeader
             'heading_1_color' => $style->heading_1_color,
             'heading_2_color' => $style->heading_2_color,
             'button_1_color' => $style->button_1_color,
-            'button_1_border_color' => $style->button_1_border,
-            'button_1_background_color' => $style->button_1_background,
+            'button_1_border_color' => $style->button_1_border_color,
+            'button_1_background_color' => $style->button_1_background_color,
             'button_2_color' => $style->button_2_color,
-            'button_2_border_color' => $style->button_2_border,
-            'button_2_background_color' => $style->button_2_background,
+            'button_2_border_color' => $style->button_2_border_color,
+            'button_2_background_color' => $style->button_2_background_color,
             'background_color' => $style->background_color
         ];
     }

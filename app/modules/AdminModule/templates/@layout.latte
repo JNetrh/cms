@@ -45,10 +45,8 @@
     <body>
     {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
 
-    <div class="container-fluid full-height">
-        <div class="row content full-height">
 
-            <nav class="navbar navbar-default visible-sm visible-xs">
+            <nav class="navbar navbar-default visible-xs">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -59,22 +57,15 @@
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav ulmenu">
-
-
-                            <li class="lead"><a n:href="Main:" >Home</a></li>
-                            <li class="lead"><a n:href="Summary:" >Manage</a></li>
-                            <li class="lead"><a n:href="Header:new" >New Header</a></li>
-                            <li class="lead"><a n:href="Members:new" >New Members</a></li>
-                            {*<li class="lead"><a n:href="Members:newMember 1" >New member</a></li>*}
-                            <li class="lead"><a n:href="References:new" >New references</a></li>
-                            {*<li class="lead"><a n:href="References:newReference 1" >New reference</a></li>*}
+                            <li id="home"><a n:href="Main:" >Home</a></li>
+                            <li id="summary"><a n:href="Summary:" >Manage</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <!--menu pro velké obrazovky-->
-            <div class="col-md-2 sidenav hidden-sm hidden-xs same-height">
-                <a n:href="Main:"><img class="img-responsive imgLogo" src="{$basePath}/admin/img/svg/moje.svg" alt="logo"/></a>
+            <div class="col-md-2 divLayoutLeft hidden-xs">
+                <a n:href="Main:"><img class="img-responsive imgLogo" src="{$basePath}/admin/img/svg/logo.svg" alt="logo"/></a>
                 <div class="divMenu">
                     <ul class="menu">
                         <li id="home"><a n:href="Main:" >Home</a></li>
@@ -119,28 +110,29 @@
                 {*</ul>*}
             {*</div>*}
 
-            <div class="col-md-10 navbar hidden-xs">
-                <div class="container-fluid text-right">
+            <div class="divLayoutTop navbar hidden-xs">
+                {*<div class="container-fluid">*}
+                    <div class="divPageH">
+                        {include heading}
+                    </div>
                     <ul class="list-inline ulNav">
                         <li><i class="fa fa-user-circle-o" aria-hidden="true"></i></li>
-                        {*<li>{ifset $firstName}{$firstName} {$lastName}{/ifset}</li>*}
+                        <li>{ifset $this->getParameter('user')->getIdentity()->data['email']}{$this->getParameter('user')->getIdentity()->data['email']}{/ifset}</li>
                         <li>|</li>
                         <li><a class="bila" n:href="logout"><strong>Sign out</strong></a></li>
                     </ul>
-                </div>
+                {*</div>*}
             </div>
 
 
 
-            <div class="col-md-10 by-height">
+            <div class="divLayoutRight by-height">
 
                 <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
                 {include content}
             </div>
 
-        </div>
-    </div>
 
 
     {block css}

@@ -1,0 +1,61 @@
+
+<div n:if="$destination != null" class="divBack col-md-2">
+    <a n:if="isset($blockId)" class="buttonCisty buttonView" n:href="$destination, $blockId"><i class="fa fa-chevron-circle-left"></i> Back</a>
+    <a n:if="!isset($blockId)" class="buttonCisty buttonView" n:href="$destination"><i class="fa fa-chevron-circle-left"></i> Back</a>
+</div>
+<div n:if="isset($create)" class="divBack col-md-2">
+    <a class="buttonCisty buttonAdd" n:href="$create $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+</div>
+<div class="panel col-md-8">
+    <div class="panel-heading">
+        <h2 id="expandNewArrow" class="h2small"><span class="spanArrow"><i class="fa fa-lg fa-caret-down"></i></span> Create Block</h2>
+    </div>
+    <div id="expandNew" class="divSummaryExpand panel-body" style="height: 0">
+        <div class="divNewBlock"><a n:href="Header:new" ><span class="glyphicon glyphicon-header" aria-hidden="true"></span> Headers</a></div>
+        <div class="divNewBlock"><a n:href="Members:new" ><i class="fa fa-address-card"></i> Members</a></div>
+        <div class="divNewBlock"><a n:href="Events:new" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Events</a></div>
+        <div class="divNewBlock"><a n:href="References:new" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> References</a></div>
+        <div class="divNewBlock"><a n:href="Contacts:new" ><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Contacts</a></div>
+        <div class="divNewBlock"><a n:href="Articles:new" ><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Articles</a></div>
+    </div>
+</div>
+<p class="pClear"></p>
+
+{block bordel}
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $("#expandNew").css({
+                height: "0",
+                padding:"0px 15px",
+                opacity:.2
+            })
+
+            $('#expandNewArrow').click(function(){
+
+                var display = $("#expandNew").css('height')
+
+                if(display == '0px'){
+                    $('#expandNew').animate({
+                        height: "100px",
+                        padding:"15px 15px",
+                        opacity:.8
+                    }, 500, function(){
+                        $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-up"></i></span>');
+                    });
+                }
+                else {
+                    $('#expandNew').animate({
+                        height: "0",
+                        padding:"0px 15px",
+                        opacity:.2
+                    }, 500, function(){
+                        $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-down"></i></span>');
+                    });
+                }
+            })
+        });
+    </script>
+{/block}

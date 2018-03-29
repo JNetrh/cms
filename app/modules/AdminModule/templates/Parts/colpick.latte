@@ -1,0 +1,10 @@
+
+<div class="input-group">
+    <input n:name="$name.'_color'" class="form-control" id={$id} value="transparent">
+    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
+    <div class="divColpick well">
+        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
+        <div id="colpick_{$name}"></div>
+    </div>
+</div>
+<span class="formError red" n:ifcontent>{inputError $name.'_color'}</span> {* error *}

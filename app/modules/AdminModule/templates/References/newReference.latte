@@ -1,9 +1,11 @@
+{block title}References{/block}
+{block heading}<h1>Reference block</h1>{/block}
 {block content}
+    {include '../Parts/topBar.latte', destination => 'References:edit', blockId => $blockId}
 
 
     <form n:name=oneReferenceForm>
         <div class="container odsaditBottom-50">
-            <h1>New reference</h1>
 
             <div class="col-md-12">
                 <div class="panel container-fluid">

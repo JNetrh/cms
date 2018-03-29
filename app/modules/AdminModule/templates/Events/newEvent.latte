@@ -1,9 +1,11 @@
+{block title}Events{/block}
+{block heading}<h1>Event block</h1>{/block}
 {block content}
+    {include '../Parts/topBar.latte', destination => 'Events:edit', blockId => $blockId}
 
 
     <form n:name=oneEventForm>
         <div class="container odsaditBottom-50">
-            <h1>New event</h1>
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -107,10 +109,6 @@
 
     </form>
 
-{/block}
-
-{block styleExt}
-    {*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css" />*}
 {/block}
 
 {block bordel}

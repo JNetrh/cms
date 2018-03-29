@@ -1,9 +1,11 @@
+{block title}Edit references{/block}
+{block heading}<h1>Edit reference block</h1>{/block}
 {block content}
+    {include '../Parts/topBar.latte', destination => 'References:edit', blockId => $blockId}
 
 
     <form n:name=oneReferenceForm>
         <div class="container odsaditBottom-50">
-            <h1>New reference</h1>
 
             <div class="col-md-12">
                 <div class="panel container-fluid">
@@ -31,7 +33,7 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Image</label>
                             <div class="col-md-7 inputGroupContainer">
-
+                            {*TODO: není tady náhled obrázku*}
                                 <div class="input-group">
                                     <label class="input-group-btn">
                                         <span class="btn btn-primary">

@@ -1,22 +1,10 @@
 
-{block title}Default{/block}
+{block title}Summary{/block}
+{block heading}<h1>Summary</h1>{/block}
 {block content}
 
 
-    <h1>Summary</h1>
-    <div class="panel">
-        <div class="panel-heading">
-            <h2 id="expandNewArrow" class="h2small"><span class="spanArrow"><i class="fa fa-lg fa-caret-down"></i></span> Create Block</h2>
-        </div>
-        <div id="expandNew" class="divSummaryExpand panel-body" style="height: 0">
-            <div class="divNewBlock"><a n:href="Header:new" ><span class="glyphicon glyphicon-header" aria-hidden="true"></span> Header</a></div>
-            <div class="divNewBlock"><a n:href="Members:new" ><i class="fa fa-address-card"></i> Members</a></div>
-            <div class="divNewBlock"><a n:href="Events:new" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Events</a></div>
-            <div class="divNewBlock"><a n:href="References:new" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> References</a></div>
-            <div class="divNewBlock"><a n:href="Contacts:new" ><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Contacts</a></div>
-            <div class="divNewBlock"><a n:href="Articles:new" ><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> Articles</a></div>
-        </div>
-    </div>
+    {include '../Parts/topBar.latte', destination => 'Main:'}
 
     {foreach $myBlocks as $row}
         {if $row->toString() == 'headers'}
@@ -49,48 +37,6 @@
     <script type="text/javascript">
         $(function() {
             $('.equal').matchHeight();
-        });
-    </script>
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-//            $('.equal-height-panels .equal').matchHeight();
-
-            $("#expandNew").css({
-                height: "0",
-                padding:"0px 15px",
-                opacity:.2
-            })
-
-            $('#expandNewArrow').click(function(){
-
-                var display = $("#expandNew").css('height')
-
-                if(display == '0px'){
-                    $('#expandNew').animate({
-                        height: "100px",
-                        padding:"15px 15px",
-                        opacity:.8
-                    }, 500, function(){
-                        $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-up"></i></span>');
-                    });
-
-
-                }
-                else {
-                    $('#expandNew').animate({
-                        height: "0",
-                        padding:"0px 15px",
-                        opacity:.2
-                    }, 500, function(){
-                        $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-down"></i></span>');
-                    });
-                }
-
-
-
-            })
-
         });
     </script>
 

@@ -1,9 +1,10 @@
+{block title}Articles{/block}
+{block heading}<h1>Article block</h1>{/block}
 {block content}
-
+    {include '../Parts/topBar.latte', destination => 'Summary:'}
 
     <form n:name=articlesForm>
         <div class="container odsaditBottom-50">
-            <h1>New article block</h1>
 
             <div class="col-md-12">
                 <div class="panel container-fluid">
@@ -23,15 +24,7 @@
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading color</label>
 
                             <div class="col-md-5 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="heading_1_color" class="form-control" id="color_1" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_heading_1"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError heading_1_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'heading_1', id => 'color_1'}
                             </div>
                         </div>
 
@@ -46,15 +39,7 @@
                             <label for="inputCaption" class="col-md-12 col-form-label">Sub heading color</label>
 
                             <div class="col-md-5 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="heading_2_color" class="form-control" id="color_2" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_heading_2"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError heading_2_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'heading_2', id => 'color_2'}
                             </div>
                         </div>
                     </div>
@@ -101,29 +86,13 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Paragraph color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="text_color" class="form-control" id="color_3" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_text"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError text_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'text', id => 'color_3'}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="background_color" class="form-control" id="color_4" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_background"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'background', id => 'color_4'}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -189,26 +158,7 @@
             init_instance_callback : function(editor){}
         });
 
-
-        $(document).ready(function() {
-
-            $('#colpick_heading_1').farbtastic(function(color){
-                $("#color_1").val(color)
-                $("#color_1").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_heading_2').farbtastic(function(color){
-                $("#color_2").val(color)
-                $("#color_2").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_text').farbtastic(function(color){
-                $("#color_3").val(color)
-                $("#color_3").next('.openColpick').css('background-color', color)
-            });
-            $('#colpick_background').farbtastic(function(color){
-                $("#color_4").val(color)
-                $("#color_4").next('.openColpick').css('background-color', color)
-            });
-
-        });
+        var pickers = [['heading_1', '#color_1'], ['heading_2', '#color_2'], ['text', '#color_3'], ['background', '#color_4']];
+        setColors(null,pickers);
     </script>
 {/block}

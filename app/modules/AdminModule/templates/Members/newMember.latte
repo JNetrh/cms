@@ -1,9 +1,11 @@
+{block title}Members{/block}
+{block heading}<h1>Member block</h1>{/block}
 {block content}
+    {include '../Parts/topBar.latte', destination => 'Members:edit', blockId => $blockId}
 
 
     <form n:name=oneMemberForm>
         <div class="container odsaditBottom-50">
-            <h1>New member</h1>
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">

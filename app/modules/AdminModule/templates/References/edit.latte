@@ -1,9 +1,11 @@
+{block title}Edit references{/block}
+{block heading}<h1>Edit reference block</h1>{/block}
 {block content}
+    {include '../Parts/topBar.latte', destination => 'Summary:', create => 'References:newReference'}
 
 
     <form n:name=referencesForm>
         <div class="container odsaditBottom-50">
-            <h1>Edit references block</h1>
 
             {* /START\ Heading formPart *}
             <div class="col-md-12">
@@ -24,15 +26,7 @@
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading color</label>
 
                             <div class="col-md-5 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="heading_color" class="form-control" id="color_2" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_heading"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError heading_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'heading', id => 'color_1'}
                             </div>
                         </div>
                     </div>
@@ -58,15 +52,7 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="background_color" class="form-control" id="color_1" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_background"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'background', id => 'color_2'}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -106,15 +92,7 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Paragraph color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="text_color" class="form-control" id="color_3" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_text"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError text_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'text', id => 'color_3'}
                             </div>
                         </div>
 
@@ -122,30 +100,14 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">The names color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="name_color" class="form-control" id="color_4" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_name"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError name_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'name', id => 'color_4'}
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="block_background_color" class="form-control" id="color_5" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_block_background"></div>
-                                    </div>
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError background_color}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'block_background', id => 'color_5'}
                             </div>
                         </div>
                     </div>
@@ -162,14 +124,6 @@
 
     </form>
 
-    <div class="col-md-12">
-        <a class="buttonCisty buttonView" n:href="Summary:"><i class="fa fa-chevron-circle-left"></i> Back</a>
-    </div>
-
-    <div class="col-md-12">
-        <a class="buttonCisty buttonAdd" n:href="References:newReference $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
-    </div>
-
     <div class="col-md-12 odsaditBottom-150 odsaditTop-50">
         <div class="container">
             {foreach $references as $row}
@@ -178,56 +132,16 @@
         </div>
     </div>
 
-    {*<div class="container odsaditBottom-150">*}
-        {*<h2>Members</h2>*}
-        {*<table class="tableSummary table table-responsive">*}
-            {*<tr>*}
-                {*<th>Name</th>*}
-                {*<th>Description</th>*}
-                {*<th>Visible</th>*}
-                {*<th>Profile photo</th>*}
-                {*<th>Edit</th>*}
-                {*<th>Delete</th>*}
-            {*</tr>*}
-            {*{foreach $references as $row}*}
-                {*<tr>*}
-                    {*<td class="col">{$row->getName()}</td>*}
-                    {*<td class="col">{$row->getText()}</td>*}
-                    {*<td class="col">{$row->getActive() == 1 ? "yes" : "no"}</td>*}
-                    {*<td class="col">{strlen($row->getImage()) > 5 ? "yes" : "no"}</td>*}
-                    {*<td class="col"><a n:href="References:editReference, $row->getId(), $row->getOwner()" >edit</a></td>*}
-                    {*<td class="col"><a n:href="deleteReference! $row->getId(), $row->getOwner()" >delete</a></td>*}
-                    {*<td class="col"><a href="#" >edit</a></td>*}
-                {*</tr>*}
-            {*{/foreach}*}
-        {*</table>*}
-    {*</div>*}
+    <div n:if="$data->referencesCount() > 0" class="col-md-12 odsaditBottom-50">
+        <a class="buttonCisty buttonAdd" n:href="Events:newEvent $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+    </div>
 
 {/block}
 
 {block bordel}
+
     <script type="text/javascript">
-
-        $(document).ready(function(){
-            var pickers = [['heading', '#color_2'], ['background', '#color_1'], ['text', '#color_3'], ['name', '#color_4'], ['block_background', '#color_5']];
-            var colors = {$colors};
-            pickers.forEach(function (name) {
-                var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
-                picker.setColor(colors[name[0] + '_color']); //set initial color
-                picker.linkTo(function (color) {
-                    $(name[1]).val(color)
-                    $(name[1]).next('.openColpick').css('background-color', color)
-                }); //link to callback
-            })
-            console.log(colors)
-
-            setTimeout(function () {
-                pickers.forEach(function (name) {
-                    $(name[1]).val(colors[name[0] + '_color'])
-                    $(name[1]).next('.openColpick').css('background-color', colors[name[0] + '_color'])
-                })
-            }, 100)
-
-        });
+        var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['text', '#color_3'], ['name', '#color_4'], ['block_background', '#color_5']];
+        setColors({$colors},pickers);
     </script>
 {/block}
