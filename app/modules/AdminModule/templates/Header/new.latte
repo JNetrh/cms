@@ -169,16 +169,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Background image</label>
-                            <div class="col-md-7 inputGroupContainer">
-
-                                <div class="input-group">
-                                    <label class="input-group-btn">
-                                        <span class="btn btn-primary">
-                                            Browse&hellip; <input n:name="image" type="file" style="display: none;" >
-                                        </span>
-                                    </label>
-                                    <input type="text" class="form-control" readonly>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Background image</label>
+                            <div class="col-md-12">
+                                <div class="file-loading">
+                                    <input id="up_1" n:name="image" type="file">
                                 </div>
                                 <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
                             </div>
@@ -230,6 +224,7 @@
             ['background', '#color_9']
         ];
         setColors(null,pickers);
+        fileUpload('up_1', false);
 
     </script>
 {/block}

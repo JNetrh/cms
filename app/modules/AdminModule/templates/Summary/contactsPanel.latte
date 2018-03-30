@@ -38,22 +38,6 @@
                         <td class="tdHeading">GPS</td>
                         <td class="">x: {$row->getGpsx()|truncate:13} | y: {$row->getGpsy()|truncate:13}</td>
                     </tr>
-                    {*<tr n:if="strlen($row->getInstagram()) > 5 || $row->getInstagram() != null">*}
-                        {*<td class="tdHeading">Instagram</td>*}
-                        {*<td class=""><a href="{$row->getInstagram()|noescape}" target="_blank">Show link</a></td>*}
-                    {*</tr>*}
-                    {*<tr n:if="strlen($row->getFacebook()) > 5 || $row->getFacebook() != null">*}
-                        {*<td class="tdHeading">Facebook</td>*}
-                        {*<td class=""><a href="{$row->getFacebook()|noescape}" target="_blank">Show link</a></td>*}
-                    {*</tr>*}
-                    {*<tr n:if="strlen($row->getTwitter()) > 5 || $row->getTwitter() != null">*}
-                        {*<td class="tdHeading">Twitter</td>*}
-                        {*<td class=""><a href="{$row->getTwitter()|noescape}" target="_blank">Show link</a></td>*}
-                    {*</tr>*}
-                    {*<tr n:if="strlen($row->getLinkedin()) > 5 || $row->getLinkedin() != null">*}
-                        {*<td class="tdHeading">Instagram</td>*}
-                        {*<td class=""><a href="{$row->getLinkedin()|noescape}" target="_blank">Show link</a></td>*}
-                    {*</tr>*}
                     <tr>
                         <td class="tdHeading">Visible</td>
                         <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
@@ -68,9 +52,9 @@
                 </table>
             </div>
             <div class="divSummButtons col-md-2 equal">
-                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Contacts:edit $row->getId()">Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteContact! $row->getId()">Delete</a>
-                <a class="buttonCisty buttonView buttonBlockSummary" href="#">View</a>
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Contacts:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteContact! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#"><span class="glyphicon glyphicon-fullscreen"></span> View</a>
             </div>
             {*<div class=" panel">*}
             {*</div>*}
