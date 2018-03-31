@@ -223,7 +223,7 @@
             ['background', '#color_9']
         ];
         setColors({$colors},pickers);
-        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
 
     </script>
 {/block}

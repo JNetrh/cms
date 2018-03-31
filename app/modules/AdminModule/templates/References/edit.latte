@@ -120,7 +120,7 @@
     </div>
 
     <div n:if="$data->referencesCount() > 0" class="col-md-12 odsaditBottom-50">
-        <a class="buttonCisty buttonAdd" n:href="Events:newEvent $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+        <a class="buttonCisty buttonAdd" n:href="References:newReference $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
     </div>
 
 {/block}
@@ -130,6 +130,6 @@
     <script type="text/javascript">
         var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['text', '#color_3'], ['name', '#color_4'], ['block_background', '#color_5']];
         setColors({$colors},pickers);
-        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
     </script>
 {/block}

@@ -3,34 +3,19 @@
         <div class="col-md-12 myFlex">
 
             <div class="col-md-4 equal">
-                <div class="divAvatarImg" style="background-image: url('{$basePath."/".$row->getImage()|noescape}');"></div>
+                <img class="img-responsive" src="{$basePath."/".$row->getImage()|noescape}" alt="event-image">
             </div>
-            {*<div class="col-md-4 equal" >*}
-                {*<img class="imgAvatar img-responsive" src="{$basePath}/{$row->getImage()|noescape}" alt="profile image" />*}
-            {*</div>*}
             <div class="col-md-6 equal divPanelTable">
                 <table class="tableSummary">
                     <tr>
-                        <td class="tdHeading">Name</td>
-                        <td class="">{$row->getName()|truncate:13}</td>
-                    </tr>
-                    <tr>
-                        <td class="tdHeading">Description</td>
-                        <td class="">{$row->getText()|truncate:21}</td>
-                    </tr>
-                    <tr>
-                        <td class="tdHeading">Visible</td>
-                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
-                    </tr>
-                    <tr>
-                        <td class="tdHeading">Reference</td>
-                        <td class="">{$row->getReference()|striptags|truncate:25}</td>
+                        <td class="tdHeading">Link</td>
+                        <td class="">{$row->getLink()|truncate:13}</td>
                     </tr>
                 </table>
             </div>
             <div class="divSummButtons col-md-2 equal">
-                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="References:editReference $row->getId(), $row->getOwner()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteReference! $row->getId(), $row->getOwner()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Sponsors:editSponsor $row->getId(), $row->getOwner()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteSponsor! $row->getId(), $row->getOwner()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
                 <a class="buttonCisty buttonView buttonBlockSummary" href="#"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
             </div>
         </div>

@@ -25,6 +25,9 @@
         {elseif $row->toString() == 'articles'}
             {include './articlesPanel.latte', row => $row}
 
+        {elseif $row->toString() == 'sponsors'}
+            {include './sponsorsPanel.latte', row => $row}
+
         {/if}
     {/foreach}
 

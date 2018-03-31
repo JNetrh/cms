@@ -11,7 +11,7 @@ class MembersPresenter extends SecuredBasePresenter {
 
     public $members;
     public $id;
-    public $mId;
+    public $sId;
     public $service;
 
     public function __construct(BF $blockFactory, MemberService $service)
@@ -30,6 +30,7 @@ class MembersPresenter extends SecuredBasePresenter {
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
         $this['membersForm']->setDefaults($defaults);
+        $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
         $this->template->members = $entity->getMembers();
@@ -37,8 +38,9 @@ class MembersPresenter extends SecuredBasePresenter {
 
     public function actionEditMember($memberId, $blockId){
         $entity = $this->members->findSubById($blockId, $memberId);
-        $this->mId = $entity->getId();
+        $this->sId = $entity->getId();
         $this['oneMemberForm']->setDefaults($entity->getFormProperties());
+        $this->template->linkSId = $this->sId;
         $this->template->blockId = $blockId;
         $this->template->data = $entity;
     }
@@ -61,7 +63,7 @@ class MembersPresenter extends SecuredBasePresenter {
         $this->redirect('Members:edit', $id);
     }
 
-    public function handleDeleteMemberImg($blockId, $id) {
+    public function handleDeleteSImg($id, $blockId) {
         $entity = $this->members->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
@@ -172,8 +174,8 @@ class MembersPresenter extends SecuredBasePresenter {
 
         $data = $form->getHttpData();
 
-        if(isset($this->mId)){
-            $entity = $this->members->findSubById($data['block_id'], $this->mId);
+        if(isset($this->sId)){
+            $entity = $this->members->findSubById($data['block_id'], $this->sId);
         }
         else {
             $entity = $this->members->newSubEntity($data['block_id']);

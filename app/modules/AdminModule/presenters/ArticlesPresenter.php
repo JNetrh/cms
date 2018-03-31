@@ -11,7 +11,6 @@ class ArticlesPresenter extends SecuredBasePresenter {
 
     public $articles;
     public $id;
-    public $mId;
     public $service;
 
     public function __construct(BF $blockFactory, ArticleService $service)
@@ -26,6 +25,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
         $this['articlesForm']->setDefaults($defaults);
+        $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
     }

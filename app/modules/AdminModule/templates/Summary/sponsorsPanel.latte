@@ -5,7 +5,7 @@
         <div class="col-md-12">
 
             <div class="divSummImg col-md-4 equal"  style=" background-color: {$row->getColorProperties()['background_color']|noescape}; background-image: url('{$basePath."/".$row->getImage()|noescape}');">
-                <div class="divBlockSign"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span><p>{$row->toString()|firstUpper}</p></div>
+                <div class="divBlockSign"><span class="glyphicon glyphicon-link" aria-hidden="true"></span><p>{$row->toString()|firstUpper}</p></div>
             </div>
             <div class="col-md-6 equal divPanelTable">
                 <table class="tableSummary">
@@ -15,15 +15,11 @@
                     </tr>
                     <tr>
                         <td class="tdHeading">Heading</td>
-                        <td class="">{$row->getHeading1()|striptags}</td>
+                        <td class="">{$row->getHeading()|striptags}</td>
                     </tr>
                     <tr>
-                        <td class="tdHeading">Sub heading</td>
-                        <td class="">{$row->getHeading2()|striptags}</td>
-                    </tr>
-                    <tr>
-                        <td class="tdHeading">Text</td>
-                        <td class="">{$row->getText()|striptags|truncate:21}</td>
+                        <td class="tdHeading">Sponsors count</td>
+                        <td class="">{$row->sponsorsCount()|striptags}</td>
                     </tr>
                     <tr>
                         <td class="tdHeading">Visible</td>
@@ -40,10 +36,10 @@
                 </table>
             </div>
             <div class="divSummButtons col-md-2 equal">
-                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Articles:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteArticle! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Sponsors:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteSponsor! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
                 <a class="buttonCisty buttonView buttonBlockSummary" href="#"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
-                {*<a class="buttonCisty buttonAdd buttonBlockSummary" href="#">Add</a>*}
+                <a class="buttonCisty buttonAdd buttonBlockSummary" n:href="Sponsors:newSponsor $row->getId()"><i class="fa fa-plus-square"></i> Add</a>
             </div>
         </div>
 </div>

@@ -53,6 +53,7 @@ services:
 	- App\Model\Services\EventService
 	- App\Model\Services\ContactService
 	- App\Model\Services\ArticleService
+	- App\Model\Services\SponsorService
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

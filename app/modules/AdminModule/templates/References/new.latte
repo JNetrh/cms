@@ -79,14 +79,6 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Paragraph color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
-                                    <input n:name="text_color" class="form-control" id="color_3" value="transparent">
-                                    <span class="input-group-addon openColpick"><i class="glyphicon glyphicon-option-horizontal"></i></span>
-                                    <div class="divColpick well">
-                                        <button type="button" class="close closeColpick" aria-hidden="true">&times;</button>
-                                        <div id="colpick_text"></div>
-                                    </div>
-                                </div>
                                 <span class="formError red" n:ifcontent>{inputError text_color}</span> {* error *}
                                 {include '../Parts/colpick.latte', name => 'text', id => 'color_3'}
                             </div>
@@ -103,7 +95,6 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <div class="input-group">
                                 {include '../Parts/colpick.latte', name => 'block_background', id => 'color_5'}
                             </div>
                         </div>

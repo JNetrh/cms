@@ -21,7 +21,9 @@ class AuthorizatorFactory {
         $permission->addRole('events');
         $permission->addRole('contacts');
         $permission->addRole('articles');
+        $permission->addRole('sponsors');
         $permission->addRole('authenticated');
+        /* TODO: Insert previous values to DB */
 
         /* seznam zdrojů */
         $permission->addResource('Admin:Main');
@@ -31,11 +33,12 @@ class AuthorizatorFactory {
         $permission->addResource('Admin:Events');
         $permission->addResource('Admin:Contacts');
         $permission->addResource('Admin:Articles');
+        $permission->addResource('Admin:Sponsors');
         $permission->addResource('Admin:Summary');
         $permission->addResource('Admin:');
 
         /* zákldní pole zdrojů */
-        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles');
+        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles', 'Admin:Sponsors');
 
         /* základní pole práv */
         $defaultPrivileges = array('default', 'detail', 'logout');
@@ -48,6 +51,7 @@ class AuthorizatorFactory {
         $permission->allow('events', $basicArray, $defaultPrivileges);
         $permission->allow('contacts', $basicArray, $defaultPrivileges);
         $permission->allow('articles', $basicArray, $defaultPrivileges);
+        $permission->allow('sponsors', $basicArray, $defaultPrivileges);
 
         /* pole privilegií k úpravám */
         $managePrivileges = array('create','delete','edit', 'handle', 'new');
@@ -69,6 +73,9 @@ class AuthorizatorFactory {
 
         //muze upravovat články
         $permission->allow('articles', 'Admin:Articles', $managePrivileges);
+
+        //muze upravovat články
+        $permission->allow('sponsors', 'Admin:Sponsors', $managePrivileges);
 
         /* ADMIN má práva na všechno */
         $permission->allow('admin', $basicArray, $managePrivileges);

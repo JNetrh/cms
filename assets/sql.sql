@@ -6,12 +6,14 @@
 DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS referencese;
 DROP TABLE IF EXISTS events;
+DROP TABLE IF EXISTS sponsors;
 DROP TABLE IF EXISTS block_header;
 DROP TABLE IF EXISTS block_members;
 DROP TABLE IF EXISTS block_references;
 DROP TABLE IF EXISTS block_events;
 DROP TABLE IF EXISTS block_contacts;
 DROP TABLE IF EXISTS block_articles;
+DROP TABLE IF EXISTS block_sponsors;
 DROP TABLE IF EXISTS userrights;
 DROP TABLE IF EXISTS rights;
 DROP TABLE IF EXISTS users;
@@ -19,7 +21,7 @@ DROP TABLE IF EXISTS users;
 
 
 /*==============================================================*/
-/* Table: block_header                                                 */
+/* Table: block_header                                          */
 /*==============================================================*/
 create TABLE block_header
 (
@@ -41,7 +43,7 @@ create TABLE block_header
 
 
 /*==============================================================*/
-/* Table: block_members                                                 */
+/* Table: block_members                                         */
 /*==============================================================*/
 create TABLE block_members
 (
@@ -115,7 +117,7 @@ create TABLE block_contacts
 ;
 
 /*==============================================================*/
-/* Table: block_articles                                          */
+/* Table: block_articles                                        */
 /*==============================================================*/
 create TABLE block_articles
 (
@@ -127,6 +129,22 @@ create TABLE block_articles
   text                  TEXT not null DEFAULT "",
   image                 VARCHAR(255) default null,
   image_article         VARCHAR(255) default null,
+  active                SMALLINT DEFAULT 0,
+  position              INTEGER not NULL DEFAULT 696969,
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: block_sponsors                                        */
+/*==============================================================*/
+create TABLE block_sponsors
+(
+  id                    SERIAL,
+  style                 TEXT,
+  bg_type               varchar(255) not null DEFAULT "color",
+  heading               varchar(255) not null DEFAULT "",
+  image                 VARCHAR(255) default null,
   active                SMALLINT DEFAULT 0,
   position              INTEGER not NULL DEFAULT 696969,
   primary key (id)
@@ -185,6 +203,20 @@ create TABLE events
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 
+/*==============================================================*/
+/* Table: sponsors                                              */
+/*==============================================================*/
+create TABLE sponsors
+(
+  id                    SERIAL,
+  link                  VARCHAR(255) not null DEFAULT "#",
+  image                 VARCHAR(255) default null,
+  owner                 BIGINT UNSIGNED,
+  primary key (id),
+  foreign key (owner) references block_sponsors (id) on delete CASCADE
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
 
 
 /*==============================================================*/
@@ -233,6 +265,11 @@ INSERT INTO `rights`(`name`) VALUES ("admin");
 INSERT INTO `rights`(`name`) VALUES ("headers");
 INSERT INTO `rights`(`name`) VALUES ("members");
 INSERT INTO `rights`(`name`) VALUES ("references");
+INSERT INTO `rights`(`name`) VALUES ("events");
+INSERT INTO `rights`(`name`) VALUES ("contacts");
+INSERT INTO `rights`(`name`) VALUES ("articles");
+INSERT INTO `rights`(`name`) VALUES ("authenticated");
+
 
 INSERT INTO `users`(`email`, `password`) VALUES ("netj01@vse.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
 INSERT INTO `userrights`(`userId`, `rightId`) VALUES (1,1);

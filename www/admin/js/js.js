@@ -1,9 +1,9 @@
 
 /*----------------------------------------------------------------------------*/
 /* SetColors colorpicker: */
-var setColors = function (clr,pick) {
-    var colors = clr;
-    var pickers = pick;
+var setColors = function (colors,pickers) {
+    console.log(colors)
+    console.log(pickers)
     pickers.forEach(function (name) {
         var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
         colors != null ? picker.setColor(colors[name[0] + '_color']) : null //set initial color
@@ -25,19 +25,11 @@ var setColors = function (clr,pick) {
 
 /*----------------------------------------------------------------------------*/
 /* FileInput beautify: */
-var fileUpload = function (id, update, images){
-    var urls = false;
-    if (update === true){
-        urls = images;
-    }
-    var uploader = $("#" + id);
-    uploader.fileinput({
+var fileUpload = function (id, images, urlDel){
+    var match = null;
+    var options = {
         language: "en",
-        initialPreview: urls,
         initialPreviewAsData: true,
-        // initialPreviewConfig: [
-        //     { caption: "Moon.jpg", size: 930321}
-        // ],
         allowedFileExtensions: ['png', 'gif', 'jpg', 'jpeg', 'JPG'],
         maxFileSize: 10240,
         validateInitialCount: true,
@@ -47,7 +39,18 @@ var fileUpload = function (id, update, images){
         showUpload: false,
         uploadAsync: false,
         autoReplace: true
-    });
+    };
+    if(images){
+        match = images[0].match(/\.(jpg|png|gif|jpeg|JPG)\b/);
+    }
+    if (match != null) {
+        options.initialPreview = images;
+        options.initialPreviewConfig = [{
+            url: urlDel
+        }];
+    }
+    var uploader = $("#" + id);
+    uploader.fileinput(options);
 };
 
 $(document).ready(function() {

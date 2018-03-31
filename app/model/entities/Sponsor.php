@@ -15,9 +15,9 @@ use Kdyby\Doctrine\Entities\Attributes\Identifier;
  * Doctrine entita
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="members")
+ * @ORM\Table(name="sponsors")
  */
-class Member
+class Sponsor
 {
 
 
@@ -26,24 +26,16 @@ class Member
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="BlockMembers", inversedBy="members")
+     * @ORM\ManyToOne(targetEntity="BlockSponsors", inversedBy="sponsors")
      * @ORM\JoinColumn(name="owner", referencedColumnName="id", onDelete="CASCADE")
      */
     private $ref;
 
     /**
      * right name column
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
-    protected $name;
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="text")
-     */
-    protected $text;
-
+    protected $link;
 
 
     /**
@@ -60,21 +52,10 @@ class Member
     protected $owner;
 
 
-
-    /**
-     * right name column
-     * @ORM\Column(type="boolean")
-     */
-    protected $active;
-
-
     /**
      * deletes image that corresponds with this subBlock
      */
     public function deleteImage(){
-        if(is_file($this->getImage())){
-            unlink($this->getImage());
-        }
         $this->setImage(null);
     }
 
@@ -86,11 +67,9 @@ class Member
 
         return [
             'id' => $this->getId(),
-            'name' => $this->getName(),
-            'text' => $this->getText(),
+            'link' => $this->getLink(),
             'image' => $this->getImage(),
-            'owner' => $this->getOwner(),
-            'active' => $this->getActive()
+            'owner' => $this->getOwner()
         ];
     }
 
@@ -103,14 +82,6 @@ class Member
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -132,33 +103,17 @@ class Member
     /**
      * @return string
      */
-    public function getName()
+    public function getLink()
     {
-        return $this->name;
+        return $this->link;
     }
 
     /**
-     * @param string $name
+     * @param string $link
      */
-    public function setName($name)
+    public function setLink($link)
     {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
+        $this->link = $link;
     }
 
     /**
@@ -174,6 +129,9 @@ class Member
      */
     public function setImage($image)
     {
+        if(file_exists($this->getImage())){
+            unlink($this->getImage());
+        }
         $this->image = $image;
     }
 
@@ -192,22 +150,6 @@ class Member
     {
         $this->owner = $owner->getId();
         $this->setRef($owner);
-    }
-
-    /**
-     * @return int
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param int $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
     }
 
 }

@@ -1,61 +1,51 @@
-{block title}Edit references{/block}
-{block heading}<h1>Edit reference block</h1>{/block}
+{block title}Edit sponsors{/block}
+{block heading}<h1>Edit sponsor block</h1>{/block}
 {block content}
-    {include '../Parts/topBar.latte', destination => 'References:edit', blockId => $blockId}
+    {include '../Parts/topBar.latte', destination => 'Sponsors:edit', blockId => $blockId}
 
 
-    <form n:name=oneReferenceForm>
+    <form n:name=oneSponsorForm>
         <div class="container odsaditBottom-50">
 
-            <div class="col-md-12">
+
+
+            <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h3 class="h3form">Reference</h3>
+                        <h3 class="h3form">Sponsor</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Content</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Link</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <textarea id="content" n:name="content" class="form-control"></textarea>
-                                <span class="formError red" n:ifcontent>{inputError content}</span> {* error *}
+                                <input n:name="link" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError link}</span> {* error *}
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div> {*end col-md*}
+
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h3 class="h3form">Referrer&rsquo;s data</h3>
+                        <h3 class="h3form">Sponsor logo</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Image</label>
-                            <div class="col-md-12">
+                            <div class="col-md-12 ">
                                 <div class="file-loading">
-                                    <input id="up_1" n:name="image" type="file">
+                                    <input id="up_1" n:name="image" type="file" multiple>
                                 </div>
-                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Name</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <input n:name="name" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError name}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Description</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <textarea n:name="text" class="form-control"></textarea>
-                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {*error*}
                             </div>
                         </div>
                     </div>
                 </div>
             </div> {*end col-md*}
+
 
 
             <div class="col-md-12">
@@ -71,15 +61,6 @@
 
 {block bordel}
     <script type="text/javascript">
-        $(document).ready(function(){
-            tinymce.init({
-                selector: '#content',
-                entity_encoding : "raw",
-                init_instance_callback : function(editor){
-                    editor.setContent({$data->getReference()});
-                }
-            });
-        });
         fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteSImg!, $linkSId, $blockId});
     </script>
 {/block}

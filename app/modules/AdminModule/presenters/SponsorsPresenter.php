@@ -5,102 +5,111 @@ namespace App\AdminModule\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use App\Model\BlockFactory as BF;
-use App\Model\Services\ArticleService;
+use App\Model\Services\SponsorService;
 
-class ArticlesPresenter extends SecuredBasePresenter {
+class SponsorsPresenter extends SecuredBasePresenter {
 
-    public $articles;
+    public $sponsors;
     public $id;
-    public $mId;
+    public $sId;
     public $service;
 
-    public function __construct(BF $blockFactory, ArticleService $service)
+    public function __construct(BF $blockFactory, SponsorService $service)
     {
         $this->service = $service;
-        $this->articles = $blockFactory->getBlockArticles();
+        $this->sponsors = $blockFactory->getBlockSponsors();
+    }
+
+    public function renderNewSponsor($blockId){
+        $this->template->blockId = $blockId;
     }
 
     public function actionEdit($blockId){
-        $entity = $this->articles->findById($blockId);
+        $entity = $this->sponsors->findById($blockId);
         $defaults = $entity->getFormProperties();
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
-        $this['articlesForm']->setDefaults($defaults);
+        $this['sponsorsForm']->setDefaults($defaults);
         $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
+        $this->template->sponsors = $entity->getSponsors();
+    }
+
+    public function actionEditSponsor($sponsorId, $blockId){
+        $entity = $this->sponsors->findSubById($blockId, $sponsorId);
+        $this->sId = $entity->getId();
+        $this['oneSponsorForm']->setDefaults($entity->getFormProperties());
+        $this->template->linkSId = $this->sId;
+        $this->template->blockId = $blockId;
+        $this->template->data = $entity;
     }
 
     public function handleDelete($blockId){
-        $this->articles->delete($blockId);
+        $this->sponsors->delete($blockId);
         $this->redirect('Summary:');
     }
 
+    public function handleDeleteSponsor($sponsorId, $blockId){
+        $this->sponsors->deleteSponsor($blockId, $sponsorId);
+        $this->redirect('Sponsors:edit', $blockId);
+    }
+
     public function handleDeleteImg($id) {
-        $entity = $this->articles->findById($id);
+        $entity = $this->sponsors->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
-        $this->redirect('Articles:edit', $id);
+        $this->redirect('Sponsors:edit', $id);
     }
 
-    public function handleDeleteImgArticle($id) {
-        $entity = $this->articles->findById($id);
-        $entity->deleteImageArticle();
+    public function handleDeleteSImg($id, $blockId) {
+        $entity = $this->sponsors->findSubById($blockId, $id);
+        $entity->deleteImage();
         $this->service->saveEntity($entity);
-        $this->redirect('Articles:edit', $id);
+        $this->redirect('Sponsors:edit', $blockId);
     }
 
-    public function createComponentArticlesForm(){
+    public function createComponentSponsorsForm(){
         $form = new Form();
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
 
-        $form -> addText('heading_1');
-        $form -> addText('heading_1_color');
-        $form -> addText('heading_2');
-        $form -> addText('heading_2_color');
-        $form -> addTextArea('text');
-        $form -> addText('text_color');
+        $form -> addText('heading');
+        $form -> addText('heading_color');
         $form -> addText('background_color');
+        $form -> addText('block_background_color');
         $form -> addText('position');
         $form -> addCheckbox('active');
         $form ->addUpload('image')
-            ->addCondition(Form::FILLED)
-            ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
-        $form ->addUpload('image_article')
             ->addCondition(Form::FILLED)
             ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
 
         $form->addSubmit('submit', 'Create block');
 
 
-        $form->onSuccess[] = [$this, 'articlesFormSucceeded'];
+        $form->onSuccess[] = [$this, 'sponsorsFormSucceeded'];
 
         return $form;
     }
 
-    public function articlesFormSucceeded($form, $values){
+    public function sponsorsFormSucceeded($form, $values){
         $data = $form->getHttpData();
 
         if(isset($this->id)){
-            $entity = $this->articles->findById($this->id);
+            $entity = $this->sponsors->findById($this->id);
         }
         else {
-            $entity = $this->articles->newEntity();
+            $entity = $this->sponsors->newEntity();
         }
 
         $file = $data['image'];
-        $fileArticle = $data['image_article'];
 
         isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
         $entity->setActive($data['active']);
-        $entity->setHeading1($data['heading_1']);
-        $entity->setHeading2($data['heading_2']);
+        $entity->setHeading($data['heading']);
         $entity->setPosition($data['position']);
-        $entity->setText($data['text']);
 
         $path = $entity->getImage();
-        $pathArticle = $entity->getImageArticle();
 
         if($file != null){
             $entity->setBgType('image');
@@ -111,13 +120,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
             $entity->setBgType('color');
         }
 
-        if($fileArticle != null){
-            if(!$fileArticle->isImage() and !$fileArticle->isOk())
-                $form['image_article']->addError('Image for article was not ok');
-        }
-
-        unset($data['heading_1'], $data['active'], $data['position'], $data['image'], $data['image_article']);
-        unset($data['heading_2'], $data['text']);
+        unset($data['heading'], $data['active'], $data['position'], $data['image']);
 
         $arrayKeys = array_keys($data);
         forEach($arrayKeys as $value){
@@ -139,20 +142,68 @@ class ArticlesPresenter extends SecuredBasePresenter {
             $entity->setImage($newPath);
             $file->move($newPath);
         }
-        if($fileArticle != null){
-            $file_ext_art = strtolower(mb_substr($fileArticle->getSanitizedName(), strrpos($fileArticle->getSanitizedName(), ".")));
-            $newPathArticle = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext_art;
-            if(file_exists($pathArticle)){
-                unlink($pathArticle);
-            }
-            $entity->setImageArticle($newPathArticle);
-            $fileArticle->move($newPathArticle);
-        }
+
+
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
             $this->redirect('Summary:');
         }
+
+    }
+
+    public function createComponentOneSponsorForm(){
+        $form = new Form();
+        $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
+
+        $form -> addText('link');
+        $form ->addUpload('image')
+            ->addCondition(Form::FILLED)
+            ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
+
+        $form->addSubmit('submit', 'Create sponsor');
+
+
+        $form->onSuccess[] = [$this, 'oneSponsorFormSucceeded'];
+
+        return $form;
+    }
+
+    public function oneSponsorFormSucceeded($form, $values){
+
+        $data = $form->getHttpData();
+
+        if(isset($this->sId)){
+            $entity = $this->sponsors->findSubById($data['block_id'], $this->sId);
+        }
+        else {
+            $entity = $this->sponsors->newSubEntity($data['block_id']);
+        }
+
+        $file = $data['image'];
+
+        $entity->setLink($data['link']);
+        $entity->setOwner($this->sponsors->findById($data['block_id']));
+
+        $path = $entity->getImage();
+
+        if($file != null){
+            $file_ext = strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            $newPath = UPLOAD_DIR.'img/repo/' . uniqid(rand(0,20), TRUE).$file_ext;
+            if(file_exists($path)){
+                unlink($path);
+            }
+            $entity->setImage($newPath);
+            $file->move($newPath);
+        }
+
+        if(!$form->hasErrors()){
+
+            $this->service->saveEntity($entity);
+            $this->redirect('Sponsors:edit', $entity->getOwner());
+        }
+
+//        $this->redirect('Sponsors:edit', $entity->getOwner());
 
     }
 

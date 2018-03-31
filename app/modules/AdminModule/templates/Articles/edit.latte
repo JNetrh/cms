@@ -155,8 +155,10 @@
 
         var pickers = [['heading_1', '#color_1'], ['heading_2', '#color_2'], ['text', '#color_3'], ['background', '#color_4']];
         setColors({$colors},pickers);
-        fileUpload('up_2', true, [{$basePath."/".$data->getImageArticle()}]);
-        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
+        console.log({bdump($data)})
+        var id =
+        fileUpload('up_2', [{$basePath."/".$data->getImageArticle()}], {link deleteImgArticle!, $linkId});
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
     </script>
 
 {/block}

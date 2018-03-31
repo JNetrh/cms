@@ -7,10 +7,11 @@
  */
 namespace App\Model\Services;
 
-use App\Model\Entities\BlockArticles;
+use App\Model\Entities\BlockSponsors;
+use App\Model\Entities\Sponsor;
 use Kdyby\Doctrine\EntityManager;
 
-class ArticleService
+class SponsorService
 {
 
     /**
@@ -26,11 +27,11 @@ class ArticleService
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->entities = $this->entityManager->getRepository(BlockArticles::class);
+        $this->entities = $this->entityManager->getRepository(BlockSponsors::class);
     }
 
     public function newEntity(){
-        $entity = new BlockArticles;
+        $entity = new BlockSponsors;
         return $entity;
     }
 
@@ -39,15 +40,12 @@ class ArticleService
         $this->entityManager->flush();
     }
 
-    public function createEntity($style, $bgType, $heading1, $heading2, $text, $imageArticle, $image, $position, $active)
+    public function createEntity($style, $bgType, $heading, $image, $position, $active)
     {
-        $entity = new BlockArticles;
+        $entity = new BlockSponsors();
         $entity->setStyle($style);
         $entity->setBgType($bgType);
-        $entity->setHeading1($heading1);
-        $entity->setHeading2($heading2);
-        $entity->setText($text);
-        $entity->setImageArticle($imageArticle);
+        $entity->setHeading($heading);
         $entity->setImage($image);
         $entity->setPosition($position);
         $entity->setActive($active);
@@ -56,8 +54,31 @@ class ArticleService
         $this->entityManager->flush();
     }
 
+    public function newSubEntity($blockId){
+        $blockId = intval($blockId);
+        $entity = new Sponsor();
+        $this->findById($blockId)->setSponsor($entity);
+        return $entity;
+    }
+
+    public function createSubEntity($id){
+        $entity = $this->entityManager->findById($id)->createEntity();
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+    }
+
     public function delete($id){
         $toDel = $this->findById($id);
+        $toDel->getSponsors()->map(function(Sponsor $el){
+            $el->deleteImage();
+        });
+        $toDel->deleteImage();
+        $this->entityManager->remove($toDel);
+        $this->entityManager->flush();
+    }
+
+    public function deleteSponsor($blockId, $id){
+        $toDel = $this->findById($blockId)->removeSponsor($this->findSubById($blockId, $id));
         $toDel->deleteImage();
         $this->entityManager->remove($toDel);
         $this->entityManager->flush();
@@ -73,6 +94,11 @@ class ArticleService
 
     public function getEntities() {
         return $this->entities->findAll();
+    }
+
+    public function findSubById($blockId, $subId){
+        return $this->findById($blockId)->findById($subId);
+
     }
 
 }

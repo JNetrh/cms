@@ -25,6 +25,7 @@ class ContactsPresenter extends SecuredBasePresenter {
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
         $this['contactsForm']->setDefaults($defaults);
+        $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
     }

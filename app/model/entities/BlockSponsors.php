@@ -10,18 +10,24 @@ namespace App\Model\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
+use App\Model\Entities\Sponsor;
 
 /**
  * Doctrine entita
  * @package App\Model\Entities
  * @ORM\Entity
- * @ORM\Table(name="block_articles")
+ * @ORM\Table(name="block_sponsors")
  */
-class BlockArticles
+class BlockSponsors
 {
 
 
     use Identifier;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Sponsor", mappedBy="ref")
+     */
+    private $sponsors;
 
 
     /**
@@ -43,31 +49,7 @@ class BlockArticles
      * right name column
      * @ORM\Column(type="string")
      */
-    protected $heading_1;
-
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="string")
-     */
-    protected $heading_2;
-
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="text")
-     */
-    protected $text;
-
-
-
-    /**
-     * right name column
-     * @ORM\Column(type="string")
-     */
-    protected $image_article;
+    protected $heading;
 
 
 
@@ -101,10 +83,7 @@ class BlockArticles
 
         return [
             'id' => $this->getId(),
-            'heading_1' => $this->getHeading1(),
-            'heading_2' => $this->getHeading2(),
-            'text' => $this->getText(),
-            'image_article' => $this->getImageArticle(),
+            'heading' => $this->getHeading(),
             'active' => $this->getActive(),
             'position' => $this->getPosition(),
             'image' => $this->getImage()
@@ -120,11 +99,18 @@ class BlockArticles
 
 
         return [
-            'heading_1_color' => $style->heading_1_color,
-            'heading_2_color' => $style->heading_2_color,
-            'text_color' => $style->text_color,
-            'background_color' => $style->background_color
+            'heading_color' => $style->heading_color,
+            'background_color' => $style->background_color,
+            'block_background_color' => $style->block_background_color
         ];
+    }
+
+    /**
+     * @return integer
+     */
+    public function sponsorsCount()
+    {
+        return count($this->sponsors);
     }
 
     /**
@@ -135,10 +121,42 @@ class BlockArticles
     }
 
     /**
-     * Deletes article image from server
+     * @param $id of the searching sponsor block
+     * @return Sponsor
      */
-    public function deleteImageArticle(){
-        $this->setImageArticle(null);
+    public function findById($id){
+        foreach ($this->sponsors as $el){
+            if($el->getId() == $id){
+                return $el;
+            }
+        }
+    }
+
+
+    /**
+     * set the sponsor dedicated to this block
+     * @param \App\Model\Entities\Sponsor $sponsor
+     */
+    public function setSponsor (Sponsor $sponsor){
+        $this->sponsors->add($sponsor);
+    }
+
+    /**
+     * remove sponsor dedicated to this block and returns it back
+     * @param \App\Model\Entities\Sponsor $sponsor
+     * @return \App\Model\Entities\Sponsor
+     */
+    public function removeSponsor(Sponsor $sponsor){
+        $this->sponsors->remove($sponsor->getId());
+        return $sponsor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSponsors()
+    {
+        return $this->sponsors;
     }
 
 
@@ -178,33 +196,17 @@ class BlockArticles
     /**
      * @return string
      */
-    public function getHeading1()
+    public function getHeading()
     {
-        return $this->heading_1;
+        return $this->heading;
     }
 
     /**
-     * @param string $heading_1
+     * @param string $heading
      */
-    public function setHeading1($heading_1)
+    public function setHeading($heading)
     {
-        $this->heading_1 = $heading_1;
-    }
-
-    /**
-     * @return string
-     */
-    public function getHeading2()
-    {
-        return $this->heading_2;
-    }
-
-    /**
-     * @param string $heading_2
-     */
-    public function setHeading2($heading_2)
-    {
-        $this->heading_2 = $heading_2;
+        $this->heading = $heading;
     }
 
     /**
@@ -224,25 +226,6 @@ class BlockArticles
             unlink($this->getImage());
         }
         $this->image = $image;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImageArticle()
-    {
-        return $this->image_article;
-    }
-
-    /**
-     * @param mixed $image_article
-     */
-    public function setImageArticle($image_article)
-    {
-        if(file_exists($this->getImageArticle())){
-            unlink($this->getImageArticle());
-        }
-        $this->image_article = $image_article;
     }
 
     /**
@@ -286,28 +269,10 @@ class BlockArticles
     }
 
     /**
-     * @return mixed
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param mixed $text
-     */
-    public function setText($text)
-    {
-        $this->text = $text;
-    }
-
-
-
-    /**
      * @return string
      */
     public function toString(){
-        return 'articles';
+        return 'sponsors';
     }
 
 

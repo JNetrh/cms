@@ -11,7 +11,7 @@ class EventsPresenter extends SecuredBasePresenter {
 
     public $events;
     public $id;
-    public $mId;
+    public $sId;
     public $service;
 
     public function __construct(BF $blockFactory, EventService $service)
@@ -30,6 +30,7 @@ class EventsPresenter extends SecuredBasePresenter {
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
         $this['eventsForm']->setDefaults($defaults);
+        $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
         $this->template->events = $entity->getEvents();
@@ -37,8 +38,9 @@ class EventsPresenter extends SecuredBasePresenter {
 
     public function actionEditEvent($eventId, $blockId){
         $entity = $this->events->findSubById($blockId, $eventId);
-        $this->mId = $entity->getId();
+        $this->sId = $entity->getId();
         $this['oneEventForm']->setDefaults($entity->getFormProperties());
+        $this->template->linkSId = $this->sId;
         $this->template->blockId = $blockId;
         $this->template->data = $entity;
     }
@@ -61,7 +63,7 @@ class EventsPresenter extends SecuredBasePresenter {
         $this->redirect('Events:edit', $id);
     }
 
-    public function handleDeleteEventImg($blockId, $id) {
+    public function handleDeleteSImg($blockId, $id) {
         $entity = $this->events->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
@@ -176,8 +178,8 @@ class EventsPresenter extends SecuredBasePresenter {
 
         $data = $form->getHttpData();
 
-        if(isset($this->mId)){
-            $entity = $this->events->findSubById($data['block_id'], $this->mId);
+        if(isset($this->sId)){
+            $entity = $this->events->findSubById($data['block_id'], $this->sId);
         }
         else {
             $entity = $this->events->newSubEntity($data['block_id']);

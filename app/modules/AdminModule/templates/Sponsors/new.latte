@@ -1,12 +1,12 @@
-{block title}Articles{/block}
-{block heading}<h1>Article block</h1>{/block}
+{block title}Sponsors{/block}
+{block heading}<h1>Sponsor block</h1>{/block}
 {block content}
     {include '../Parts/topBar.latte', destination => 'Summary:'}
 
-    <form n:name=articlesForm>
+    <form n:name=sponsorsForm>
         <div class="container odsaditBottom-50">
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
                         <h3 class="h3form">Heading text</h3>
@@ -15,8 +15,8 @@
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input type="text" n:name="heading_1" class="form-control">
-                                <span class="formError red" n:ifcontent>{inputError heading_1}</span> {* error *}
+                                <input type="text" n:name="heading" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError heading}</span> {* error *}
                             </div>
                         </div>
 
@@ -24,39 +24,7 @@
                             <label for="inputCaption" class="col-md-12 col-form-label">Heading color</label>
 
                             <div class="col-md-5 inputGroupContainer">
-                                {include '../Parts/colpick.latte', name => 'heading_1', id => 'color_1'}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading</label>
-                            <div class="col-md-12 inputGroupContainer">
-                                <input n:name="heading_2" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading color</label>
-
-                            <div class="col-md-5 inputGroupContainer">
-                                {include '../Parts/colpick.latte', name => 'heading_2', id => 'color_2'}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> {*end col-md*}
-
-            <div class="col-md-12">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h3 class="h3form">Article</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Content</label>
-                            <div class="col-md-12 inputGroupContainer">
-                                <textarea n:name="text" ></textarea>
-                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                                {include '../Parts/colpick.latte', name => 'heading', id => 'color_1'}
                             </div>
                         </div>
                     </div>
@@ -84,43 +52,24 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Paragraph color</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                {include '../Parts/colpick.latte', name => 'text', id => 'color_3'}
+                                {include '../Parts/colpick.latte', name => 'background', id => 'color_2'}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
                             <div class="col-md-7 inputGroupContainer">
-                                {include '../Parts/colpick.latte', name => 'background', id => 'color_4'}
+                                {include '../Parts/colpick.latte', name => 'block_background', id => 'color_3'}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Background image</label>
                             <div class="col-md-12">
                                 <div class="file-loading">
-                                    <input id="background_up" n:name="image" type="file">
+                                    <input id="up_1" n:name="image" type="file">
                                 </div>
                                 <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> {*end col-md*}
-
-            <div class="col-md-6">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h3 class="h3form">Article Photography</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Image</label>
-                            <div class="col-md-12 ">
-                                <div class="file-loading">
-                                    <input id="article_up" n:name="image_article" type="file">
-                                </div>
-                                <span class="formError red" n:ifcontent>{inputError image_article}</span> {*error*}
                             </div>
                         </div>
                     </div>
@@ -140,15 +89,10 @@
 
 {block bordel}
     <script type="text/javascript">
-        tinymce.init({
-            selector: 'textarea',
-            entity_encoding : "raw",
-            init_instance_callback : function(editor){}
-        });
 
-        var pickers = [['heading_1', '#color_1'], ['heading_2', '#color_2'], ['text', '#color_3'], ['background', '#color_4']];
+        var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['block_background', '#color_3']];
         setColors(null,pickers);
-        fileUpload('background_up', false);
-        fileUpload('article_up', false);
+        fileUpload('up_1', false);
+        fileUpload('up_2', false);
     </script>
 {/block}

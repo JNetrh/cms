@@ -226,7 +226,7 @@
 
         var pickers = [['heading_1', '#color_1'], ['heading_2', '#color_2'], ['text', '#color_3'], ['background', '#color_4'], ['block_background', '#color_5']];
         setColors({$colors},pickers);
-        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
 
 
 

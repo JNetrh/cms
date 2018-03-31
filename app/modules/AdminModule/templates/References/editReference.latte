@@ -80,6 +80,6 @@
                 }
             });
         });
-        fileUpload('up_1', true, [{$basePath."/".$data->getImage()}]);
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteSImg!, $linkSId, $blockId});
     </script>
 {/block}

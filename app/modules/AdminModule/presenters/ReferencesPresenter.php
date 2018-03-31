@@ -11,7 +11,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
     public $references;
     public $id;
-    public $rId;
+    public $sId;
     public $service;
 
     public function __construct(BF $blockFactory, ReferenceService $service)
@@ -30,6 +30,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $this->id = $entity->getId();
         $defaultColors = $entity->getColorProperties();
         $this['referencesForm']->setDefaults($defaults);
+        $this->template->linkId = $this->id;
         $this->template->data = $entity;
         $this->template->colors = $defaultColors;
         $this->template->references = $entity->getReferences();
@@ -37,8 +38,9 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
     public function actionEditReference($referenceId, $blockId){
         $entity = $this->references->findSubById($blockId, $referenceId);
-        $this->rId = $entity->getId();
+        $this->sId = $entity->getId();
         $this['oneReferenceForm']->setDefaults($entity->getFormProperties());
+        $this->template->linkSId = $this->sId;
         $this->template->blockId = $blockId;
         $this->template->data = $entity;
     }
@@ -60,7 +62,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $this->redirect('References:edit', $id);
     }
 
-    public function handleDeleteReferenceImg($blockId, $id) {
+    public function handleDeleteSImg($id, $blockId) {
         $entity = $this->references->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
@@ -173,8 +175,8 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
         $data = $form->getHttpData();
 
-        if(isset($this->mId)){
-            $entity = $this->references->findSubById($data['block_id'], $this->rId);
+        if(isset($this->sId)){
+            $entity = $this->references->findSubById($data['block_id'], $this->sId);
         }
         else {
             $entity = $this->references->newSubEntity($data['block_id']);
