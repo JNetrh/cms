@@ -1,0 +1,54 @@
+
+{block header}
+
+<div class="panel equal-height-panel divSummaryPanel">
+        <div class="col-md-12">
+
+            <div class="divSummImg col-md-4 equal"  style=" background-color: {$row->getColorProperties()['background_color']|noescape}; background-image: url('{$basePath."/".$row->getImage()|noescape}');">
+                <div class="divBlockSign"><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span><p>{$row->toString()|firstUpper}</p></div>
+            </div>
+            <div class="col-md-6 equal divPanelTable">
+                <table class="tableSummary">
+                    <tr>
+                        <td class="tdHeading">Position</td>
+                        <td class="">{$row->getPosition()}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Heading</td>
+                        <td class="">{$row->getHeading1()|striptags}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Sub heading</td>
+                        <td class="">{$row->getHeading2()|striptags}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Text</td>
+                        <td class="">{$row->getText()|striptags|truncate:21}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">Visible</td>
+                        <td class="">{$row->getActive() == 1 ? "yes" : "no"}</td>
+                    </tr>
+                    <tr>
+                        <td class="tdHeading">General colors</td>
+                        <td>
+                            <div n:foreach="$row->getColorProperties() as $color" style="background-color: {$color|noescape}" class="divColor">
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="divSummButtons col-md-2 equal">
+                <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Articles:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteArticle! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="buttonCisty buttonView buttonBlockSummary" href="#"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
+                {*<a class="buttonCisty buttonAdd buttonBlockSummary" href="#">Add</a>*}
+            </div>
+        </div>
+</div>
+{/block}
+
+{block bordel}
+
+{/block}
