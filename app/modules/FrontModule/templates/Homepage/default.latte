@@ -2,27 +2,638 @@
 {block content}
 
 
-    <header id="page-top" class="opening_1">
-        <div class="container height-100">
-            <div class="row height-100 display-middle">
-                <div class="col-lg-12 vertical-auto">
-                    <h1 class="" >New Age is an app landing page that will help you beautifully showcase your new mobile app, or anything else!</h1>
-                </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#myPage">Logo</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#contacts">Kontakty</a></li>
+                    <li><a href="#members">Members</a></li>
+                    <li><a href="#references">References</a></li>
+                    <li><a href="#events">Akce</a></li>
+                    <li><a href="#articles">Článek</a></li>
+                </ul>
             </div>
         </div>
-        <a href="#opening_2"><span class="arrowDown"><img src="{$basePath}/img/down.png" class="" /></span></a>
-    </header>
-    <div class="container">
-        <div class="col-md-4">
-            <img src="{$basePath}/img/svg/quotes.svg" />
-        </div>
-        <div class="col-md-4">
-            <img src="{$basePath}/img/svg/quotes.png" />
-        </div>
-        <div class="col-md-4">
-            <img src="{$basePath}/img/svg/arrow_left.svg" />
-        </div>
-    </div>
+    </nav>
 
+    <div style="padding: 50px 0"></div>
+
+
+
+
+
+    {include '../../Blocks/headers.latte'}
+    {include '../../Blocks/members.latte'}
+    {include '../../Blocks/events.latte'}
+    {include '../../Blocks/references.latte'}
+    {include '../../Blocks/articles.latte'}
+    {include '../../Blocks/contacts.latte'}
+
+
+
+
+    {*<div class="blockBg" style="background-color: #ffd21f; background-image: url('{$basePath."/img/repo/205ac008ff9280f6.92397251.jpg"}')">*}
+        {*<!-- Container (Services Section) -->*}
+        {*<div id="headers" class="container-fluid">*}
+            {*<div class="row">*}
+                {*<div class="col-xs-12 divHeader">*}
+                    {*<h1>Chlastáme jednou za týden.<br />Ve sklepě.</h1>*}
+                    {*<p class="pHeader">Scházíme se ve sklepě a 5 hodin v kuse si povídáme o holkách</p>*}
+                    {*<div class="divHeaderButton"><a href="#">Přidat se</a></div>*}
+                    {*<div class="divHeaderButton"><a href="#">Začít hrát</a></div>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+
+    {*<div class="blockBg" style="background-color: #f3de62; background-image: url('{$basePath."/img/repo/185ac0092b209c15.59203131.jpg"}')">*}
+        {*<!-- Container (Services Section) -->*}
+        {*<div id="members" class="container-fluid text-center">*}
+            {*<h2>Náš tým</h2>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-4 col-xs-12 equal">*}
+                    {*<div class="divAvatarImg" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                    {*<h3>Jana Krátká</h3>*}
+                    {*<p class="pMember">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                {*</div>*}
+                {*<div class="col-md-4 col-xs-12 equal">*}
+                    {*<div class="divAvatarImg" style="background-image: url('{$basePath."/img/repo/125ac00b301f0a42.99767614.jpg"}');"></div>*}
+                    {*<h3>Marek Veselý</h3>*}
+                    {*<p class="pMember">Marek pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM.</p>*}
+                {*</div>*}
+                {*<div class="col-md-4 col-xs-12 equal">*}
+                    {*<div class="divAvatarImg" style="background-image: url('{$basePath."/img/repo/145ac00b4403bad2.07513298.jpg"}');"></div>*}
+                    {*<h3>Zuzka Bílá</h3>*}
+                    {*<p class="pMember">Zuzka pracuje jako marketér a web vývojář. Jako malá se zajímala o malování.</p>*}
+                {*</div>*}
+            {*</div>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-4 col-xs-12 equal">*}
+                    {*<div class="divAvatarImg" style="background-image: url('{$basePath."/img/repo/125ac00bb4a303c8.69197777.jpg"}');"></div>*}
+                    {*<h3>Jakub Netrh mladší</h3>*}
+                    {*<p class="pMember">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+
+
+    {*<div class="blockBg" style="background-color: #8ec841; background-image: url('{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}')">*}
+        {*<!-- Container (Services Section) -->*}
+        {*<div id="articles" class="container-fluid">*}
+            {*<h2>Výlet do neznáma</h2>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<div class="divArticleImg">*}
+                        {*<img class="imgArticle" src="{$basePath."/img/repo/135ac00671efabf6.77973708.jpg"}" />*}
+                    {*</div>*}
+                {*</div>*}
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<div class="divArticle">*}
+                        {*<h3 class="h3Article">Poslední výlet se velmi vydařil a nyní vám přináším krátkou reportáž</h3>*}
+                        {*<p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                    {*</div>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+    {*<div class="blockBg" style="background-color: #8ec841">*}
+        {*<!-- Container (Portfolio Section) -->*}
+        {*<div id="events" class="container-fluid">*}
+            {*<h2>Akce</h2>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-4 col-xs-12">*}
+                    {*<div class="divEventsBg equalAfter">*}
+                        {*<div class="divEventImg equal">*}
+                            {*<img class="imgEvent" src="{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}" alt="Alt">*}
+                        {*</div>*}
+                        {*<div class="divEvent">*}
+                            {*<h4>Nástěnné malby s pračlověkem</h4>*}
+                            {*<p class="pEventTime">05/22/2018</p>*}
+                            {*<p>Zuzka pracuje jako marketér a web vývojář. Jako malá se zajímala o malování.</p>*}
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+                {*<div class="col-md-4 col-xs-12">*}
+                    {*<div class="divEventsBg equalAfter">*}
+                        {*<div class="divEventImg equal">*}
+                            {*<img class="imgEvent" src="{$basePath."/img/repo/205ac00c82ae5e05.56293940.jpg"}" alt="Alt">*}
+                        {*</div>*}
+                        {*<div class="divEvent">*}
+                            {*<h4>Zacvičme si ve čtyřech</h4>*}
+                            {*<p class="pEventTime">05/22/2018</p>*}
+                            {*<p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+                {*<div class="col-md-4 col-xs-12">*}
+                    {*<div class="divEventsBg equalAfter">*}
+                        {*<div class="divEventImg equal">*}
+                            {*<img class="imgEvent" src="{$basePath."/img/repo/15ac007902f6117.28439671.jpg"}" alt="Alt">*}
+                        {*</div>*}
+                        {*<div class="divEvent">*}
+                            {*<h4>Národní zvyky za pět minut</h4>*}
+                            {*<p class="pEventTime">05/22/2018</p>*}
+                            {*<p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+            {*</div>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-4 col-xs-12">*}
+                    {*<div class="divEventsBg equalAfter">*}
+                        {*<div class="divEventImg equal">*}
+                            {*<img class="imgEvent" src="{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}" alt="Alt">*}
+                        {*</div>*}
+                        {*<div class="divEvent">*}
+                            {*<h4>Nástěnné malby s pračlověkem</h4>*}
+                            {*<p class="pEventTime">05/22/2018</p>*}
+                            {*<p>Zuzka pracuje jako marketér a web vývojář. Jako malá se zajímala o malování.</p>*}
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+                {*<div class="col-md-4 col-xs-12">*}
+                    {*<div class="divEventsBg equalAfter">*}
+                        {*<div class="divEventImg equal">*}
+                            {*<img class="imgEvent" src="{$basePath."/img/repo/15ac007902f6117.28439671.jpg"}" alt="Alt">*}
+                        {*</div>*}
+                        {*<div class="divEvent">*}
+                            {*<h4>Národní zvyky za pět minut</h4>*}
+                            {*<p class="pEventTime">05/22/2018</p>*}
+                            {*<p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+    {*<div class="blockBg" style="background-color: #5c9541; background-image: url('{$basePath."/img/repo/25ac0087fa9dd42.59821951.jpg"}')">*}
+        {*<!-- Container (Services Section) -->*}
+        {*<div id="contacts" class="container-fluid text-center">*}
+            {*<h2>Kontakt</h2>*}
+            {*<div class="row slideanim">*}
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<div class="divContactsBg">*}
+                        {*<h3>Máte otázky?</h3>*}
+                        {*<p class="pContact"><a href="mailto:mail@gmail.com">mail@gmail.com</a></p>*}
+                        {*<p class="pContact">(+420) 774 985 663</p>*}
+                        {*<p class="pContact">Vysoká škola ekonomická v praze, nám. W. Churchilla*}
+                            {*1938/4130 67 Praha 3*}
+                        {*</p>*}
+                        {*<p class="pClear"></p>*}
+                        {*<a href="#">*}
+                            {*<img class="imgContactsNetwork" src="{$basePath."/img/svg/instagram.svg"}" />*}
+                        {*</a>*}
+                        {*<a href="#">*}
+                            {*<img class="imgContactsNetwork" src="{$basePath."/img/svg/facebook.svg"}" />*}
+                        {*</a>*}
+                        {*<a href="#">*}
+                            {*<img class="imgContactsNetwork" src="{$basePath."/img/svg/twitter.svg"}" />*}
+                        {*</a>*}
+                        {*<a href="#">*}
+                            {*<img class="imgContactsNetwork" src="{$basePath."/img/svg/linkedin.svg"}" />*}
+                        {*</a>*}
+                    {*</div>*}
+                {*</div>*}
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<iframe src="https://maps.google.com/maps?q=50.026780,14.497448&hl=es;z=14&amp;output=embed" frameborder="0" allowfullscreen></iframe>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+
+    {*<div class="blockBg" style="background-color: #c9c76e">*}
+        {*<!-- Container (Services Section) -->*}
+        {*<div id="references" class="container-fluid text-center">*}
+            {*<h2>Reference</h2>*}
+            {*<div class="row divReference-inner">*}
+
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<div class="divReferencesBg">*}
+                        {*<div class="divQuotes">*}
+                            {*<img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">*}
+                        {*</div>*}
+                        {*<p class="pReference equal">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                        {*<div class="divReferrer equal">*}
+                            {*<div class="divReferenceAvatar" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                            {*<h4>Michal Krátká</h4>*}
+                            {*<p class="pReferenceReferrer">Web designer, consultant at IBM</p>*}
+
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+
+                {*<div class="col-md-6 col-xs-12 equal">*}
+                    {*<div class="divReferencesBg">*}
+                        {*<div class="divQuotes">*}
+                            {*<img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">*}
+                        {*</div>*}
+                        {*<p class="pReference equal">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                        {*<div class="divReferrer equal">*}
+                            {*<div class="divReferenceAvatar" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                            {*<h4>Michal Krátká</h4>*}
+                            {*<p class="pReferenceReferrer">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+
+                        {*</div>*}
+                    {*</div>*}
+                {*</div>*}
+            {*</div>*}
+            {*<div class="row">*}
+
+                {*<div id="myCarousel" class="carousel slide divReferencesBg" data-ride="carousel">*}
+                    {*<!-- Indicators -->*}
+                    {*<ol class="carousel-indicators">*}
+                        {*<li data-target="#myCarousel" data-slide-to="0" class="active"></li>*}
+                        {*<li data-target="#myCarousel" data-slide-to="1"></li>*}
+                        {*<li data-target="#myCarousel" data-slide-to="2"></li>*}
+                    {*</ol>*}
+
+                    {*<!-- Wrapper for slides -->*}
+                    {*<div class="carousel-inner" role="listbox">*}
+                        {*<div class="item">*}
+                            {*<div class="col-md-4 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divReferenceAvatarExtra" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                                            {*<h4 class="h4referencesExtra">Michal Krátká</h4>*}
+                                            {*<p class="pReferenceReferrerExtra">Web designer, consultant at IBM</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                            {*<div class="col-md-8 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divQuotesExtra">*}
+                                                {*<img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">*}
+                                            {*</div>*}
+                                            {*<p class="pReferenceExtra">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                        {*</div>*}
+
+                        {*<div class="item">*}
+                            {*<div class="col-md-4 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divReferenceAvatarExtra" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                                            {*<h4 class="h4referencesExtra">Klára Krátká</h4>*}
+                                            {*<p class="pReferenceReferrerExtra">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o gana pracuje jako marketér a web vývojář. Jako malá se zajímala o gana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                            {*<div class="col-md-8 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divQuotesExtra">*}
+                                                {*<img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">*}
+                                            {*</div>*}
+                                            {*<p class="pReferenceExtra">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                        {*</div>*}
+
+                        {*<div class="item active">*}
+                            {*<div class="col-md-4 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divReferenceAvatarExtra" style="background-image: url('{$basePath."/img/repo/175ac00b1e3ffe62.35233008.jpg"}');"></div>*}
+                                            {*<h4 class="h4referencesExtra">Jana Krátká</h4>*}
+                                            {*<p class="pReferenceReferrerExtra">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                            {*<div class="col-md-8 col-xs-12">*}
+                                {*<table class="tableReference">*}
+                                    {*<tr>*}
+                                        {*<td class="equalReference">*}
+                                            {*<div class="divQuotesExtra">*}
+                                                {*<img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">*}
+                                            {*</div>*}
+                                            {*<p class="pReferenceExtra">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
+                                        {*</td>*}
+                                    {*</tr>*}
+                                {*</table>*}
+                            {*</div>*}
+                        {*</div>*}
+
+                    {*</div>*}
+
+                    {*<!-- Left and right controls -->*}
+                    {*<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">*}
+                        {*<img src="{$basePath}/img/svg/arrow_left.svg" aria-hidden="true" />*}
+                        {*<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>*}
+                        {*<span class="sr-only">Previous</span>*}
+                    {*</a>*}
+                    {*<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">*}
+                        {*<img src="{$basePath}/img/svg/arrow_right.svg" aria-hidden="true" />*}
+                        {*<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>*}
+                        {*<span class="sr-only">Next</span>*}
+                    {*</a>*}
+                {*</div>*}
+            {*</div>*}
+        {*</div>*}
+    {*</div>*}
+
+
+
+
+
+
+
+    {*<div class="jumbotron text-center">*}
+    {*<h1>Company</h1>*}
+    {*<p>We specialize in blablabla</p>*}
+    {*<form>*}
+    {*<div class="input-group">*}
+    {*<input type="email" class="form-control" size="50" placeholder="Email Address" required>*}
+    {*<div class="input-group-btn">*}
+    {*<button type="button" class="btn btn-danger">Subscribe</button>*}
+    {*</div>*}
+    {*</div>*}
+    {*</form>*}
+    {*</div>*}
+
+    {*<!-- Container (About Section) -->*}
+    {*<div id="about" class="container-fluid">*}
+    {*<div class="row">*}
+    {*<div class="col-sm-8">*}
+    {*<h2>About Company Page</h2><br>*}
+    {*<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>*}
+    {*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>*}
+    {*<br><button class="btn btn-default btn-lg">Get in Touch</button>*}
+    {*</div>*}
+    {*<div class="col-sm-4">*}
+    {*<span class="glyphicon glyphicon-signal logo"></span>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+
+    {*<div class="container-fluid bg-grey">*}
+    {*<div class="row">*}
+    {*<div class="col-sm-4">*}
+    {*<span class="glyphicon glyphicon-globe logo slideanim"></span>*}
+    {*</div>*}
+    {*<div class="col-sm-8">*}
+    {*<h2>Our Values</h2><br>*}
+    {*<h4><strong>MISSION:</strong> Our mission lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h4><br>*}
+    {*<p><strong>VISION:</strong> Our vision Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.*}
+    {*Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+
+
+
+
+
+
+    {*<!-- Container (Pricing Section) -->*}
+    {*<div id="pricing" class="container-fluid">*}
+    {*<div class="text-center">*}
+    {*<h2>Pricing</h2>*}
+    {*<h4>Choose a payment plan that works for you</h4>*}
+    {*</div>*}
+    {*<div class="row slideanim">*}
+    {*<div class="col-sm-4 col-xs-12">*}
+    {*<div class="panel panel-default text-center">*}
+    {*<div class="panel-heading">*}
+    {*<h1>Basic</h1>*}
+    {*</div>*}
+    {*<div class="panel-body">*}
+    {*<p><strong>20</strong> Lorem</p>*}
+    {*<p><strong>15</strong> Ipsum</p>*}
+    {*<p><strong>5</strong> Dolor</p>*}
+    {*<p><strong>2</strong> Sit</p>*}
+    {*<p><strong>Endless</strong> Amet</p>*}
+    {*</div>*}
+    {*<div class="panel-footer">*}
+    {*<h3>$19</h3>*}
+    {*<h4>per month</h4>*}
+    {*<button class="btn btn-lg">Sign Up</button>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*<div class="col-sm-4 col-xs-12">*}
+    {*<div class="panel panel-default text-center">*}
+    {*<div class="panel-heading">*}
+    {*<h1>Pro</h1>*}
+    {*</div>*}
+    {*<div class="panel-body">*}
+    {*<p><strong>50</strong> Lorem</p>*}
+    {*<p><strong>25</strong> Ipsum</p>*}
+    {*<p><strong>10</strong> Dolor</p>*}
+    {*<p><strong>5</strong> Sit</p>*}
+    {*<p><strong>Endless</strong> Amet</p>*}
+    {*</div>*}
+    {*<div class="panel-footer">*}
+    {*<h3>$29</h3>*}
+    {*<h4>per month</h4>*}
+    {*<button class="btn btn-lg">Sign Up</button>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*<div class="col-sm-4 col-xs-12">*}
+    {*<div class="panel panel-default text-center">*}
+    {*<div class="panel-heading">*}
+    {*<h1>Premium</h1>*}
+    {*</div>*}
+    {*<div class="panel-body">*}
+    {*<p><strong>100</strong> Lorem</p>*}
+    {*<p><strong>50</strong> Ipsum</p>*}
+    {*<p><strong>25</strong> Dolor</p>*}
+    {*<p><strong>10</strong> Sit</p>*}
+    {*<p><strong>Endless</strong> Amet</p>*}
+    {*</div>*}
+    {*<div class="panel-footer">*}
+    {*<h3>$49</h3>*}
+    {*<h4>per month</h4>*}
+    {*<button class="btn btn-lg">Sign Up</button>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+
+    {*<!-- Container (Contact Section) -->*}
+    {*<div id="contact" class="container-fluid bg-grey">*}
+    {*<h2 class="text-center">CONTACT</h2>*}
+    {*<div class="row">*}
+    {*<div class="col-sm-5">*}
+    {*<p>Contact us and we'll get back to you within 24 hours.</p>*}
+    {*<p><span class="glyphicon glyphicon-map-marker"></span> Chicago, US</p>*}
+    {*<p><span class="glyphicon glyphicon-phone"></span> +00 1515151515</p>*}
+    {*<p><span class="glyphicon glyphicon-envelope"></span> myemail@something.com</p>*}
+    {*</div>*}
+    {*<div class="col-sm-7 slideanim">*}
+    {*<div class="row">*}
+    {*<div class="col-sm-6 form-group">*}
+    {*<input class="form-control" id="name" name="name" placeholder="Name" type="text" required>*}
+    {*</div>*}
+    {*<div class="col-sm-6 form-group">*}
+    {*<input class="form-control" id="email" name="email" placeholder="Email" type="email" required>*}
+    {*</div>*}
+    {*</div>*}
+    {*<textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>*}
+    {*<div class="row">*}
+    {*<div class="col-sm-12 form-group">*}
+    {*<button class="btn btn-default pull-right" type="submit">Send</button>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+    {*</div>*}
+
+    <!-- Add Google Maps -->
+    {*<div id="googleMap" style="height:400px;width:100%;"></div>*}
+    {*<script>*}
+    {*function myMap() {*}
+    {*var myCenter = new google.maps.LatLng(41.878114, -87.629798);*}
+    {*var mapProp = { center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};*}
+    {*var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);*}
+    {*var marker = new google.maps.Marker({ position:myCenter});*}
+    {*marker.setMap(map);*}
+    {*}*}
+    {*</script>*}
+    {*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>*}
+    <!--
+    To use this code on your website, get a free API key from Google.
+    Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+    -->
+
+    <footer class="container-fluid text-center">
+        <a href="#myPage" title="To Top">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+        <p>Bootstrap Theme Made By <a href="https://www.w3schools.com" title="Visit w3schools">www.w3schools.com</a></p>
+    </footer>
+
+
+    {*<h1>Nádherné počasí</h1>*}
+    {*<h2>Slavnostní obřad</h2>*}
+    {*<h3>O nás</h3>*}
+    {*<h4>Ahoj Moře!</h4>*}
+
+
+    {*<p>Lorem ipsum <strong>dolor sit amet</strong>. Tady je dneska moc pěkně*}
+    {*a já bych vás rád pozva. Každé čtvrté pondělí počínaje od <strong>druhého <em>jarního úplňku</em> se scházíme</strong>*}
+    {*v <em>nevelké místnosti</em> na okraji neznámého městečka jménem Věstonice.*}
+    {*</p>*}
+    {*<p>Lorem ipsum dolor sit amet. Tady je dneska moc pěkně*}
+    {*a já bych vás rád pozva. Každé čtvrté pondělí počínaje od druhého jarního úplňku se scházíme*}
+    {*v <a href="#">nevelké místnosti</a> na okraji neznámého městečka jménem Věstonice.*}
+    {*</p>*}
+
+    {*<span>představuji span tag</span>*}
+
+    {*<button>Přihlásit se</button>*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {*<div class="container">*}
+    {*<div class="col-md-4">*}
+    {*<img src="{$basePath}/img/svg/quotes.svg" />*}
+    {*</div>*}
+    {*<div class="col-md-4">*}
+    {*<img src="{$basePath}/img/svg/quotes.png" />*}
+    {*</div>*}
+    {*<div class="col-md-4">*}
+    {*<img src="{$basePath}/img/svg/arrow_left.svg" />*}
+    {*</div>*}
+    {*</div>*}
+
+
+{/block}
+
+{block bordel}
+
+    <script>
+
+        $.fn.matchHeight._beforeUpdate = function(event, groups) {
+
+        }
+        $.fn.matchHeight._afterUpdate = function(event, groups) {
+            $('.equalAfter').matchHeight();
+        }
+        $('.equal').matchHeight();
+        $('.equalReference').matchHeight();
+
+        $(document).ready(function(){
+            // Add smooth scrolling to all links in navbar + footer link
+            $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+                // Make sure this.hash has a value before overriding default behavior
+                if (this.hash !== "") {
+                    // Prevent default anchor click behavior
+                    event.preventDefault();
+
+                    // Store hash
+                    var hash = this.hash;
+
+                    // Using jQuery's animate() method to add smooth page scroll
+                    // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 900, function(){
+
+                        // Add hash (#) to URL when done scrolling (default click behavior)
+                        window.location.hash = hash;
+                    });
+                } // End if
+            });
+
+            $(window).scroll(function() {
+                $(".slideanim").each(function(){
+                    var pos = $(this).offset().top;
+
+                    var winTop = $(window).scrollTop();
+                    if (pos < winTop + 600) {
+                        $(this).addClass("slide");
+                    }
+                });
+            });
+        })
+    </script>
 
 {/block}
