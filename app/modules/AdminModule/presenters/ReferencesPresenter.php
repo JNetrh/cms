@@ -81,9 +81,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $form -> addText('background_color');
         $form -> addText('position');
         $form -> addCheckbox('active');
-        $form ->addUpload('image')
-            ->addCondition(Form::FILLED)
-            ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
+        $form ->addUpload('image');
 
         $form->addSubmit('submit', 'Create block');
 
@@ -159,9 +157,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $form -> addTextArea('text');
         $form -> addCheckbox('active');
         $form -> addText('content');
-        $form ->addUpload('image')
-            ->addCondition(Form::FILLED)
-            ->addRule(Form::IMAGE, 'Image has to be in format JPEG, PNG or GIF.');
+        $form ->addUpload('image');
 
         $form->addSubmit('submit', 'Create reference');
 

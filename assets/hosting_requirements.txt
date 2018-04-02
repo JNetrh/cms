@@ -1,0 +1,11 @@
+FTP access
+.htaccess files supported (option to allow)
+database access
+Database MariaDB (InnoDB engine)
+database min 1 MB free space (Tolik zabírá základ)
+SMTP (IMAP) server (možná!)
+PHP 7 and higher
+Apache
+40 MB free space
+1,6 GHz CPU
+1,75 GB RAM

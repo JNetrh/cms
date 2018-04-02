@@ -152,6 +152,36 @@ create TABLE block_sponsors
 ;
 
 /*==============================================================*/
+/* Table: block_menu                                            */
+/*==============================================================*/
+create TABLE block_menus
+(
+  id                    SERIAL,
+  style                 TEXT,
+  bg_type               varchar(255) not null DEFAULT "color",
+  heading               varchar(255) not null DEFAULT "",
+  image                 VARCHAR(255) default null,
+  instagram             TEXT,
+  facebook              TEXT,
+  twitter               TEXT,
+  linkedin              TEXT,
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: block_footer                                          */
+/*==============================================================*/
+create TABLE block_footer
+(
+  id                    SERIAL,
+  style                 TEXT,
+  text                  TEXT,
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
 /* Table: members                                               */
 /*==============================================================*/
 create TABLE members
@@ -217,6 +247,33 @@ create TABLE sponsors
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;
 
+/*==============================================================*/
+/* Table: menus                                                 */
+/*==============================================================*/
+create TABLE menus
+(
+  id                    SERIAL,
+  link                  VARCHAR(255) not null DEFAULT "#",
+  text                  VARCHAR(255) default null,
+  active                TINYINT not null DEFAULT 0,
+  position              INTEGER not NULL DEFAULT 696969,
+  owner                 BIGINT UNSIGNED,
+  primary key (id),
+  foreign key (owner) references block_menus (id) on delete CASCADE
+) ENGINE=InnoDB CHARACTER SET utf8
+;
+
+/*==============================================================*/
+/* Table: seo                                                   */
+/*==============================================================*/
+create TABLE seo
+(
+  id                    SERIAL,
+  keywords              TEXT,
+  description           VARCHAR(255) default "",
+  primary key (id)
+) ENGINE=InnoDB CHARACTER SET utf8
+;
 
 
 /*==============================================================*/

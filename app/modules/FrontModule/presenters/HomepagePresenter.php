@@ -3,19 +3,21 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use Nette\Application\UI\Form;
+use App\Model\BlockFactory as BF;
 
 
 class HomepagePresenter  extends BasePresenter
 {
 
-    public function __construct()
-    {
-        
-    }
+	private $visibleBlocks;
+
+	public function __construct(BF $blockFactory)
+	{
+		$this->visibleBlocks = $blockFactory->getAllBlocks();
+	}
 
     public function renderDefault(){
-
+		$this->template->visibleBlocks = $this->visibleBlocks;
     }
 
 }

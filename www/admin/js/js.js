@@ -2,8 +2,6 @@
 /*----------------------------------------------------------------------------*/
 /* SetColors colorpicker: */
 var setColors = function (colors,pickers) {
-    console.log(colors)
-    console.log(pickers)
     pickers.forEach(function (name) {
         var picker = $.farbtastic('#colpick_' + name[0]);  //picker variable
         colors != null ? picker.setColor(colors[name[0] + '_color']) : null //set initial color
@@ -31,7 +29,6 @@ var fileUpload = function (id, images, urlDel){
         language: "en",
         initialPreviewAsData: true,
         allowedFileExtensions: ['png', 'gif', 'jpg', 'jpeg', 'JPG'],
-        maxFileSize: 10240,
         validateInitialCount: true,
         browseClass: "btn btn-primary btn-block",
         showCaption: false,
