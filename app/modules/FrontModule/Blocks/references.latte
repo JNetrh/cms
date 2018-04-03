@@ -1,5 +1,5 @@
 {block blockyReferences}
-    <div class="blockBg" style="background-image: url('{$basePath}/{$row->getImage()|noescape}'); ">
+    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
         <div id="references" class="container-fluid text-center">
             {*<h2>Reference</h2>*}
@@ -26,13 +26,13 @@
                 {/foreach}
 
             </div>
-            <div class="row">
+            <div n:if="$row->referencesCount() > 2" class="row">
 
                 <div id="myCarousel" class="carousel slide divReferencesBg" data-ride="carousel">
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                         {foreach $row->getReferences() as $eRow}
-                            <li n:if="$iterator->getCounter() > 2" data-target="#myCarousel" data-slide-to="{$iterator->getCounter() - 3}" class="active"></li>
+                            <li n:if="$iterator->getCounter() > 2" data-target="#myCarousel" data-slide-to="{$iterator->getCounter() - 3}" n:class="$iterator->isLast() ? 'active' : ''"></li>
                         {/foreach}
                     </ol>
 
@@ -40,7 +40,7 @@
                     <div class="carousel-inner" role="listbox">
 
                     {foreach $row->getReferences() as $eRow}
-                        <div n:class="$iterator->isLast() ? 'item active' : 'item'">
+                        <div n:if="$iterator->getCounter() > 2" n:class="$iterator->isLast() ? 'item active' : 'item'">
                             <div class="col-md-4 col-xs-12">
                                 <table class="tableReference">
                                     <tr>
@@ -86,10 +86,25 @@
     </div>
 {/block}
 
-{block myStyle}
-    <style>
-        .mujsyl {
-            color: #0A246A;
+{block blockyReferencesStyle}
+
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-image: url('{$basePath}/{$row->getImage()|noescape}');
+            background-color: {$row->getColorProperties()['background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .divReferencesBg {
+            background-color: {$row->getColorProperties()['block_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h4 {
+            color: {$row->getColorProperties()['name_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h2 {
+            color: {$row->getColorProperties()['heading_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} p {
+            color: {$row->getColorProperties()['heading_color']|noescape};
         }
     </style>
+
 {/block}
