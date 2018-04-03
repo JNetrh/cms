@@ -8,7 +8,8 @@ html, body {
 /*----------------------------------------------------------------------------*/
 /* HROMADNÁ DEKLARACE FONTŮ: */
 body, p, ul, ol, ul li, ol li, table, table td, span, div, a, a:hover, a:visited, input, textarea, select, button, span, label {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
+    font-weight: 400;
     font-size: 16px;
     font-weight: normal;
     font-style: normal;
@@ -21,12 +22,12 @@ button {
     font-style: normal;
 }
 em {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-weight: normal;
     font-style: normal;
 }
 strong {
-    font-family: 'robotoblack', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-style: inherit;
     color: inherit;
     text-decoration: inherit;
@@ -44,8 +45,8 @@ label {
 /*----------------------------------------------------------------------------*/
 /* TEXT: */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'robotoregular', sans-serif;
-    font-weight: 600;
+    font-family: 'roboto', sans-serif;
+    font-weight: 700;
     text-transform: uppercase;
     font-style: normal;
     margin: 0;
@@ -127,7 +128,7 @@ p.pEventTime {
 
 }
 p.pHeader {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-weight: 700;
     font-size: 20px;
     padding: 45px 0 0 0;
@@ -150,11 +151,14 @@ div.blockBg {
     background-repeat: no-repeat;
     background-size: cover;
 }
+div.firstBlock {
+    margin-top: 75px;
+}
 div.divHeader {
-    min-height: 500px;
+    min-height: 600px;
 }
 div.divHeaderButton {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-weight: 700;
     font-size: 16px;
     color: #000;
@@ -686,53 +690,57 @@ div.divReference-inner {
 /*----------------------------------------------------------------------------*/
 /*FONTY: */
 
-@font-face {
-    font-family: 'robotoregular';
-    src: url('../font/Roboto-Regular.eot');
-    src: url('../font/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
-    url('../font/Roboto-Regular.woff2') format('woff2'),
-    url('../font/Roboto-Regular.woff') format('woff'),
-    url('../font/Roboto-Regular.svg#robotoregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotoblack';
-    src: url('../font/Roboto-Black.eot');
-    src: url('../font/Roboto-Black.eot?#iefix') format('embedded-opentype'),
-    url('../font/Roboto-Black.woff2') format('woff2'),
-    url('../font/Roboto-Black.woff') format('woff'),
-    url('../font/Roboto-Black.svg#robotoblack') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotoblack_italic';
-    src: url('../font/Roboto-Black-Italic.eot');
-    src: url('../font/Roboto-Black-Italic.eot?#iefix') format('embedded-opentype'),
-    url('../font/Roboto-Black-Italic.woff2') format('woff2'),
-    url('../font/Roboto-Black-Italic.woff') format('woff'),
-    url('../font/Roboto-Black-Italic.svg#robotoblack_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotobold';
-    src: url('../font/Roboto-Bold.eot');
-    src: url('../font/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
-    url('../font/Roboto-Bold.woff2') format('woff2'),
-    url('../font/Roboto-Bold.woff') format('woff'),
-    url('../font/Roboto-Bold.svg#robotobold_condensed_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotothin';
-    src: url('../font/Roboto-Thin.eot');
-    src: url('../font/Roboto-Thin.eot?#iefix') format('embedded-opentype'),
-    url('../font/Roboto-Thin.woff2') format('woff2'),
-    url('../font/Roboto-Thin.woff') format('woff'),
-    url('../font/Roboto-Thin.svg#robotobold_condensed_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,700i&subset=latin-ext');
+
+/*@font-face {*/
+    /*font-family: 'robotoregular';*/
+    /*src: url('../font/Roboto-Regular.eot');*/
+    /*src: url('../font/Roboto-Regular.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../font/Roboto-Regular.woff2') format('woff2'),*/
+    /*url('../font/Roboto-Regular.woff') format('woff'),*/
+    /*url('../font/Roboto-Regular.svg#robotoregular') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotoblack';*/
+    /*src: url('../font/Roboto-Black.eot');*/
+    /*src: url('../font/Roboto-Black.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../font/Roboto-Black.woff2') format('woff2'),*/
+    /*url('../font/Roboto-Black.woff') format('woff'),*/
+    /*url('../font/Roboto-Black.svg#robotoblack') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotoblack_italic';*/
+    /*src: url('../font/Roboto-Black-Italic.eot');*/
+    /*src: url('../font/Roboto-Black-Italic.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../font/Roboto-Black-Italic.woff2') format('woff2'),*/
+    /*url('../font/Roboto-Black-Italic.woff') format('woff'),*/
+    /*url('../font/Roboto-Black-Italic.svg#robotoblack_italic') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotobold';*/
+    /*src: url('../font/Roboto-Bold.eot');*/
+    /*src: url('../font/Roboto-Bold.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../font/Roboto-Bold.woff2') format('woff2'),*/
+    /*url('../font/Roboto-Bold.woff') format('woff'),*/
+    /*url('../font/Roboto-Bold.svg#robotobold_condensed_italic') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotothin';*/
+    /*src: url('../font/Roboto-Thin.eot');*/
+    /*src: url('../font/Roboto-Thin.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../font/Roboto-Thin.woff2') format('woff2'),*/
+    /*url('../font/Roboto-Thin.woff') format('woff'),*/
+    /*url('../font/Roboto-Thin.svg#robotobold_condensed_italic') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/

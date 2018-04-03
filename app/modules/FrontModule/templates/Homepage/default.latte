@@ -1,10 +1,10 @@
 
-{*{import '../../Blocks/@headers.latte'}*}
-{*{import '../../Blocks/@members.latte'}*}
-{*{import '../../Blocks/@events.latte'}*}
+{import '../../Blocks/headers.latte'}
+{import '../../Blocks/members.latte'}
+{import '../../Blocks/events.latte'}
 {import '../../Blocks/references.latte'}
-{*{import '../../Blocks/articles.latte'}*}
-{*{import '../../Blocks/@contacts.latte'}*}
+{import '../../Blocks/articles.latte'}
+{import '../../Blocks/contacts.latte'}
 
 {block content}
 
@@ -37,32 +37,29 @@
 
     {foreach $visibleBlocks as $row}
         {if $row->toString() == 'headers'}
-            {*{include './headerPanel.latte', row => $row}*}
+            {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'references'}
-            {include blockyReferences row => $row}
-            {*{include blockyReferences brow => $row}*}
+            {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false}}
 
-        {*{elseif $row->toString() == 'members'}*}
-            {*{include './referencesPanel.latte', row => $row}*}
+        {elseif $row->toString() == 'members'}
+            {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false}}
 
-        {*{elseif $row->toString() == 'events'}*}
-            {*{include './eventsPanel.latte', row => $row}*}
+        {elseif $row->toString() == 'events'}
+            {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false}}
 
-        {*{elseif $row->toString() == 'contacts'}*}
-            {*{include './contactsPanel.latte', row => $row}*}
+        {elseif $row->toString() == 'contacts'}
+            {*{include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false}}*}
 
-        {*{elseif $row->toString() == 'articles'}*}
-            {*{include './articlesPanel.latte', row => $row}*}
+        {elseif $row->toString() == 'articles'}
+            {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false}}
 
-        {*{elseif $row->toString() == 'sponsors' }*}
-            {*{include './sponsorsPanel.latte', row => $row}*}
+        {elseif $row->toString() == 'sponsors' }
+            {*{include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false}}*}
 
         {/if}
     {/foreach}
 
-    {*{include blockyReferences}*}
-    {*{include blockyArticles}*}
 
 
 
@@ -90,6 +87,32 @@
 
 
 {block cmsStyle}
+
+    {foreach $visibleBlocks as $row}
+        {if $row->toString() == 'headers'}
+            {include blockyHeadersStyle row => $row}
+
+        {elseif $row->toString() == 'references'}
+            {*{include blockyReferencesStyle row => $row}*}
+
+        {elseif $row->toString() == 'members'}
+            {include blockyMembersStyle row => $row}
+
+        {elseif $row->toString() == 'events'}
+            {*{include blockyEventsStyle row => $row}*}
+
+        {elseif $row->toString() == 'contacts'}
+            {*{include blockyContactsStyle row => $row}*}
+
+        {elseif $row->toString() == 'articles'}
+            {*{include blockyArticlesStyle row => $row}*}
+
+        {elseif $row->toString() == 'sponsors' }
+            {*{include blockySponsorsStyle row => $row}*}
+
+        {/if}
+    {/foreach}
+
     {ifset myStyle}{include myStyle}{/ifset}
 {/block}
 

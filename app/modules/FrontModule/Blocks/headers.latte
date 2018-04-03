@@ -1,16 +1,45 @@
 
 
-
-<div class="blockBg" style="background-color: #ffd21f; background-image: url('{$basePath."/img/repo/205ac008ff9280f6.92397251.jpg"}')">
-    <!-- Container (Services Section) -->
-    <div id="headers" class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 divHeader">
-                <h1>Chlastáme jednou za týden.<br />Ve sklepě.</h1>
-                <p class="pHeader">Scházíme se ve sklepě a 5 hodin v kuse si povídáme o holkách</p>
-                <div class="divHeaderButton"><a href="#">Přidat se</a></div>
-                <div class="divHeaderButton"><a href="#">Začít hrát</a></div>
+{block blockyHeaders}
+    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}" style="">
+        <!-- Container (Services Section) -->
+        <div id="headers" class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 divHeader">
+                    <h1>{$row->getHeading1()}</h1>
+                    <p class="pHeader">{$row->getHeading2()}</p>
+                    <div class="divHeaderButton cms_button_1"><a href="{$row->getButton1Link()}">{$row->getButton1()}</a></div>
+                    <div class="divHeaderButton cms_button_2"><a href="{$row->getButton2Link()}">{$row->getButton2()}</a></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+{/block}
+
+
+
+{block blockyHeadersStyle}
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-image: url('{$basePath}/{$row->getImage()|noescape}');
+            background-color: {$row->getColorProperties()['background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h1 {
+            color: {$row->getColorProperties()['heading_1_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .pHeader {
+            color: {$row->getColorProperties()['heading_2_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .cms_button_1 {
+            color: {$row->getColorProperties()['button_1_color']|noescape};
+            border: 1px solid {$row->getColorProperties()['button_1_border_color']|noescape};
+            background-color: {$row->getColorProperties()['button_1_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .cms_button_2 {
+            color: {$row->getColorProperties()['button_2_color']|noescape};
+            border: 1px solid {$row->getColorProperties()['button_2_border_color']|noescape};
+            background-color: {$row->getColorProperties()['button_2_background_color']|noescape};
+        }
+
+    </style>
+{/block}

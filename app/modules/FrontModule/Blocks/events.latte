@@ -1,72 +1,25 @@
 
-
-<div class="blockBg" style="background-color: #8ec841">
-    <!-- Container (Portfolio Section) -->
-    <div id="events" class="container-fluid">
-        <h2>Akce</h2>
-        <div class="row slideanim">
-            <div class="col-md-4 col-xs-12">
-                <div class="divEventsBg equalAfter">
-                    <div class="divEventImg equal">
-                        <img class="imgEvent" src="{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}" alt="Alt">
-                    </div>
-                    <div class="divEvent">
-                        <h4>Nástěnné malby s pračlověkem</h4>
-                        <p class="pEventTime">05/22/2018</p>
-                        <p>Zuzka pracuje jako marketér a web vývojář. Jako malá se zajímala o malování.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-                <div class="divEventsBg equalAfter">
-                    <div class="divEventImg equal">
-                        <img class="imgEvent" src="{$basePath."/img/repo/205ac00c82ae5e05.56293940.jpg"}" alt="Alt">
-                    </div>
-                    <div class="divEvent">
-                        <h4>Zacvičme si ve čtyřech</h4>
-                        <p class="pEventTime">05/22/2018</p>
-                        <p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>
+{block blockyEvents}
+    <div class="blockBg" style="background-color: #8ec841; background-image: url('{$basePath}/{$row->getImage()|noescape}');">
+        <!-- Container (Portfolio Section) -->
+        <div id="events" class="container-fluid">
+            <h2>{$row->getHeading()}</h2>
+            {foreach $row->getEvents() as $eRow}
+                {first 3}<div class="row slideanim">{/first}
+                <div class="col-md-4 col-xs-12">
+                    <div class="divEventsBg equalAfter">
+                        <div class="divEventImg equal">
+                            <img class="imgEvent" src="{$basePath}/{$eRow->getImage()}" alt="eventImg">
+                        </div>
+                        <div class="divEvent">
+                            <h4>{$eRow->getHeading()}</h4>
+                            <p class="pEventTime">{$eRow->getEventTime()->format('Y/m/d')}</p>
+                            <p>{$eRow->getText()}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-                <div class="divEventsBg equalAfter">
-                    <div class="divEventImg equal">
-                        <img class="imgEvent" src="{$basePath."/img/repo/15ac007902f6117.28439671.jpg"}" alt="Alt">
-                    </div>
-                    <div class="divEvent">
-                        <h4>Národní zvyky za pět minut</h4>
-                        <p class="pEventTime">05/22/2018</p>
-                        <p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row slideanim">
-            <div class="col-md-4 col-xs-12">
-                <div class="divEventsBg equalAfter">
-                    <div class="divEventImg equal">
-                        <img class="imgEvent" src="{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}" alt="Alt">
-                    </div>
-                    <div class="divEvent">
-                        <h4>Nástěnné malby s pračlověkem</h4>
-                        <p class="pEventTime">05/22/2018</p>
-                        <p>Zuzka pracuje jako marketér a web vývojář. Jako malá se zajímala o malování.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-xs-12">
-                <div class="divEventsBg equalAfter">
-                    <div class="divEventImg equal">
-                        <img class="imgEvent" src="{$basePath."/img/repo/15ac007902f6117.28439671.jpg"}" alt="Alt">
-                    </div>
-                    <div class="divEvent">
-                        <h4>Národní zvyky za pět minut</h4>
-                        <p class="pEventTime">05/22/2018</p>
-                        <p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>
-                    </div>
-                </div>
-            </div>
+                {last 3}</div>{/last}
+            {/foreach}
         </div>
     </div>
-</div>
+{/block}

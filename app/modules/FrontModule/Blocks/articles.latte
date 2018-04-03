@@ -1,20 +1,20 @@
 
 {block blockyArticles}
 
-    <div class="blockBg" style="background-color: #8ec841; background-image: url('{$basePath."/img/repo/35ac006a68672d7.29623084.jpg"}')">
+    <div class="blockBg" style="background-color: #8ec841; background-image: url('{$basePath}/{$row->getImage()|noescape}')">
         <!-- Container (Services Section) -->
         <div id="articles" class="container-fluid">
-            <h2>Výlet do neznáma</h2>
+            <h2>{$row->getHeading1()}</h2>
             <div class="row slideanim">
                 <div class="col-md-6 col-xs-12 equal">
                     <div class="divArticleImg">
-                        <img class="imgArticle" src="{$basePath."/img/repo/135ac00671efabf6.77973708.jpg"}" />
+                        <img class="imgArticle" src="{$basePath}/{$row->getImageArticle()|noescape}" />
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12 equal">
                     <div class="divArticle">
-                        <h3 class="h3Article">Poslední výlet se velmi vydařil a nyní vám přináším krátkou reportáž</h3>
-                        <p>Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>
+                        <h3 class="h3Article">{$row->getHeading2()}</h3>
+                        <p>{$row->getText()|noescape}</p>
                     </div>
                 </div>
             </div>

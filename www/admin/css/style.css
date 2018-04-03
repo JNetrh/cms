@@ -10,9 +10,9 @@ body, html
 /* HROMADNÁ DEKLARACE FONTŮ: */
 body, p, ul, ol, ul li, ol li, table, table td, span, div, a, a:hover, a:visited, input, textarea, select, button, span /*----NEMAZAT----*/
 {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
+    font-weight: 400;
     font-size: 20px;
-    font-weight: normal;
     font-style: normal;
 }
 input {
@@ -59,8 +59,8 @@ span.formError{
     /* border-radius: 0 0 4px 4px; */
 }
 label {
-    font-family: 'robotolight', sans-serif;
-    font-weight: inherit;
+    font-family: 'roboto', sans-serif;
+    font-weight: 300;
     font-style: inherit;
     color: inherit;
     text-decoration: inherit;
@@ -80,9 +80,9 @@ h1, h2, h3, h4, h5, h6 /*----NEMAZAT----*/
 }
 h1 /*----NEMAZAT----*/
 {
-    font-family: 'robotoblack', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-size: 36px;
-    /* margin: 0 0 40px 0; */
+    font-weight: 400;
     padding: 0;
     text-align: center;
     clear: both;
@@ -91,7 +91,7 @@ h1 /*----NEMAZAT----*/
 
 h2 /*----NEMAZAT----*/
 {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
     text-align: left;
     font-size: 20px;
     padding: 30px 0 0 0;
@@ -102,7 +102,7 @@ h2.h2small {
 }
 h3 /*----NEMAZAT----*/
 {
-    font-family: 'robotoregular', sans-serif;
+    font-family: 'roboto', sans-serif;
     font-size: 18px;
     color: #000;
     text-align: left;
@@ -438,7 +438,8 @@ table.tableSummary td {
 table.tableSummary tr td.tdHeading{
     /*border-bottom: 1px dotted;*/
     width: 40%;
-    font-family: 'robotoblack', sans-serif;
+    font-family: 'roboto', sans-serif;
+    font-weight: 500;
 }
 table.tableSummary td{
     font-size: 16px;
@@ -729,36 +730,40 @@ textarea.form-control {
 
 /*----------------------------------------------------------------------------*/
 /*FONTY: */
-@font-face {
-    font-family: 'robotoregular';
-    src: url('../../font/Roboto-Regular.eot');
-    src: url('../../font/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
-    url('../../font/Roboto-Regular.woff2') format('woff2'),
-    url('../../font/Roboto-Regular.woff') format('woff'),
-    url('../../font/Roboto-Regular.svg#robotoregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotoblack';
-    src: url('../../font/Roboto-Black.eot');
-    src: url('../../font/Roboto-Black.eot?#iefix') format('embedded-opentype'),
-    url('../../font/Roboto-Black.woff2') format('woff2'),
-    url('../../font/Roboto-Black.woff') format('woff'),
-    url('../../font/Roboto-Black.svg#robotoblack') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'robotoblack_italic';
-    src: url('../../font/Roboto-Black-Italic.eot');
-    src: url('../../font/Roboto-Black-Italic.eot?#iefix') format('embedded-opentype'),
-    url('../../font/Roboto-Black-Italic.woff2') format('woff2'),
-    url('../../font/Roboto-Black-Italic.woff') format('woff'),
-    url('../../font/Roboto-Black-Italic.svg#robotoblack_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,700i&subset=latin-ext');
+
+/*@font-face {*/
+    /*font-family: 'robotoregular';*/
+    /*src: url('../../font/Roboto-Regular.eot');*/
+    /*src: url('../../font/Roboto-Regular.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../../font/Roboto-Regular.woff2') format('woff2'),*/
+    /*url('../../font/Roboto-Regular.woff') format('woff'),*/
+    /*url('../../font/Roboto-Regular.svg#robotoregular') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotoblack';*/
+    /*src: url('../../font/Roboto-Black.eot');*/
+    /*src: url('../../font/Roboto-Black.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../../font/Roboto-Black.woff2') format('woff2'),*/
+    /*url('../../font/Roboto-Black.woff') format('woff'),*/
+    /*url('../../font/Roboto-Black.svg#robotoblack') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
+/*@font-face {*/
+    /*font-family: 'robotoblack_italic';*/
+    /*src: url('../../font/Roboto-Black-Italic.eot');*/
+    /*src: url('../../font/Roboto-Black-Italic.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../../font/Roboto-Black-Italic.woff2') format('woff2'),*/
+    /*url('../../font/Roboto-Black-Italic.woff') format('woff'),*/
+    /*url('../../font/Roboto-Black-Italic.svg#robotoblack_italic') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
 /*@font-face {*/
     /*font-family: 'robotobold_italic';*/
     /*src: url('../../font/roboto-bolditalic-webfont.eot');*/
@@ -799,16 +804,16 @@ textarea.form-control {
     /*font-weight: normal;*/
     /*font-style: normal;*/
 /*}*/
-@font-face {
-    font-family: 'robotobold';
-    src: url('../../font/Roboto-Bold.eot');
-    src: url('../../font/Roboto-Bold.eot?#iefix') format('embedded-opentype'),
-    url('../../font/Roboto-Bold.woff2') format('woff2'),
-    url('../../font/Roboto-Bold.woff') format('woff'),
-    url('../../font/Roboto-Bold.svg#robotobold_condensed_italic') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
+/*@font-face {*/
+    /*font-family: 'robotobold';*/
+    /*src: url('../../font/Roboto-Bold.eot');*/
+    /*src: url('../../font/Roboto-Bold.eot?#iefix') format('embedded-opentype'),*/
+    /*url('../../font/Roboto-Bold.woff2') format('woff2'),*/
+    /*url('../../font/Roboto-Bold.woff') format('woff'),*/
+    /*url('../../font/Roboto-Bold.svg#robotobold_condensed_italic') format('svg');*/
+    /*font-weight: normal;*/
+    /*font-style: normal;*/
+/*}*/
 /*@font-face {*/
     /*font-family: 'robotoitalic';*/
     /*src: url('../../font/roboto-italic-webfont.eot');*/

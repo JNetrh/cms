@@ -1,16 +1,4 @@
-{*{layout '@layout-main.latte'}*}
 {block blockyReferences}
-
-    {*{bdump($brow, 'neco')}*}
-    {*{bdump($row->getImage())}*}
-    {*<p>{$row->getImage()}</p>*}
-    {*<p>{$row->getStyle()}</p>*}
-    {*{bdump($row->getStyle())}*}
-    {*{bdump($row->getStyle())}*}
-    {*{bdump($row->getStyle())}*}
-
-
-    {*{bdump($row)}*}
     <div class="blockBg" style="background-image: url('{$basePath}/{$row->getImage()|noescape}'); ">
         <!-- Container (Services Section) -->
         <div id="references" class="container-fluid text-center">
@@ -42,50 +30,44 @@
 
                 <div id="myCarousel" class="carousel slide divReferencesBg" data-ride="carousel">
                     <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        {foreach $row->getReferences() as $eRow}
+                            <li n:if="$iterator->getCounter() > 2" data-target="#myCarousel" data-slide-to="{$iterator->getCounter() - 3}" class="active"></li>
+                        {/foreach}
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
 
                     {foreach $row->getReferences() as $eRow}
-
-                        <div n:if="$iterator->getCounter() > 2">
-
-                            {if $iterator->getCounter() == 2}<ol class="carousel-indicators">{/if}
-                                <li data-target="#myCarousel" data-slide-to="{$iterator->getCounter() - 3}" class="active"></li>
-                            {if $iterator->isLast()}</ol>{/if}
-
-                            <!-- Wrapper for slides -->
-                        {if $iterator->getCounter() == 2}
-                            <div class="carousel-inner" role="listbox">
-                        {/if}
-                                <div n:class="$iterator->getCounter() == 2 ? 'item active' : 'item'">
-                                    <div class="col-md-4 col-xs-12">
-                                        <table class="tableReference">
-                                            <tr>
-                                                <td class="equalReference">
-                                                    <div class="divReferenceAvatarExtra" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}'); "></div>
-                                                    <h4 class="h4referencesExtra">{$eRow->getName()}</h4>
-                                                    <p class="pReferenceReferrerExtra">{$eRow->getText()}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-8 col-xs-12">
-                                        <table class="tableReference">
-                                            <tr>
-                                                <td class="equalReference">
-                                                    <div class="divQuotesExtra">
-                                                        <img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">
-                                                    </div>
-                                                    <p class="pReferenceExtra">{$eRow->getReference()}</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            {if $iterator->getCounter() == 2}
+                        <div n:class="$iterator->isLast() ? 'item active' : 'item'">
+                            <div class="col-md-4 col-xs-12">
+                                <table class="tableReference">
+                                    <tr>
+                                        <td class="equalReference">
+                                            <div class="divReferenceAvatarExtra" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}'); "></div>
+                                            <h4 class="h4referencesExtra">{$eRow->getName()}</h4>
+                                            <p class="pReferenceReferrerExtra">{$eRow->getText()}</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            {/if}
+                            <div class="col-md-8 col-xs-12">
+                                <table class="tableReference">
+                                    <tr>
+                                        <td class="equalReference">
+                                            <div class="divQuotesExtra">
+                                                <img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">
+                                            </div>
+                                            <p class="pReferenceExtra">{$eRow->getReference()}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-
                     {/foreach}
+                    </div>
+
 
                     <!-- Left and right controls -->
                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -105,11 +87,9 @@
 {/block}
 
 {block myStyle}
-
     <style>
         .mujsyl {
             color: #0A246A;
         }
     </style>
-
 {/block}
