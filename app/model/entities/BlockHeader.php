@@ -346,6 +346,12 @@ class BlockHeader
         return $this->id;
     }
 
+	/**
+	 * @return string
+	 */
+	public function getMainHeading(){
+		return $this->getHeading1();
+	}
 
     /**
      * @return string

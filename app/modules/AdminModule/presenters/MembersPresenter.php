@@ -14,10 +14,13 @@ class MembersPresenter extends SecuredBasePresenter {
     public $sId;
     public $service;
 
+    public $blockFactory;
+
     public function __construct(BF $blockFactory, MemberService $service)
     {
         $this->service = $service;
         $this->members = $blockFactory->getBlockMembers();
+        $this->blockFactory = $blockFactory;
     }
 
     public function renderNewMember($blockId){
@@ -146,6 +149,7 @@ class MembersPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->blockFactory->setMenu($entity);
             $this->redirect('Summary:');
         }
 

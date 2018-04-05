@@ -14,10 +14,13 @@ class SponsorsPresenter extends SecuredBasePresenter {
     public $sId;
     public $service;
 
+    public $blockFactory;
+
     public function __construct(BF $blockFactory, SponsorService $service)
     {
         $this->service = $service;
         $this->sponsors = $blockFactory->getBlockSponsors();
+        $this->blockFactory = $blockFactory;
     }
 
     public function renderNewSponsor($blockId){
@@ -147,6 +150,7 @@ class SponsorsPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->blockFactory->setMenu($entity);
             $this->redirect('Summary:');
         }
 

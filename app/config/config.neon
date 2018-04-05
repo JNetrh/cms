@@ -54,6 +54,7 @@ services:
 	- App\Model\Services\ContactService
 	- App\Model\Services\ArticleService
 	- App\Model\Services\SponsorService
+	- App\Model\Services\MenuService
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

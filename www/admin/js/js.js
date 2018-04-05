@@ -31,6 +31,7 @@ var fileUpload = function (id, images, urlDel){
         allowedFileExtensions: ['png', 'gif', 'jpg', 'jpeg', 'JPG'],
         validateInitialCount: true,
         resizeImage: true,
+        maxFileSize: 2000,
         maxImageWidth: 1000,
         browseClass: "btn btn-primary btn-block",
         showCaption: false,

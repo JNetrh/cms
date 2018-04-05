@@ -14,10 +14,13 @@ class ReferencesPresenter extends SecuredBasePresenter {
     public $sId;
     public $service;
 
+    public $blockFactory;
+
     public function __construct(BF $blockFactory, ReferenceService $service)
     {
         $this->service = $service;
         $this->references = $blockFactory->getBlockReferences();
+        $this->blockFactory = $blockFactory;
     }
 
     public function renderNewReference($blockId){
@@ -144,6 +147,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->blockFactory->setMenu($entity);
             $this->redirect('Summary:');
         }
 

@@ -14,10 +14,13 @@ class EventsPresenter extends SecuredBasePresenter {
     public $sId;
     public $service;
 
+    public $blockFactory;
+
     public function __construct(BF $blockFactory, EventService $service)
     {
         $this->service = $service;
         $this->events = $blockFactory->getBlockEvents();
+        $this->blockFactory = $blockFactory;
     }
 
     public function renderNewEvent($blockId){
@@ -147,6 +150,7 @@ class EventsPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->blockFactory->setMenu($entity);
             $this->redirect('Summary:');
         }
 

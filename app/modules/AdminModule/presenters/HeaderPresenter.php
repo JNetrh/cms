@@ -13,6 +13,7 @@ class HeaderPresenter extends SecuredBasePresenter {
     public $id;
     public $service;
 
+
     public function __construct(BF $blockFactory, HeaderService $service)
     {
         $this->service = $service;

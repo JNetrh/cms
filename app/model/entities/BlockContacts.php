@@ -458,6 +458,13 @@ class BlockContacts
         $this->linkedin = $linkedin;
     }
 
+	/**
+	 * @return string
+	 */
+	public function getMainHeading(){
+		return $this->getHeading1();
+	}
+
     /**
      * @return string
      */

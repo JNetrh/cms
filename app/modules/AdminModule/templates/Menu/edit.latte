@@ -1,0 +1,168 @@
+{block title}Edit menu{/block}
+{block heading}<h1>Edit menu</h1>{/block}
+{block content}
+    {include '../Parts/topBar.latte', destination => 'Summary:'}
+
+    <form n:name=menusForm>
+        <div class="container odsaditBottom-50">
+
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Menu items</h3>
+                    </div>
+                    <div class="panel-body">
+                        {foreach $items as $row}
+
+                            <div class="form-group row">
+                                <label for="inputCaption" class="col-md-4 col-form-label">{$row->getBlockOwner()}</label>
+                                <div class="col-md-3 inputGroupContainer">
+                                    {*<textarea n:name="heading_1" class="form-control"></textarea>*}
+                                    {*<input type="text" n:name="heading_1" class="form-control">*}
+                                    {*<span class="formError red" n:ifcontent>{inputError heading_1}</span> *}{* error *}
+                                </div>
+                            </div>
+
+                        {/foreach}
+
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                {*<textarea n:name="heading_1" class="form-control"></textarea>*}
+                                {*<input type="text" n:name="heading_1" class="form-control">*}
+                                {*<span class="formError red" n:ifcontent>{inputError heading_1}</span> *}{* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Page settings</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Logo text</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input type="text" n:name="heading" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError heading}</span> {* error *}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Text logo color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'heading', id => 'color_1'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'background', id => 'color_2'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'inverted_background', id => 'color_3'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'text', id => 'color_4'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'inverted_text', id => 'color_5'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Background image</label>
+                            <div class="col-md-12">
+                                <div class="file-loading">
+                                    <input id="up_1" n:name="image" type="file">
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+            <div class="col-md-6">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Social links</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Facebook</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="facebook" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError facebook}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Instagram</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="instagram" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError instagram}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">LinkedIn</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="linkedin" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError linkedin}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Twitter</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                <input type="text" n:name="twitter" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError twitter}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+
+
+    </form>
+
+
+{/block}
+
+{block bordel}
+    <script type="text/javascript">
+
+        {*tinymce.init({*}
+            {*selector: 'textarea',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function tinyInstance (editor) {*}
+                {*editor.setContent({$data->getHeading()});*}
+            {*}*}
+        {*});*}
+
+        var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['inverted_background', '#color_3'], ['text', '#color_4'], ['inverted_text', '#color_5']];
+        setColors({$colors},pickers);
+        fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
+
+    </script>
+
+{/block}

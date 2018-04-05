@@ -300,6 +300,12 @@ class BlockEvents
         return $this->id;
     }
 
+	/**
+	 * @return string
+	 */
+	public function getMainHeading(){
+		return $this->getHeading();
+	}
 
     /**
      * @return string

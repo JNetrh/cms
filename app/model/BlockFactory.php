@@ -9,6 +9,8 @@
 namespace App\Model;
 
 use Nette;
+use Kdyby\Doctrine\EntityManager;
+
 use App\Model\Services\ReferenceService;
 use App\Model\Services\MemberService;
 use App\Model\Services\HeaderService;
@@ -17,9 +19,15 @@ use App\Model\Services\ContactService;
 use App\Model\Services\ArticleService;
 use App\Model\Services\SponsorService;
 
+use App\Model\Services\MenuService;
+
 
 class BlockFactory
 {
+	/**
+	 * @var EntityManager
+	 */
+	private $entityManager;
 
     private $references;
     private $members;
@@ -29,17 +37,24 @@ class BlockFactory
     private $articles;
     private $sponsors;
 
+    private $menu;
+
 
     public function __construct(
+    	EntityManager $entityManager,
         ReferenceService $references,
         MemberService $members,
         HeaderService $headers,
         EventService $events,
         ContactService $contacts,
         ArticleService $articles,
-        SponsorService $sponsors
+        SponsorService $sponsors,
+
+        MenuService $menu
     )
     {
+	    $this->entityManager = $entityManager;
+
         $this->references = $references;
         $this->members = $members;
         $this->headers = $headers;
@@ -47,6 +62,8 @@ class BlockFactory
         $this->contacts = $contacts;
         $this->articles = $articles;
         $this->sponsors = $sponsors;
+
+        $this->menu = $menu;
     }
 
 
@@ -107,6 +124,14 @@ class BlockFactory
         return $this->sponsors;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getBlockMenus()
+    {
+        return $this->menu;
+    }
+
 
     public function getAllBlocks(){
         return $this->mergeBlocks();
@@ -121,6 +146,55 @@ class BlockFactory
         });
 
         return $merged;
+    }
+
+    public function setMenu($entity){
+    	$myBlock = $this->searchBlock($entity);
+    	$idExt = $myBlock->toString()."_".$myBlock->getId();
+    	$blockMenus = $this->getBlockMenus()->getOne();
+	    $menusEntity = $blockMenus->findByBlock($idExt);
+
+	    if($menusEntity == null){
+	    	$menusEntity = $blockMenus->createEntity(
+	    		$idExt,
+			    $entity->getMainHeading(),
+			    $entity->getPosition(),
+			    $blockMenus,
+			    $entity->getActive(),
+			    $idExt
+		    );
+	    }
+	    else {
+		    $menusEntity->setBlockOwner($idExt);
+		    $menusEntity->setText($entity->getMainHeading());
+	    }
+
+	    $this->entityManager->persist($menusEntity);
+	    $this->entityManager->flush();
+
+
+    }
+
+    public function deleteMenu($entity){
+	    $myBlock = $this->searchBlock($entity);
+	    $idExt = $myBlock->toString()."_".$myBlock->getId();
+	    $blockMenus = $this->getBlockMenus()->getOne();
+	    $menusEntity = $blockMenus->findByBlock($idExt);
+
+	    if($menusEntity != null) {
+		    $this->entityManager->remove($menusEntity);
+		    $this->entityManager->flush();
+	    }
+    }
+
+    private function searchBlock ($entity){
+	    foreach ($this->getAllBlocks() as $row){
+		    $id = $row->getId();
+		    $name = $row->toString();
+		    if($entity->getId() == $id and $entity->toString() == $name){
+			    return $row;
+		    }
+	    }
     }
 
 

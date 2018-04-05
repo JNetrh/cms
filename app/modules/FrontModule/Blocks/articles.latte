@@ -1,7 +1,7 @@
 
 {block blockyArticles}
 
-    <div class="blockBg" style="background-color: #8ec841; background-image: url('{$basePath}/{$row->getImage()|noescape}')">
+    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
         <div id="articles" class="container-fluid">
             <h2>{$row->getHeading1()}</h2>
@@ -20,5 +20,25 @@
             </div>
         </div>
     </div>
+
+{/block}
+
+{block blockyArticlesStyle}
+
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-image: url('{$basePath}/{$row->getImage()|noescape}');
+            background-color: {$row->getColorProperties()['background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h2 {
+            color: {$row->getColorProperties()['heading_1_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h3 {
+            color: {$row->getColorProperties()['heading_2_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} p {
+            color: {$row->getColorProperties()['text_color']|noescape};
+        }
+    </style>
 
 {/block}

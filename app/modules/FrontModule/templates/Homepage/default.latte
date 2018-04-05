@@ -40,22 +40,22 @@
             {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'references'}
-            {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false}}
+            {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'members'}
-            {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false}}
+            {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'events'}
-            {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false}}
+            {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'contacts'}
-            {*{include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false}}*}
+            {*{include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false}*}
 
         {elseif $row->toString() == 'articles'}
-            {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false}}
+            {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false}
 
         {elseif $row->toString() == 'sponsors' }
-            {*{include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false}}*}
+            {*{include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false}*}
 
         {/if}
     {/foreach}
@@ -99,13 +99,13 @@
             {include blockyMembersStyle row => $row}
 
         {elseif $row->toString() == 'events'}
-            {*{include blockyEventsStyle row => $row}*}
+            {include blockyEventsStyle row => $row}
 
         {elseif $row->toString() == 'contacts'}
             {*{include blockyContactsStyle row => $row}*}
 
         {elseif $row->toString() == 'articles'}
-            {*{include blockyArticlesStyle row => $row}*}
+            {include blockyArticlesStyle row => $row}
 
         {elseif $row->toString() == 'sponsors' }
             {*{include blockySponsorsStyle row => $row}*}

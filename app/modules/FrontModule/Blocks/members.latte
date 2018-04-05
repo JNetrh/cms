@@ -25,6 +25,15 @@
             background-image: url('{$basePath}/{$row->getImage()|noescape}');
             background-color: {$row->getColorProperties()['background_color']|noescape};
         }
+        .{$row->toString().$row->getId()} h2{
+            color: {$row->getColorProperties()['heading_1_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h3{
+            color: {$row->getColorProperties()['name_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} p{
+            color: {$row->getColorProperties()['text_color']|noescape};
+        }
     </style>
 
 {/block}

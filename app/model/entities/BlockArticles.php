@@ -301,7 +301,12 @@ class BlockArticles
         $this->text = $text;
     }
 
-
+	/**
+	 * @return string
+	 */
+	public function getMainHeading(){
+		return $this->getHeading1();
+	}
 
     /**
      * @return string

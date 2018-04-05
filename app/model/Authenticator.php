@@ -36,11 +36,11 @@ class Authenticator implements NS\IAuthenticator
 
 
         if ($row == null) {
-            throw new NS\AuthenticationException('Špatný email.');
+            throw new NS\AuthenticationException('Wrong email.');
         }
 
         if (!NS\Passwords::verify($password, $row->getPassword())) {
-            throw new NS\AuthenticationException('Špatné heslo.');
+            throw new NS\AuthenticationException('wrong heslo.');
         }
 
 

@@ -13,10 +13,13 @@ class ContactsPresenter extends SecuredBasePresenter {
     public $id;
     public $service;
 
+    public $blockFactory;
+
     public function __construct(BF $blockFactory, ContactService $service)
     {
         $this->service = $service;
         $this->contacts = $blockFactory->getBlockContacts();
+        $this->blockFactory = $blockFactory;
     }
 
     public function actionEdit($blockId){
@@ -145,6 +148,7 @@ class ContactsPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->blockFactory->setMenu($entity);
             $this->redirect('Summary:');
         }
 

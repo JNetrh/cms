@@ -15,13 +15,14 @@ class AuthorizatorFactory {
 
         /* seznam uživatelských rolí */
         $permission->addRole('admin');
-        $permission->addRole('header');
+        $permission->addRole('headers');
         $permission->addRole('members');
         $permission->addRole('references');
         $permission->addRole('events');
         $permission->addRole('contacts');
         $permission->addRole('articles');
         $permission->addRole('sponsors');
+        $permission->addRole('menu');
         $permission->addRole('authenticated');
         /* TODO: Insert previous values to DB */
 
@@ -34,30 +35,32 @@ class AuthorizatorFactory {
         $permission->addResource('Admin:Contacts');
         $permission->addResource('Admin:Articles');
         $permission->addResource('Admin:Sponsors');
+        $permission->addResource('Admin:Menu');
         $permission->addResource('Admin:Summary');
         $permission->addResource('Admin:');
 
         /* zákldní pole zdrojů */
-        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles', 'Admin:Sponsors');
+        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles', 'Admin:Sponsors', 'Admin:Menu');
 
         /* základní pole práv */
         $defaultPrivileges = array('default', 'detail', 'logout');
 
         /* přiřazení základních oprávnění */
         $permission->allow('admin', $basicArray, $defaultPrivileges);
-        $permission->allow('header', $basicArray, $defaultPrivileges);
+        $permission->allow('headers', $basicArray, $defaultPrivileges);
         $permission->allow('members', $basicArray, $defaultPrivileges);
         $permission->allow('references', $basicArray, $defaultPrivileges);
         $permission->allow('events', $basicArray, $defaultPrivileges);
         $permission->allow('contacts', $basicArray, $defaultPrivileges);
         $permission->allow('articles', $basicArray, $defaultPrivileges);
         $permission->allow('sponsors', $basicArray, $defaultPrivileges);
+        $permission->allow('menu', $basicArray, $defaultPrivileges);
 
         /* pole privilegií k úpravám */
         $managePrivileges = array('create','delete','edit', 'handle', 'new');
 
         //muze upravovat hlavicku
-        $permission->allow('header', 'Admin:Header', $managePrivileges);
+        $permission->allow('headers', 'Admin:Header', $managePrivileges);
 
         //muze upravovat členy
         $permission->allow('members', 'Admin:Members', $managePrivileges);
@@ -74,8 +77,11 @@ class AuthorizatorFactory {
         //muze upravovat články
         $permission->allow('articles', 'Admin:Articles', $managePrivileges);
 
-        //muze upravovat články
+        //muze upravovat sponsory
         $permission->allow('sponsors', 'Admin:Sponsors', $managePrivileges);
+
+        //muze upravovat Menu
+        $permission->allow('menu', 'Admin:Menu', $managePrivileges);
 
         /* ADMIN má práva na všechno */
         $permission->allow('admin', $basicArray, $managePrivileges);
