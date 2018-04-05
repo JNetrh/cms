@@ -3,9 +3,9 @@
 
     <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
-        <div id="articles" class="container-fluid">
+        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid">
             <h2>{$row->getHeading1()}</h2>
-            <div class="row slideanim">
+            <div class="row {$isSlide ? 'slideanim' : ''}">
                 <div class="col-md-6 col-xs-12 equal">
                     <div class="divArticleImg">
                         <img class="imgArticle" src="{$basePath}/{$row->getImageArticle()|noescape}" />
@@ -40,5 +40,4 @@
             color: {$row->getColorProperties()['text_color']|noescape};
         }
     </style>
-
 {/block}

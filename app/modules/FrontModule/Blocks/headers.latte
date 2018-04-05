@@ -3,7 +3,7 @@
 {block blockyHeaders}
     <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}" style="">
         <!-- Container (Services Section) -->
-        <div id="headers" class="container-fluid">
+        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 divHeader">
                     <h1>{$row->getHeading1()}</h1>

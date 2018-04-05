@@ -3,10 +3,10 @@
 {block blockyMembers}
     <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
-        <div id="members" class="container-fluid text-center">
+        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid text-center">
             <h2>{$row->getHeading()}</h2>
             {foreach $row->getMembers() as $eRow}
-                {first 3}<div class="row slideanim">{/first}
+                {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}
                 <div class="col-md-4 col-xs-12 equal">
                     <div class="divAvatarImg" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}');"></div>
                     <h3>{$eRow->getName()}</h3>

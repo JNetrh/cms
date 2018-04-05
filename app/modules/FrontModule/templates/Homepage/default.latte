@@ -1,4 +1,5 @@
 
+{import '../../Blocks/menu.latte'}
 {import '../../Blocks/headers.latte'}
 {import '../../Blocks/members.latte'}
 {import '../../Blocks/events.latte'}
@@ -9,53 +10,54 @@
 {block content}
 
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#myPage">Logo</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#contacts">Kontakty</a></li>
-                    <li><a href="#members">Members</a></li>
-                    <li><a href="#references">References</a></li>
-                    <li><a href="#events">Akce</a></li>
-                    <li><a href="#articles">Článek</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {*<nav class="navbar navbar-default navbar-fixed-top">*}
+        {*<div class="container">*}
+            {*<div class="navbar-header">*}
+                {*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">*}
+                    {*<span class="icon-bar"></span>*}
+                    {*<span class="icon-bar"></span>*}
+                    {*<span class="icon-bar"></span>*}
+                {*</button>*}
+                {*<a class="navbar-brand" href="#myPage">Logo</a>*}
+            {*</div>*}
+            {*<div class="collapse navbar-collapse" id="myNavbar">*}
+                {*<ul class="nav navbar-nav navbar-right">*}
+                    {*<li><a href="#contacts">Kontakty</a></li>*}
+                    {*<li><a href="#members">Members</a></li>*}
+                    {*<li><a href="#references">References</a></li>*}
+                    {*<li><a href="#events">Akce</a></li>*}
+                    {*<li><a href="#articles">Článek</a></li>*}
+                {*</ul>*}
+            {*</div>*}
+        {*</div>*}
+    {*</nav>*}
 
     {*<div style="padding: 50px 0"></div>*}
 
+    {include blockyMenu row => $menu}
 
 
-    {foreach $visibleBlocks as $row}
+    {foreach $blocks as $row}
         {if $row->toString() == 'headers'}
-            {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false}
+            {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
         {elseif $row->toString() == 'references'}
-            {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false}
+            {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
         {elseif $row->toString() == 'members'}
-            {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false}
+            {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
         {elseif $row->toString() == 'events'}
-            {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false}
+            {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
         {elseif $row->toString() == 'contacts'}
-            {*{include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false}*}
+            {*{include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}*}
 
         {elseif $row->toString() == 'articles'}
-            {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false}
+            {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
         {elseif $row->toString() == 'sponsors' }
-            {*{include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false}*}
+            {*{include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}*}
 
         {/if}
     {/foreach}
@@ -88,7 +90,9 @@
 
 {block cmsStyle}
 
-    {foreach $visibleBlocks as $row}
+    {include blockyMenuStyle row => $menu}
+
+    {foreach $blocks as $row}
         {if $row->toString() == 'headers'}
             {include blockyHeadersStyle row => $row}
 

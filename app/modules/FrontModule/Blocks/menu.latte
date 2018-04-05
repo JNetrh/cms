@@ -1,0 +1,46 @@
+{block blockyMenu}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#myPage">{$row->getHeading()}</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    {foreach $row->getMenus() as $eRow}
+                        <li n:if="$eRow->getActive() == 1"><a href="{$eRow->getBlockOwner() == 'ext' ? '' : '#'}{$eRow->getLink()|noescape}" target="{$eRow->getBlockOwner() == 'ext' ? '_blank' : ''}">{$eRow->getText()}</a></li>
+                    {/foreach}
+                    {*<li><a href="#members">Members</a></li>*}
+                    {*<li><a href="#references">References</a></li>*}
+                    {*<li><a href="#events">Akce</a></li>*}
+                    {*<li><a href="#articles">Článek</a></li>*}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{/block}
+
+{block blockyMenuStyle}
+    <style type="text/css">
+        .navbar-brand {
+            color: {$row->getColorProperties()['heading_color']|noescape}!important;
+            background-color: {$row->getColorProperties()['background_color']|noescape}!important;
+        }
+        .navbar li a, .navbar .navbar-brand {
+            color: {$row->getColorProperties()['text_color']|noescape}!important;
+            background-color: {$row->getColorProperties()['background_color']|noescape}!important;
+        }
+        .navbar-nav li a:hover, .navbar-nav li.active a {
+            color: {$row->getColorProperties()['inverted_text_color']|noescape}!important;
+            background-color: {$row->getColorProperties()['inverted_background_color']|noescape}!important;
+        }
+        .navbar-default, .navbar-toggle {
+            border-color: transparent;
+            background-color: {$row->getColorProperties()['background_color']|noescape}!important;
+        }
+    </style>
+{/block}

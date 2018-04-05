@@ -1,10 +1,10 @@
 
 
-<div class="blockBg" style="background-color: #5c9541; background-image: url('{$basePath."/img/repo/25ac0087fa9dd42.59821951.jpg"}')">
+<div class="blockBg" {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
     <!-- Container (Services Section) -->
-    <div id="contacts" class="container-fluid text-center">
+    <div id="{$row->toString()."_".$row->getId()}" class="container-fluid text-center">
         <h2>Kontakt</h2>
-        <div class="row slideanim">
+        <div class="row  {$isSlide ? 'slideanim' : ''}">
             <div class="col-md-6 col-xs-12 equal">
                 <div class="divContactsBg">
                     <h3>Máte otázky?</h3>

@@ -39,7 +39,7 @@
             <div class="divSummButtons col-md-2 equal">
                 <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Events:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
                 <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteEvent! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
-                <a class="buttonCisty buttonView buttonBlockSummary" href="#"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
+                <a class="buttonCisty buttonView buttonBlockSummary ajax" n:href="preview! $row->toString(), $row->getId()"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
                 <a class="buttonCisty buttonAdd buttonBlockSummary" n:href="Events:newEvent $row->getId()"><i class="fa fa-plus-square"></i> Add</a>
             </div>
             {*<div class=" panel">*}

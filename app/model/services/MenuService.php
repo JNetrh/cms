@@ -40,6 +40,21 @@ class MenuService
         $this->entityManager->flush();
     }
 
+	/**
+	 * ONLY for MenuPresenter!
+	 * @param $entity
+	 */
+    public function updateEntity($entity){
+	    $this->entityManager->persist($entity);
+    }
+
+	/**
+	 * ONLY for MenuPresenter!
+	 */
+    public function saveChanges(){
+	    $this->entityManager->flush();
+    }
+
     public function createEntity($style, $bgType, $image, $instagram, $facebook, $twitter, $linkedin, $heading)
     {
         $entity = new BlockMenus();
@@ -78,7 +93,6 @@ class MenuService
 
     public function deleteMenu($blockId, $id){
         $toDel = $this->findById($blockId)->removeMenu($this->findSubById($blockId, $id));
-        $toDel->deleteImage();
         $this->entityManager->remove($toDel);
         $this->entityManager->flush();
     }

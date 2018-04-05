@@ -33,6 +33,37 @@
 
 
 
+    {* modální okno *}
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        {snippet preview}
+            {if isset($blockName)}
+                {if $block->toString() == 'headers'}
+                    {include '../../../FrontModule/Blocks/headers.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'members'}
+                    {include '../../../FrontModule/Blocks/members.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'references'}
+                    {include '../../../FrontModule/Blocks/references.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'events'}
+                    {include '../../../FrontModule/Blocks/events.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'contacts'}
+                    {include '../../../FrontModule/Blocks/contacts.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'articles'}
+                    {include '../../../FrontModule/Blocks/articles.latte', row => $block, first => true, isSlide => false}
+
+                {elseif $block->toString() == 'sponsors'}
+                    {include '../../../FrontModule/Blocks/sponsors.latte', row => $block, first => true, isSlide => false}
+
+                {/if}
+            {/if}
+        {/snippet}
+    </div>
+
+
 
 {/block}
 
@@ -41,6 +72,45 @@
         $(function() {
             $('.equal').matchHeight();
         });
+        $(".ajax").click(function () {
+            $('#myModal').modal('show');
+        });
+        $('#myModal').on('show.bs.modal', function (e) {
+            var cssId = 'myCss';  // you could encode the css path itself to generate id..
+            if (!document.getElementById(cssId))
+            {
+                var head  = document.getElementsByTagName('head')[0];
+                var link  = document.createElement('link');
+                link.id   = cssId;
+                link.rel  = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '' + {$basePath} + '/css/style.css';
+                link.media = 'all';
+                head.appendChild(link);
+            }
+            console.log('open')
+        });
+        $('#myModal').on('hide.bs.modal', function (e) {
+            var sheet = document.getElementById('myCss');
+            sheet.disabled = true;
+            sheet.parentNode.removeChild(sheet);
+        });
     </script>
 
+
 {/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

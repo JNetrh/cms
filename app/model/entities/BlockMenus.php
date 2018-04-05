@@ -184,8 +184,6 @@ class BlockMenus
     public function findByBlock($extId){
 	    foreach ($this->menus as $el){
 		    if($el->getBlockOwner() === $extId){
-		    	bdump([$el->getBlockOwner(), $extId], 11);
-		    	bdump($el->getBlockOwner() == $extId, 12);
 			    return $el;
 		    }
 	    }
@@ -209,6 +207,10 @@ class BlockMenus
     public function removeMenu(Menu $menu){
         $this->menus->remove($menu->getId());
         return $menu;
+    }
+
+    public function deleteImage(){
+    	$this->setImage(null);
     }
 
     /**

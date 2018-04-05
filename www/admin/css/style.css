@@ -308,6 +308,11 @@ div.divColor{
     margin: 0 5px;
     float: left;
 }
+/*separate new external link when editing menu items*/
+div.divMenuItemNew{
+    border-top: 1px solid #f2f2f2;
+    padding-top: 20px;
+}
 
 /*----------------------------------------------------------------------------*/
 /* ODKAZY: */

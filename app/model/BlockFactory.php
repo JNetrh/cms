@@ -197,6 +197,16 @@ class BlockFactory
 	    }
     }
 
+    public function searchByIdExt ($string, $id){
+	    foreach ($this->getAllBlocks() as $row){
+		    $cId = $row->getId();
+		    $name = $row->toString();
+		    if(intval($id) == intval($cId) and $string == $name){
+			    return $row;
+		    }
+	    }
+    }
+
 
 
 }

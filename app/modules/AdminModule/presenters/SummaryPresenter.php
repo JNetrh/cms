@@ -92,4 +92,23 @@ class SummaryPresenter extends SecuredBasePresenter {
     }
 
 
+
+	public function handlePreview($string, $id)
+	{
+
+//		$this->template->singleMember = $this->database->query('SELECT users.id, users.name, users.email, users.surname, users.about, users.specialization, users.clubposition, users.member_display, images.category, images.alt, images.img, owner FROM users JOIN images ON (users.id = images.owner) WHERE images.category="people" AND users.id = ? LIMIT 1', $userId)->fetch();
+		if( $this->isAjax() ) {
+			$toDisplay = $this->myBlocks->searchByIdExt($string, $id);
+			$this->template->block = $toDisplay;
+			$blockName = $toDisplay->toString();
+			$this->template->blockName = $blockName;
+			$this->redrawControl('preview');         // invalidace snippetu
+			return 'xxx';
+		} else {
+			/** TODO Jak vypsat modal bez AJAXu? */
+		}
+	}
+
+
+
 }
