@@ -1,0 +1,40 @@
+
+{block blockySponsors}
+
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+        <!-- Container (Services Section) -->
+        <div class="container-fluid">
+            <h2>{$row->getHeading()}</h2>
+            <div class="row {$isSlide ? 'slideanim' : ''}">
+                <div class="container blockBackground">
+                    {foreach $row->getSponsors() as $eRow}
+                        <div class="col-md-3 col-xs-12 equal divSponsorsContent">
+                            <div class="divSponsorImg">
+                                <a href="{$eRow->getLink()}">
+                                    <img class="imgSponsor" src="{$basePath}/{$eRow->getImage()|noescape}" />
+                                </a>
+                            </div>
+                        </div>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{/block}
+
+{block blockySponsorsStyle}
+
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-image: url('{$basePath}/{$row->getImage()|noescape}');
+            background-color: {$row->getColorProperties()['background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h2 {
+            color: {$row->getColorProperties()['heading_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .blockBackground {
+            background-color: {$row->getColorProperties()['block_background_color']|noescape};
+        }
+    </style>
+{/block}

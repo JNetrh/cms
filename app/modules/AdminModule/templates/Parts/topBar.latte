@@ -7,10 +7,10 @@
     <a class="buttonCisty buttonAdd" n:href="$create $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
 </div>
 <div class="panel col-md-8">
-    <div class="panel-heading">
-        <h2 id="expandNewArrow" class="h2small"><span class="spanArrow"><i class="fa fa-lg fa-caret-down"></i></span> Create Block</h2>
+    <div id="expandNewArrow" class="panel-heading">
+        <h2 class="h2small"><span class="spanArrow"><i class="fa fa-lg fa-caret-down"></i></span> Create Block</h2>
     </div>
-    <div id="expandNew" class="divSummaryExpand panel-body" style="height: 0">
+    <div id="expandNew" class="divSummaryExpand panel-body" {*style="height: 0"*}>
         <div class="divNewBlock"><a n:href="Header:new" ><span class="glyphicon glyphicon-header" aria-hidden="true"></span> Headers</a></div>
         <div class="divNewBlock"><a n:href="Members:new" ><i class="fa fa-address-card"></i> Members</a></div>
         <div class="divNewBlock"><a n:href="Events:new" ><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Events</a></div>
@@ -28,35 +28,66 @@
 
         $(document).ready(function() {
 
-            $("#expandNew").css({
-                height: "0",
-                padding:"0px 15px",
-                opacity:.2
-            })
-
             $('#expandNewArrow').click(function(){
+                var visibility = $("#expandNew").css('display')
+                var height = $("#expandNew").css('height')
 
-                var display = $("#expandNew").css('height')
 
-                if(display == '0px'){
+                if(visibility == 'none'){
+                    $("#expandNew").css({ height: '0px' })
+                    $("#expandNew").css({ display: 'block' })
                     $('#expandNew').animate({
-                        height: "100px",
-                        padding:"15px 15px",
-                        opacity:.8
-                    }, 500, function(){
+                        height: height,
+                        padding: '15px 0px 0px 0px'
+                    }, 400, function(){
                         $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-up"></i></span>');
                     });
                 }
                 else {
                     $('#expandNew').animate({
-                        height: "0",
-                        padding:"0px 15px",
-                        opacity:.2
+                        height: '0px',
+                        padding: '0px 0px 0px 0px'
                     }, 500, function(){
                         $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-down"></i></span>');
+                        setTimeout(function () {
+                            $("#expandNew").css({ display: 'none' })
+                            $("#expandNew").css({ height: height })
+                        },100)
                     });
+
                 }
-            })
+                console.log(height)
+            });
+
+            // $("#expandNew").css({
+            //     height: "0",
+            //     padding:"0px 15px",
+            //     opacity:.2
+            // })
+            //
+            // $('#expandNewArrow').click(function(){
+            //
+            //     var display = $("#expandNew").css('height')
+            //
+            //     if(display == '0px'){
+            //         $('#expandNew').animate({
+            //             height: "100px",
+            //             padding:"15px 15px",
+            //             opacity:.8
+            //         }, 500, function(){
+            //             $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-up"></i></span>');
+            //         });
+            //     }
+            //     else {
+            //         $('#expandNew').animate({
+            //             height: "0",
+            //             padding:"0px 15px",
+            //             opacity:.2
+            //         }, 500, function(){
+            //             $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-down"></i></span>');
+            //         });
+            //     }
+            // })
         });
     </script>
 {/block}

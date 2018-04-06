@@ -58,12 +58,13 @@ $(document).ready(function() {
 /*----------------------------------------------------------------------------*/
 /* Toggle colorpicker: */
     $(".openColpick").click(function () {
-        $(".divColpick").hide()
-        $(this).next(".divColpick").show()
-    })
+        $(".divColpick").hide();
+        $(this).next(".divColpick").show();
+    });
     $(".closeColpick").click(function () {
-        $(this).closest('.divColpick').hide()
-    })
+        $(this).closest('.divColpick').hide();
+    });
+
 
 
 

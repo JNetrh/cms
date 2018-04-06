@@ -55,20 +55,22 @@ class MenuService
 	    $this->entityManager->flush();
     }
 
-    public function createEntity($style, $bgType, $image, $instagram, $facebook, $twitter, $linkedin, $heading)
+//    public function createEntity($style, $bgType, $image, $instagram, $facebook, $twitter, $linkedin, $heading)
+    public function createEntity($style, $bgType)
     {
         $entity = new BlockMenus();
         $entity->setStyle($style);
         $entity->setBgType($bgType);
-        $entity->setImage($image);
-        $entity->setInstagram($instagram);
-        $entity->setFacebook($facebook);
-        $entity->setTwitter($twitter);
-        $entity->setLinkedin($linkedin);
-        $entity->setHeading($heading);
+//        $entity->setImage($image);
+//        $entity->setInstagram($instagram);
+//        $entity->setFacebook($facebook);
+//        $entity->setTwitter($twitter);
+//        $entity->setLinkedin($linkedin);
+//        $entity->setHeading($heading);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
+        return $entity;
     }
 
     public function newSubEntity($blockId){
@@ -110,7 +112,16 @@ class MenuService
     }
 
     public function getOne() {
-	    return $this->entities->findAll()[0];
+    	$menu = $this->entities->findAll();
+    	if(count($menu) == 0){
+    		$menu = $this->createEntity('{"members_2_text":"\u010clenov\u00e9 s menu","members_2_checkbox":"on","members_2_position":"21","events_2_text":"Akce s menu","events_2_checkbox":"on","events_2_position":"30","references_2_text":"Reference s menu","references_2_position":"40","contacts_2_text":"Kontakt s menu","contacts_2_checkbox":"on","contacts_2_position":"50","articles_2_text":"Ben\u00e1tky","articles_2_position":"60","sponsors_2_text":"Sponzo\u0159i","sponsors_2_checkbox":"on","sponsors_2_position":"70","ext_20_text":"new link","ext_20_link":"http:\/\/4fis.cz","ext_20_position":"1","newext_text":"","newext_link":"","newext_position":"","heading_color":"#ffffff","background_color":"#631192","inverted_background_color":"#ffffff","text_color":"#ffffff","inverted_text_color":"#631192","_submit":"Send","_token_":"va9jay287l1KCfJwrEbqbCRS\/9Yf+7aTwB8c8=","_do":"menusForm-submit"}', 'color');
+	    }
+	    else {
+		    $menu = $menu[0];
+	    }
+    	bdump($menu);
+	    return $menu;
+//	    return $this->entities->findAll()[0];
     }
 
     public function findSubById($blockId, $subId){

@@ -1,36 +1,59 @@
 
+{block blockyContacts}
 
-<div class="blockBg" {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
     <!-- Container (Services Section) -->
-    <div id="{$row->toString()."_".$row->getId()}" class="container-fluid text-center">
-        <h2>Kontakt</h2>
+    <div class="container-fluid text-center">
+        <h2>{$row->getHeading1()}</h2>
         <div class="row  {$isSlide ? 'slideanim' : ''}">
             <div class="col-md-6 col-xs-12 equal">
                 <div class="divContactsBg">
-                    <h3>Máte otázky?</h3>
-                    <p class="pContact"><a href="mailto:mail@gmail.com">mail@gmail.com</a></p>
-                    <p class="pContact">(+420) 774 985 663</p>
-                    <p class="pContact">Vysoká škola ekonomická v praze, nám. W. Churchilla
-                        1938/4130 67 Praha 3
-                    </p>
+                    <h3>{$row->getHeading2()}</h3>
+                    <p class="pContact"><a href="mailto:"{$row->getEmail()}>{$row->getEmail()}</a></p>
+                    <p class="pContact">{$row->getPhone()}</p>
+                    <p class="pContact">{$row->getAdress()}</p>
                     <p class="pClear"></p>
-                    <a href="#">
+                    <a href={$row->getInstagram()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/instagram.svg"}" />
                     </a>
-                    <a href="#">
+                    <a href={$row->getFacebook()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/facebook.svg"}" />
                     </a>
-                    <a href="#">
+                    <a href={$row->getTwitter()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/twitter.svg"}" />
                     </a>
-                    <a href="#">
+                    <a href={$row->getLinkedin()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/linkedin.svg"}" />
                     </a>
                 </div>
             </div>
             <div class="col-md-6 col-xs-12 equal">
-                <iframe src="https://maps.google.com/maps?q=50.026780,14.497448&hl=es;z=14&amp;output=embed" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://maps.google.com/maps?q={$row->getGpsy()},{$row->getGpsx()}&hl=es;z=14&amp;output=embed" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </div>
-</div>
+    </div>
+
+{/block}
+
+{block blockyContactsStyle}
+
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-image: url('{$basePath}/{$row->getImage()|noescape}');
+            background-color: {$row->getColorProperties()['background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .divContactsBg {
+            background-color: {$row->getColorProperties()['block_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h2 {
+            color: {$row->getColorProperties()['heading_1_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} h3 {
+            color: {$row->getColorProperties()['heading_2_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} p {
+            color: {$row->getColorProperties()['text_color']|noescape};
+        }
+    </style>
+{/block}

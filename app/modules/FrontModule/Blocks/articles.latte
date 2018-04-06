@@ -1,9 +1,9 @@
 
 {block blockyArticles}
 
-    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
-        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid">
+        <div class="container-fluid">
             <h2>{$row->getHeading1()}</h2>
             <div class="row {$isSlide ? 'slideanim' : ''}">
                 <div class="col-md-6 col-xs-12 equal">

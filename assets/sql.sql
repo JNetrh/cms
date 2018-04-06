@@ -7,8 +7,9 @@ DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS referencese;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS sponsors;
-DROP TABLE IF EXISTS menu;
+DROP TABLE IF EXISTS menus;
 DROP TABLE IF EXISTS seo;
+DROP TABLE IF EXISTS block_menus;
 DROP TABLE IF EXISTS block_header;
 DROP TABLE IF EXISTS block_members;
 DROP TABLE IF EXISTS block_references;
@@ -16,7 +17,6 @@ DROP TABLE IF EXISTS block_events;
 DROP TABLE IF EXISTS block_contacts;
 DROP TABLE IF EXISTS block_articles;
 DROP TABLE IF EXISTS block_sponsors;
-DROP TABLE IF EXISTS block_menus;
 DROP TABLE IF EXISTS block_footer;
 DROP TABLE IF EXISTS userrights;
 DROP TABLE IF EXISTS rights;
@@ -163,7 +163,7 @@ create TABLE block_menus
   id                    SERIAL,
   style                 TEXT,
   bg_type               varchar(255) not null DEFAULT "color",
-  heading               varchar(255) not null DEFAULT "",
+  heading               varchar(255) DEFAULT "",
   image                 VARCHAR(255) default null,
   instagram             TEXT,
   facebook              TEXT,

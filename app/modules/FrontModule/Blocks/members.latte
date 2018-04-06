@@ -1,9 +1,9 @@
 
 
 {block blockyMembers}
-    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
-        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid text-center">
+        <div class="container-fluid text-center">
             <h2>{$row->getHeading()}</h2>
             {foreach $row->getMembers() as $eRow}
                 {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}

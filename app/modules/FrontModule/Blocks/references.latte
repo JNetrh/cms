@@ -1,7 +1,7 @@
 {block blockyReferences}
-    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Services Section) -->
-        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid text-center">
+        <div class="container-fluid text-center">
             {*<h2>Reference</h2>*}
             <h2>{$row->getHeading()}</h2>
             <div class="row divReference-inner">
@@ -103,7 +103,14 @@
             color: {$row->getColorProperties()['heading_color']|noescape};
         }
         .{$row->toString().$row->getId()} p {
-            color: {$row->getColorProperties()['heading_color']|noescape};
+            color: {$row->getColorProperties()['text_color']|noescape};
+        }
+
+        .carousel-indicators li {
+            border-color: {$row->getColorProperties()['text_color']|noescape};
+        }
+        .carousel-indicators li.active {
+            background-color: {$row->getColorProperties()['text_color']|noescape};
         }
     </style>
 

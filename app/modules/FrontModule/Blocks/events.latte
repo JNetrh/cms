@@ -1,8 +1,8 @@
 
 {block blockyEvents}
-    <div class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
+    <div id="{$row->toString()."_".$row->getId()}" class="blockBg {$row->toString().$row->getId()} {$first ? firstBlock : noPadding}">
         <!-- Container (Portfolio Section) -->
-        <div id="{$row->toString()."_".$row->getId()}" class="container-fluid">
+        <div class="container-fluid">
             <h2>{$row->getHeading()}</h2>
             {foreach $row->getEvents() as $eRow}
                 {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}
