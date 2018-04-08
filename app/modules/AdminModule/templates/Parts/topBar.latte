@@ -38,7 +38,7 @@
                     $("#expandNew").css({ display: 'block' })
                     $('#expandNew').animate({
                         height: height,
-                        padding: '15px 0px 0px 0px'
+                        padding: '15px 0px 0px 15px'
                     }, 400, function(){
                         $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-up"></i></span>');
                     });
@@ -46,7 +46,7 @@
                 else {
                     $('#expandNew').animate({
                         height: '0px',
-                        padding: '0px 0px 0px 0px'
+                        padding: '0px 0px 0px 15px'
                     }, 500, function(){
                         $('#expandNewArrow span').html('<i class="fa fa-lg fa-caret-down"></i></span>');
                         setTimeout(function () {

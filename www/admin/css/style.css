@@ -715,8 +715,9 @@ iframe /*----NEMAZAT----*/
 
 button.closeColpick{
     position: absolute;
-    right: 8px;
-    top: 5px;
+    right: 3px;
+    top: 0px;
+    font-size: 31px;
 }
 
 .input-group-addon{

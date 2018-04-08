@@ -82,16 +82,6 @@
                                 <input type="number" name="newext_position" class="form-control" placeholder="add menu position" min="1">
                             </div>
                         </div>
-
-
-                        {*<div class="form-group row">*}
-                            {*<label for="inputCaption" class="col-md-12 col-form-label">Heading text</label>*}
-                            {*<div class="col-md-12 inputGroupContainer">*}
-                                {*<textarea n:name="heading_1" class="form-control"></textarea>*}
-                                {*<input type="text" n:name="heading_1" class="form-control">*}
-                                {*<span class="formError red" n:ifcontent>{inputError heading_1}</span> *}{**}{* error *}
-                            {*</div>*}
-                        {*</div>*}
                     </div>
                 </div>
 
@@ -110,8 +100,6 @@
                                 <span class="formError red" n:ifcontent>{inputError heading}</span> {* error *}
                             </div>
                         </div>
-
-
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">Text logo color</label>
                             <div class="col-md-7 inputGroupContainer">
@@ -143,7 +131,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Background image</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Logo image</label>
                             <div class="col-md-12">
                                 <div class="file-loading">
                                     <input id="up_1" n:name="image" type="file">
@@ -158,7 +146,7 @@
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h3 class="h3form">Social links</h3>
+                        <h3 class="h3form">Footer settings</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
@@ -189,6 +177,18 @@
                                 <span class="formError red" n:ifcontent>{inputError twitter}</span> {* error *}
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Footer background color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'footer_background', id => 'color_6'}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-5 col-form-label">Footer text color</label>
+                            <div class="col-md-7 inputGroupContainer">
+                                {include '../Parts/colpick.latte', name => 'footer_text', id => 'color_7'}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -217,7 +217,7 @@
             {*}*}
         {*});*}
 
-        var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['inverted_background', '#color_3'], ['text', '#color_4'], ['inverted_text', '#color_5']];
+        var pickers = [['heading', '#color_1'], ['background', '#color_2'], ['inverted_background', '#color_3'], ['text', '#color_4'], ['inverted_text', '#color_5'], ['footer_background', '#color_6'], ['footer_text', '#color_7']];
         setColors({$colors},pickers);
         fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteImg!, $linkId});
 

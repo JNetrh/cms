@@ -1,0 +1,61 @@
+
+{block blockyFooter}
+    <footer class="blockBg {$row->toString().$row->getId()}">
+        <div class="container-fluid text-center">
+            <div class="row">
+                <div class="col-md-4 text-left">
+                    <div class=" hidden-sm hidden-xs">
+                        {foreach $row->getMenus() as $eRow}
+                            {if $eRow->getActive() == 1}
+                                {first 5}<ul class="ulFooterMenu">{/first}
+                                <li><a href="#{$eRow->getLink()}">{$eRow->getText()}</a></li>
+                                {last 5}</ul>{/last}
+                                {last}</ul>{/last}
+                            {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="col-md-4 text-left">
+                    <div class=" hidden-sm hidden-xs">
+
+                    </div>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a href={$row->getInstagram()} target="_blank">
+                        <img class="imgContactsNetwork" src="{$basePath."/img/svg/instagram.svg"}" />
+                    </a>
+                    <a href={$row->getFacebook()} target="_blank">
+                        <img class="imgContactsNetwork" src="{$basePath."/img/svg/facebook.svg"}" />
+                    </a>
+                    <a href={$row->getTwitter()} target="_blank">
+                        <img class="imgContactsNetwork" src="{$basePath."/img/svg/twitter.svg"}" />
+                    </a>
+                    <a href={$row->getLinkedin()} target="_blank">
+                        <img class="imgContactsNetwork" src="{$basePath."/img/svg/linkedin.svg"}" />
+                    </a>
+                </div>
+            </div>
+            <p class="pJakubRita">Vytvořeno v&nbsp;<a href="#">Blocky</a> &copy; Jakub Netrh {date('Y')}<br />Autor&nbsp;projektu: <a href="#">Jakub&nbsp;Netrh</a><br />Design: <a href="#">Margarita&nbsp;Antsifirova</a> </p>
+            <a href="#myPage" title="To Top">
+                <span class="glyphicon glyphicon-chevron-up"></span>
+            </a>
+        </div>
+    </footer>
+{/block}
+
+{block blockyFooterStyle}
+    <style type="text/css">
+        .{$row->toString().$row->getId()} {
+            background-color: {$row->getColorProperties()['footer_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .ulFooterMenu, .ulFooterMenu li a, .pJakubRita {
+            color: {$row->getColorProperties()['footer_text_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} ul.ulFooterMenu li a:hover {
+            border-bottom: 1px solid {$row->getColorProperties()['footer_text_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .glyphicon {
+            color: {$row->getColorProperties()['footer_text_color']|noescape};
+        }
+    </style>
+{/block}

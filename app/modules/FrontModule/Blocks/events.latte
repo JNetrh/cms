@@ -5,20 +5,27 @@
         <div class="container-fluid">
             <h2>{$row->getHeading()}</h2>
             {foreach $row->getEvents() as $eRow}
-                {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}
-                <div class="col-md-4 col-xs-12">
-                    <div class="divEventsBg equalAfter">
-                        <div class="divEventImg equal">
-                            <img class="imgEvent" src="{$basePath}/{$eRow->getImage()}" alt="eventImg">
-                        </div>
-                        <div class="divEvent">
-                            <h4>{$eRow->getHeading()}</h4>
-                            <p class="pEventTime">{$eRow->getEventTime()->format('Y/m/d')}</p>
-                            <p>{$eRow->getText()}</p>
+                {if $eRow->getActive() == 1}
+                    {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}
+                    <div class="col-md-4 col-xs-12">
+                        <div class="divEventsBg equalAfter">
+                            <div class="divEventImg equal">
+                                <img class="imgEvent" src="{$basePath}/{$eRow->getImage()}" alt="eventImg">
+                            </div>
+                            <div class="divEvent">
+                                <h4>{$eRow->getHeading()}</h4>
+                                <p class="pEventTime">{$eRow->getEventTime()->format('Y/m/d')}</p>
+                                <div class="divPEvent">
+                                    {$eRow->getText()|noescape}
+                                </div>
+                                <div class="divEventArrow">
+                                    <a href="{$eRow->getLink()}" target="_blank"><img src="{$basePath}/img/svg/arrow_right.svg" aria-hidden="true" /></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {last 3}</div>{/last}
+                    {last 3}</div>{/last}
+                {/if}
             {/foreach}
         </div>
     </div>

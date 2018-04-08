@@ -11,9 +11,9 @@
                             <div class="divQuotes">
                                 <img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">
                             </div>
-                            {*<p class="pReference equal">Jana pracuje jako marketér a web vývojář. Jako malá se zajímala o grafiku a ve volném čase píše články pro IBM, kde mimo jiné občas spolupracuje jako konzultant.</p>*}
-                            {*<p class="pReference equal">{$eRow->getReference()|noescape}</p>*}
-                            <p class="pReference equal">{$eRow->getReference()|striptags}</p>
+                            <div class="divPReferences equal">
+                                {$eRow->getReference()|noescape}
+                            </div>
                             <div class="divReferrer equal">
                                 <div class="divReferenceAvatar" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}'); "></div>
                                 {*<h4>Michal Krátká</h4>*}
@@ -59,7 +59,9 @@
                                             <div class="divQuotesExtra">
                                                 <img class="imgQuotes" src="{$basePath}/img/svg/quotes.svg">
                                             </div>
-                                            <p class="pReferenceExtra">{$eRow->getReference()}</p>
+                                            <div class="divPReferencesExtra equal">
+                                                {$eRow->getReference()|noescape}
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>

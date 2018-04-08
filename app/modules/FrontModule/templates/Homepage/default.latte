@@ -7,59 +7,44 @@
 {import '../../Blocks/articles.latte'}
 {import '../../Blocks/contacts.latte'}
 {import '../../Blocks/sponsors.latte'}
+{import '../../Blocks/footer.latte'}
 
 {block content}
-
-    {include blockyMenu row => $menu}
+    <header>
+        {include blockyMenu row => $menu}
+    </header>
 
 
     {foreach $blocks as $row}
         {if $row->getActive() == 1}
-            {if $row->toString() == 'headers'}
-                {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+            <section>
+                {if $row->toString() == 'headers'}
+                    {include blockyHeaders row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'references'}
-                {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'references'}
+                    {include blockyReferences row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'members'}
-                {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'members'}
+                    {include blockyMembers row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'events'}
-                {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'events'}
+                    {include blockyEvents row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'contacts'}
-                {include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'contacts'}
+                    {include blockyContacts, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'articles'}
-                {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'articles'}
+                    {include blockyArticles row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {elseif $row->toString() == 'sponsors' }
-                {include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
+                {elseif $row->toString() == 'sponsors' }
+                    {include blockySponsors, row => $row, first => $iterator->isFirst() ? true : false, isSlide => true}
 
-            {/if}
+                {/if}
+            </section>
         {/if}
     {/foreach}
 
-
-
-
-
-    <footer class="container-fluid text-center">
-        <a href="#myPage" title="To Top">
-            <span class="glyphicon glyphicon-chevron-up"></span>
-        </a>
-        <p></p>
-    </footer>
-
-
-
-
-
-
-
-
-
-
+    {include blockyFooter row => $menu}
 
 
 
@@ -94,6 +79,8 @@
 
         {/if}
     {/foreach}
+
+    {include blockyFooterStyle row => $menu}
 
     {ifset myStyle}{include myStyle}{/ifset}
 {/block}

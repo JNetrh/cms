@@ -65,7 +65,9 @@ $(document).ready(function() {
         $(this).closest('.divColpick').hide();
     });
 
-
-
-
+    $(".onKey").keyup(function (event) {
+        var typed = $(this).val();
+        if(typed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i))
+            $(this).next('.openColpick').css('background-color', typed)
+    })
 });

@@ -6,6 +6,37 @@
 
     <form n:name=oneMemberForm>
         <div class="container odsaditBottom-50">
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Member's data</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Name</label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <input n:name="name" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError name}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Description</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <textarea n:name="text" class="form-control"></textarea>
+                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Visible</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input type="checkbox" n:name="active" class="" >
+                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> {*end col-md*}
             <div class="col-md-6">
                 <div class="panel container-fluid">
                     <div class="panel-title">
@@ -18,42 +49,11 @@
                                 <div class="file-loading">
                                     <input id="up_1" n:name="image" type="file">
                                 </div>
-                                <span class="formError red" n:ifcontent>{inputError image}</span> {* error *}
+                                <span class="formError red" n:ifcontent>{inputError image}</span>  {*error*}
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> {*end col-md*}
-            <div class="col-md-6">
-                <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h3 class="h3form">Member's data</h3>
-                    </div>
-                    <div class="panel-body">
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Name</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <input n:name="name" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError name}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Description</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <textarea n:name="text" class="form-control"></textarea>
-                                <span class="formError red" n:ifcontent>{inputError text}</span> {* error *}
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
-                            <div class="col-md-7 inputGroupContainer">
-                                <input type="checkbox" n:name="active" class="" >
-                                <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div> {*end col-md*}
 
 
@@ -70,6 +70,14 @@
 
 {block bordel}
     <script type="text/javascript">
+
+        tinymce.init({
+            selector: 'textarea',
+            entity_encoding : "raw",
+            init_instance_callback : function tinyInstance (editor) {
+                editor.setContent({$data->getText()});
+            }
+        });
 
         fileUpload('up_1', [{$basePath."/".$data->getImage()}], {link deleteSImg!, $linkSId, $blockId});
     </script>

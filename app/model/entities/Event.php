@@ -83,7 +83,7 @@ class Event
 
     /**
      * right name column
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="integer")
      */
     protected $position;
 

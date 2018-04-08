@@ -120,13 +120,14 @@ class BlockMenus
         $style = json_decode($this->getStyle());
 
 
-        return [
-            'heading_color' => $style->heading_color,
-            'text_color' => $style->text_color,
-            'inverted_text_color' => $style->inverted_text_color,
-            'background_color' => $style->background_color,
-            'inverted_background_color' => $style->inverted_background_color
-        ];
+//        return [
+//            'heading_color' => $style->heading_color,
+//            'text_color' => $style->text_color,
+//            'inverted_text_color' => $style->inverted_text_color,
+//            'background_color' => $style->background_color,
+//            'inverted_background_color' => $style->inverted_background_color
+//        ];
+	    return (array)$style;
     }
 
 

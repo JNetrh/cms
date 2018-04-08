@@ -203,6 +203,8 @@ class EventsPresenter extends SecuredBasePresenter {
         $entity->setActive($data['active']);
         $entity->setPosition($data['position']);
 
+        bdump($entity);
+
         $path = $entity->getImage();
 
         if($file != null){

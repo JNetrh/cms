@@ -113,7 +113,7 @@
             selector: 'textarea',
             entity_encoding : "raw",
             init_instance_callback : function tinyInstance (editor) {
-                editor.setContent({$data->getHeading()});
+                editor.setContent({$data->getText()});
             }
         });
 

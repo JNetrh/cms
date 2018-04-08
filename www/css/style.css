@@ -96,16 +96,16 @@ p.pClear {
     padding: 0;
     margin: 0;
 }
-p.pMember {
-    text-align: center;
-    width: 70%; /*TODO: měnit v závislosti na rozlišení*/
-    margin: 0 auto;
-    padding-bottom: 80px;
-}
-p.pReference {
-    padding: 15px 50px 0 15px;
-    clear: both;
-}
+/*p.pMember {*/
+    /*text-align: center;*/
+    /*width: 70%; !*TODO: měnit v závislosti na rozlišení*!*/
+    /*margin: 0 auto;*/
+    /*padding-bottom: 80px;*/
+/*}*/
+/*p.pReference {*/
+    /*padding: 15px 50px 0 15px;*/
+    /*clear: both;*/
+/*}*/
 p.pReferenceReferrer {
     font-size: 14px;
     padding: 0 50px 0 15px;
@@ -117,10 +117,10 @@ p.pReferenceReferrerExtra {
     margin: 0 auto;
     text-align: center;
 }
-p.pReferenceExtra {
-    padding: 0 100px 0 0;
-    clear: both;
-}
+/*p.pReferenceExtra {*/
+    /*padding: 0 100px 0 0;*/
+    /*clear: both;*/
+/*}*/
 p.pContact{
     width: 80%;
 }
@@ -132,6 +132,10 @@ p.pHeader {
     font-weight: 700;
     font-size: 20px;
     padding: 45px 0 0 0;
+}
+p.pJakubRita {
+    text-align: right;
+    font-size: 13px;
 }
 pre {
     font-family: inherit;
@@ -261,6 +265,32 @@ div.divSponsorsContent {
 div.divArticle {
     padding-top: 45px;
 }
+div.divPMember {
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+div.divPEvent{
+    margin: 0 auto;
+}
+div.divEventArrow {
+    text-align: right;
+    width: 100%;
+    margin: 45px auto 0 auto;
+}
+div.divPReferences {
+    padding: 15px 50px 0 15px;
+    clear: both;
+    width: 100%;
+    margin: 0 auto;
+}
+div.divPReferencesExtra {
+    padding: 0 100px 0 0;
+    clear: both;
+    width: 100%;
+    margin: 0 auto;
+}
 /*----------------------------------------------------------------------------*/
 /* ODKAZY: */
 a {
@@ -272,6 +302,12 @@ a {
 }
 div.divSponsorImg a {
     display: block;
+}
+div.divHeaderButton a, div.divHeaderButton a:hover, div.divHeaderButton:hover{
+    font-family: 'roboto', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none!important;
 }
 a:hover,
 a:focus,
@@ -312,6 +348,10 @@ img {
     border: none; /*----NEMAZAT----*/
     margin: 0;
     padding: 0;
+}
+img.imgLogo {
+    max-height: 54px;
+    margin: 8px 0;
 }
 img.imgQuotes {
     width: 100%;
@@ -383,6 +423,28 @@ ul li {
     margin: 0;
     padding: 10px 0 0 5px;
     list-style-type: disc;
+}
+ul.ulFooterMenu {
+    display: inline-table;
+    text-align: left;
+    padding: 0 25px 0 0;
+    position: relative;
+    left: 0;
+}
+ul.ulFooterMenu li {
+    list-style-type: none;
+    padding: 0;
+}
+ul.ulFooterMenu li a {
+    font-weight: 600;
+    padding: 0 0 2px 0;
+    font-size: 14px;
+    text-decoration: none;
+}
+ul.ulFooterMenu li a:hover {
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0 0 2px 0;
 }
 
 /*----------------------------------------------------------------------------*/
@@ -495,8 +557,7 @@ body {
 /*}*/
 footer .glyphicon {
     font-size: 20px;
-    margin-bottom: 20px;
-    color: #f4511e;
+    margin-bottom: 15px;
 }
 .slideanim {visibility:hidden;}
 .slide {
@@ -560,7 +621,7 @@ footer .glyphicon {
 
 
 .navbar {
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .navbar ul{
     padding: 0 0 0 0;
@@ -568,9 +629,12 @@ footer .glyphicon {
 .navbar ul li{
     padding: 0;
 }
-.navbar ul li a, .navbar-brand{
-    padding-top: 30px;
-    padding-bottom: 20px;
+.navbar ul li a, .navbar-brand, .navbar-brand:hover, .navbar-brand:active, .navbar-brand:focus {
+    font-family: 'roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 25px;
+    padding-bottom: 25px;
     text-decoration: none;
 }
 .carousel-control.right, .carousel-control.left {

@@ -167,13 +167,14 @@ class BlockContacts
         $style = json_decode($this->getStyle());
 
 
-        return [
-            'heading_1_color' => $style->heading_1_color,
-            'heading_2_color' => $style->heading_2_color,
-            'text_color' => $style->text_color,
-            'background_color' => $style->background_color,
-            'block_background_color' => $style->block_background_color
-        ];
+//        return [
+//            'heading_1_color' => $style->heading_1_color,
+//            'heading_2_color' => $style->heading_2_color,
+//            'text_color' => $style->text_color,
+//            'background_color' => $style->background_color,
+//            'block_background_color' => $style->block_background_color
+//        ];
+	    return (array)$style;
     }
 
 

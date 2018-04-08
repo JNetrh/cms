@@ -55,12 +55,16 @@ class HeaderPresenter extends SecuredBasePresenter {
         $form -> addText('button_1');
         $form -> addText('button_1_link');
         $form -> addText('button_1_color');
+        $form -> addText('inverted_button_1_color');
+        $form -> addText('inverted_button_1_background_color');
         $form -> addText('button_1_background_color');
         $form -> addText('button_1_border_color');
         $form -> addText('button_2');
         $form -> addText('button_2_link');
         $form -> addText('button_2_color');
+        $form -> addText('inverted_button_2_color');
         $form -> addText('button_2_background_color');
+        $form -> addText('inverted_button_2_background_color');
         $form -> addText('button_2_border_color');
         $form -> addText('background_color');
         $form -> addText('position');

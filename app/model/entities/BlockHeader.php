@@ -135,19 +135,24 @@ class BlockHeader
     public function getColorProperties(){
 
         $style = json_decode($this->getStyle());
+//		return =  [
+//            'heading_1_color' => $style->heading_1_color,
+//            'heading_2_color' => $style->heading_2_color,
+//            'button_1_color' => $style->button_1_color,
+//            'inverted_button_1_color' => $style->inverted_button_1_color,
+//            'button_1_border_color' => $style->button_1_border_color,
+//            'button_1_background_color' => $style->button_1_background_color,
+//            'inverted_button_1_background_color' => $style->inverted_button_1_background_color,
+//            'button_2_color' => $style->button_2_color,
+//            'inverted_button_2_color' => $style->inverted_button_2_color,
+//            'button_2_border_color' => $style->button_2_border_color,
+//            'button_2_background_color' => $style->button_2_background_color,
+//            'inverted_button_2_background_color' => $style->inverted_button_2_background_color,
+//            'background_color' => $style->background_color
+//        ];
 
 
-        return [
-            'heading_1_color' => $style->heading_1_color,
-            'heading_2_color' => $style->heading_2_color,
-            'button_1_color' => $style->button_1_color,
-            'button_1_border_color' => $style->button_1_border_color,
-            'button_1_background_color' => $style->button_1_background_color,
-            'button_2_color' => $style->button_2_color,
-            'button_2_border_color' => $style->button_2_border_color,
-            'button_2_background_color' => $style->button_2_background_color,
-            'background_color' => $style->background_color
-        ];
+	    return (array)$style;
     }
 
     /**

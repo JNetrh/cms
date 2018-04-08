@@ -10,7 +10,10 @@
                 <div class="col-md-4 col-xs-12 equal">
                     <div class="divAvatarImg" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}');"></div>
                     <h3>{$eRow->getName()}</h3>
-                    <p class="pMember">{$eRow->getText()}</p>
+                    {*<p class="pMember">{$eRow->getText()}</p>*}
+                    <div class="divPMember">
+                        {$eRow->getText()|noescape}
+                    </div>
                 </div>
                 {last 3}</div>{/last}
             {/foreach}

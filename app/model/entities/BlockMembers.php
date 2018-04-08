@@ -104,12 +104,13 @@ class BlockMembers
         $style = json_decode($this->getStyle());
 
 
-        return [
-            'heading_1_color' => $style->heading_1_color,
-            'text_color' => $style->text_color,
-            'name_color' => $style->name_color,
-            'background_color' => $style->background_color
-        ];
+//        return [
+//            'heading_1_color' => $style->heading_1_color,
+//            'text_color' => $style->text_color,
+//            'name_color' => $style->name_color,
+//            'background_color' => $style->background_color
+//        ];
+	    return (array)$style;
     }
 
 

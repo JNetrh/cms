@@ -7,7 +7,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#myPage">{$row->getHeading()}</a>
+                <a n:if="$row->getImage()" href="#myPage">
+                    <img class="imgLogo" src="{$basePath}/{$row->getImage()}" />
+                </a>
+                <a n:if="!$row->getImage()" class="navbar-brand" href="#myPage">{$row->getHeading()}</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">

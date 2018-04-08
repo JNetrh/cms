@@ -8,8 +8,8 @@
                 <div class="col-xs-12 divHeader">
                     <h1>{$row->getHeading1()}</h1>
                     <p class="pHeader">{$row->getHeading2()}</p>
-                    <div class="divHeaderButton cms_button_1"><a href="{$row->getButton1Link()}">{$row->getButton1()}</a></div>
-                    <div class="divHeaderButton cms_button_2"><a href="{$row->getButton2Link()}">{$row->getButton2()}</a></div>
+                    <div n:if="$row->getButton1() != ''" class="divHeaderButton cms_button_1"><a href="{$row->getButton1Link()}">{$row->getButton1()}</a></div>
+                    <div n:if="$row->getButton2() != ''" class="divHeaderButton cms_button_2"><a href="{$row->getButton2Link()}">{$row->getButton2()}</a></div>
                 </div>
             </div>
         </div>
@@ -39,6 +39,16 @@
             color: {$row->getColorProperties()['button_2_color']|noescape};
             border: 1px solid {$row->getColorProperties()['button_2_border_color']|noescape};
             background-color: {$row->getColorProperties()['button_2_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .cms_button_1:hover, .cms_button_1 a:hover {
+            color: {$row->getColorProperties()['inverted_button_1_color']|noescape};
+            border: 1px solid {$row->getColorProperties()['button_1_border_color']|noescape};
+            background-color: {$row->getColorProperties()['inverted_button_1_background_color']|noescape};
+        }
+        .{$row->toString().$row->getId()} .cms_button_2:hover, .cms_button_2 a:hover {
+            color: {$row->getColorProperties()['inverted_button_2_color']|noescape};
+            border: 1px solid {$row->getColorProperties()['button_2_border_color']|noescape};
+            background-color: {$row->getColorProperties()['inverted_button_2_background_color']|noescape};
         }
 
     </style>

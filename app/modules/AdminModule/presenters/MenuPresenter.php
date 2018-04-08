@@ -84,8 +84,10 @@ class MenuPresenter extends SecuredBasePresenter {
         $form -> addText('heading');
         $form -> addText('heading_color');
         $form -> addText('text_color');
+        $form -> addText('footer_text_color');
         $form -> addText('inverted_text_color');
         $form -> addText('background_color');
+        $form -> addText('footer_background_color');
         $form -> addText('inverted_background_color');
         $form -> addText('link');
         $form -> addText('text');
