@@ -1,30 +1,13 @@
 parameters:
 
 
-#doctrine:
-#    user: jakub-netrh.cz
-#    password: 6DnKWH48
-#    dbname: jakubnetrhcz4
-#    metadata:
-#        App: %appDir%
 doctrine:
-    user: jakub
-    password: 1234
-    dbname: d950521_cms
+    user: @App\Model\DbFactory::username
+    password: @App\Model\DbFactory::password
+    dbname: @App\Model\DbFactory::dbname
+    host: @App\Model\DbFactory::host
     metadata:
         App: %appDir%
-
-#database:
-#    dsn: 'mysql:host=127.0.0.1;dbname=jakubnetrhcz4'
-##    dsn: 'mysql:host=192.168.64.2;dbname=d950521_cms'
-#    user: jakub-netrh.cz
-#    password: 6DnKWH48
-
-#database:
-#    dsn: 'mysql:host=127.0.0.1;dbname=d950521_cms'
-##    dsn: 'mysql:host=192.168.64.2;dbname=d950521_cms'
-#    user: jakub
-#    password: 1234
 
 extensions:
         console: Kdyby\Console\DI\ConsoleExtension
@@ -55,6 +38,7 @@ services:
 	- App\Model\Services\ArticleService
 	- App\Model\Services\SponsorService
 	- App\Model\Services\MenuService
+	- App\Model\DbFactory
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory
 	authorizator: @authorizatorFactory::create

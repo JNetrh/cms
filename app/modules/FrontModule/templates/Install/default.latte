@@ -1,0 +1,58 @@
+{layout '../@layout-install.latte'}
+{block content}
+    <h1>installation</h1>
+
+    <form n:name=databaseForm>
+        <div class="container odsaditBottom-50">
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Fill credentials</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Username</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input n:name="username" class="form-control">
+                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">password</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input n:name="password" class="form-control">
+                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Database name</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input n:name="dbname" class="form-control">
+                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label">Host (eg. localhost, 127.1.65.7) </label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input n:name="host" class="form-control">
+                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+    </form>
+
+{/block}
+
+
+{block bordel}
+
+{/block}

@@ -438,7 +438,7 @@ INSERT INTO `users`(`email`, `password`) VALUES ("netj01@vse.cz", "$2y$10$4iP5iu
 INSERT INTO `userrights`(`userId`, `rightId`) VALUES (1,1);
 INSERT INTO `users`(`email`, `password`) VALUES ("example@example.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
 INSERT INTO `userrights`(`userId`, `rightId`) VALUES (2,1);
-# INSERT INTO `users`(`email`, `password`) VALUES ("marj17@vse.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
+# INSERT INTO `users`(`email`, `password`) VALUES ("skam06@vse.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
 # INSERT INTO `userrights`(`userId`, `rightId`) VALUES (3,1);
 
 

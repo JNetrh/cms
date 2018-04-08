@@ -83,18 +83,19 @@
                                 <span class="formError red" n:ifcontent>{inputError adress}</span> {* error *}
                             </div>
                         </div>
+                        {*COORDINATES ARE SWITCHED - BUG*}
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">GPS X</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <input n:name="gpsx" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError gpsx}</span> {* error *}
+                                <input n:name="gpsy" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError gpsy}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-5 col-form-label">GPS Y</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <input n:name="gpsy" class="form-control" />
-                                <span class="formError red" n:ifcontent>{inputError gpsy}</span> {* error *}
+                                <input n:name="gpsx" class="form-control" />
+                                <span class="formError red" n:ifcontent>{inputError gpsx}</span> {* error *}
                             </div>
                         </div>
                     </div>

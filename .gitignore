@@ -2,6 +2,7 @@ app/config/config.local.neon
 app/config/config.neon
 temp/*
 www/img/repo/*
+www/config.ini
 temp/cache/*
 log/*
 .idea/
