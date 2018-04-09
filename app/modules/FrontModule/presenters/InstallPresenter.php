@@ -5,6 +5,8 @@ namespace App\FrontModule\Presenters;
 
 
 use Nette\Application\UI\Form;
+use Nette;
+use PDOException;
 
 class InstallPresenter  extends BasePresenter
 {
@@ -37,9 +39,40 @@ class InstallPresenter  extends BasePresenter
 		$data = $form->getHttpData();
 		unset($data['_submit'], $data['_do']);
 
-		$yesss = $this->write_ini_file('./config.ini', $data);
+		if($data['password'] == "") {
+			$form['password']->addError('fill the password');
+		}
+		elseif ($data['username'] == ""){
+			$form['username']->addError('fill the username');
+		}
+		elseif ($data['host'] == ""){
+			$form['host']->addError('fill the host');
+		}
+		elseif ($data['dbname'] == ""){
+			$form['dbname']->addError('fill the dbname');
+		}
 
-		bdump($yesss);
+	    $host = $data['host'];
+	    $username = $data['username'];
+	    $password = $data['password'];
+	    $dbname = $data['dbname'];
+
+
+	    try {
+		    new Nette\Database\Connection("mysql:host=$host;dbname=$dbname", $username, $password);
+	    }
+	    catch(PDOException $e)
+	    {
+		    $form->addError('Database connection failed.');
+	    }
+
+
+
+		if(!$form->hasErrors()){
+			$this->write_ini_file('./config.ini', $data);
+			$this->redirect('Homepage:');
+		}
+
     }
 
 

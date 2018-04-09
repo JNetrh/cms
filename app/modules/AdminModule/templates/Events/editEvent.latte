@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Time</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="11">Time</label>
                             <div class="col-md-7 inputGroupContainer">
                                 {*eventTime*}
                                 <div class='input-group date' id='datepicker_event'>
@@ -33,21 +33,21 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Link</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Link</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="link" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError link}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Position</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="12">Position</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
                                 <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="9">Visible</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="checkbox" n:name="active" class="" >
                                 <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
@@ -64,7 +64,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Image</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="17">Image</label>
                             <div class="col-md-12">
                                 <div class="file-loading">
                                     <input id="up_1" n:name="image" type="file">

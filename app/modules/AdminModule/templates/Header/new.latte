@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="panel container-fluid">
                     <div class="panel-title">
-                        <h2 class="h2form">Heading text</h2>
+                        <h2 class="h2form" data-toggle="tooltip" tpId="7">Heading text</h2>
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="8">Sub heading</label>
                             <div class="col-md-12 inputGroupContainer">
                                 {*<textarea id="heading_2" n:name="heading_2" class="form-control"></textarea>*}
                                 <input type="text" id="heading_2" n:name="heading_2" class="form-control">
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Link to</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Link to</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="text" n:name="button_1_link" class="form-control">
                                 <span class="formError red" n:ifcontent>{inputError button_1_link}</span> {* error *}
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Inverted text color</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="6">Inverted text color</label>
                             <div class="col-md-7 inputGroupContainer">
                                 {include '../Parts/colpick.latte', name => 'inverted_button_1', id => 'color_10'}
                             </div>
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputCaption" class="col-md-5 col-form-label">Link to</label>
+                                <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Link to</label>
                                 <div class="col-md-7 inputGroupContainer">
                                     <input type="text" n:name="button_2_link" class="form-control">
                                     <span class="formError red" n:ifcontent>{inputError button_2_link}</span> {* error *}
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputCaption" class="col-md-5 col-form-label">Inverted text color</label>
+                                <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="6">Inverted text color</label>
                                 <div class="col-md-7 inputGroupContainer">
                                     {include '../Parts/colpick.latte', name => 'inverted_button_2', id => 'color_12'}
                                 </div>
@@ -172,7 +172,7 @@
                     <div class="panel-body">
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Order</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Position</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
                                 <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
@@ -180,9 +180,9 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="9">Visible</label>
                             <div class="col-md-7 inputGroupContainer">
-                                <input type="checkbox" n:name="active" >
+                                <input type="checkbox" n:name="active" checked>
                                 <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
                             </div>
                         </div>

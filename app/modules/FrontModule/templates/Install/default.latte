@@ -1,41 +1,55 @@
 {layout '../@layout-install.latte'}
 {block content}
-    <h1>installation</h1>
 
+    <img class="imgLogo" src="{$basePath}/admin/img/svg/logo.svg">
     <form n:name=databaseForm>
-        <div class="container odsaditBottom-50">
+        <div class="container mainPanel">
+
             <div class="col-md-12">
                 <div class="panel container-fluid">
-                    <div class="panel-title">
-                        <h3 class="h3form">Fill credentials</h3>
+                    <div class="panel-title text-left">
+                        <h1>Blocky CMS &copy;</h1>
+                        <p>Welcome to the Blocky CMS. I am happy you wish to use my solution. </p>
+                        <p>Firs step to start using Blocky CMS is manage the database connection.
+                            Usually the credentials are provided by your hosting company.
+                            Once you have them fill the form below and hit "Submit" button to start.</p>
+                        <h4>Database credentials: </h4>
+                    </div>
+                    <div n:if="$form->hasErrors()" class="alert alert-danger">
+                        <strong>Danger!</strong> {$form->errors[0]}
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Username</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input n:name="username" class="form-control">
-                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                                <input n:name="username" class="form-control" required>
+                                <span class="formError red" n:ifcontent>{inputError username}</span>  {*error*}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">password</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input n:name="password" class="form-control">
-                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                                <input n:name="password" class="form-control" required>
+                                <span class="formError red" n:ifcontent>{inputError password}</span>  {*error*}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputCaption" class="col-md-12 col-form-label">Database name</label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input n:name="dbname" class="form-control">
-                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                                <input n:name="dbname" class="form-control" required>
+                                <span class="formError red" n:ifcontent>{inputError dbname}</span>  {*error*}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Host (eg. localhost, 127.1.65.7) </label>
+                            <label for="inputCaption" class="col-md-12 col-form-label">Host (eg. localhost or 127.1.65.7) </label>
                             <div class="col-md-12 inputGroupContainer">
-                                <input n:name="host" class="form-control">
-                                {*<span class="formError red" n:ifcontent>{inputError heading}</span> *}{* error *}
+                                <input n:name="host" class="form-control" required>
+                                <span class="formError red" n:ifcontent>{inputError host}</span>  {*error*}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="submit" n:name="submit" value="Send" class="btn btn-default">Submit</button>
                             </div>
                         </div>
 
@@ -44,9 +58,6 @@
             </div> {*end col-md*}
 
 
-            <div class="col-md-12">
-                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
-            </div> {*end col-md*}
         </div>
     </form>
 

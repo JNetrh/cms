@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-12 col-form-label">Sub heading</label>
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="13">Sub heading</label>
                             <div class="col-md-12 inputGroupContainer">
                                 <input n:name="heading_2" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError heading_2}</span> {* error *}
@@ -54,14 +54,14 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Email</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="14">Email</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="email" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError email}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Phone</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="15">Phone</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="phone" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError phone}</span> {* error *}
@@ -77,7 +77,7 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Adress</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Address</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="adress" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError adress}</span> {* error *}
@@ -108,28 +108,28 @@
                     </div>
                     <div class="panel-body">
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Instagram</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Instagram</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="instagram" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError instagram}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Facebook</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Facebook</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="facebook" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError facebook}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Twitter</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">Twitter</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="twitter" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError twitter}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">LinkedIn</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="4">LinkedIn</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input n:name="linkedin" class="form-control" />
                                 <span class="formError red" n:ifcontent>{inputError linkedin}</span> {* error *}
@@ -148,14 +148,14 @@
                     <div class="panel-body">
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Order</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Position</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
                                 <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="9">Visible</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="checkbox" n:name="active" class="" >
                                 <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}
@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Block background color</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="16">Block background color</label>
                             <div class="col-md-7 inputGroupContainer">
                                 {include '../Parts/colpick.latte', name => 'block_background', id => 'color_5'}
                             </div>

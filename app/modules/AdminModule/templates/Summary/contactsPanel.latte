@@ -53,7 +53,7 @@
             </div>
             <div class="divSummButtons col-md-2 equal">
                 <a class="buttonCisty buttonEdit buttonBlockSummary" n:href="Contacts:edit $row->getId()"><span class="glyphicon glyphicon-edit"></span> Edit</a>
-                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteContact! $row->getId()"><span class="glyphicon glyphicon-trash"></span> Delete</a>
+                <a class="buttonCisty buttonDelete buttonBlockSummary" n:href="deleteContact! $row->getId()" data-confirm="Do you want really to delete this block?"><span class="glyphicon glyphicon-trash"></span> Delete</a>
                 <a class="buttonCisty buttonView buttonBlockSummary ajax" n:href="preview! $row->toString(), $row->getId()"><span class="glyphicon glyphicon-fullscreen"></span> Preview</a>
             </div>
             {*<div class=" panel">*}

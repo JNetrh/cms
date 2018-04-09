@@ -95,6 +95,9 @@
             sheet.disabled = true;
             sheet.parentNode.removeChild(sheet);
         });
+        $('[data-confirm]').each(function() {
+            dialog($(this), $(this).attr('data-confirm'));
+        });
     </script>
 
 

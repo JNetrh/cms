@@ -42,14 +42,14 @@
                     <div class="panel-body">
 
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Order</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label">Position</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="number" n:name="position" class="form-control" placeholder="add block position" min="1">
                                 <span class="formError red" n:ifcontent>{inputError position}</span> {* error *}
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="inputCaption" class="col-md-5 col-form-label">Visible</label>
+                            <label for="inputCaption" class="col-md-5 col-form-label" data-toggle="tooltip" tpId="9">Visible</label>
                             <div class="col-md-7 inputGroupContainer">
                                 <input type="checkbox" n:name="active" {$data->getActive() == 1 ? 'checked'}>
                                 <span class="formError red" n:ifcontent>{inputError active}</span> {* error *}

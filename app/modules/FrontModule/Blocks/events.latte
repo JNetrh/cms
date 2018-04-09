@@ -9,8 +9,7 @@
                     {first 3}<div class="row  {$isSlide ? 'slideanim' : ''}">{/first}
                     <div class="col-md-4 col-xs-12">
                         <div class="divEventsBg equalAfter">
-                            <div class="divEventImg equal">
-                                <img class="imgEvent" src="{$basePath}/{$eRow->getImage()}" alt="eventImg">
+                            <div class="divEventImg equal" style="background-image: url('{$basePath}/{$eRow->getImage()|noescape}');">
                             </div>
                             <div class="divEvent">
                                 <h4>{$eRow->getHeading()}</h4>
