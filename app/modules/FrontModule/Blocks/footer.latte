@@ -21,16 +21,16 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-right">
-                    <a n:if="$row->getInstagram()" href={$row->getInstagram()} target="_blank">
+                    <a class="aImg" n:if="$row->getInstagram()" href={$row->getInstagram()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/instagram.svg"}" />
                     </a>
-                    <a n:if="$row->getFacebook()" href={$row->getFacebook()} target="_blank">
+                    <a class="aImg" n:if="$row->getFacebook()" href={$row->getFacebook()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/facebook.svg"}" />
                     </a>
-                    <a n:if="$row->getTwitter()" href={$row->getTwitter()} target="_blank">
+                    <a class="aImg" n:if="$row->getTwitter()" href={$row->getTwitter()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/twitter.svg"}" />
                     </a>
-                    <a n:if="$row->getLinkedin()" href={$row->getLinkedin()} target="_blank">
+                    <a class="aImg" n:if="$row->getLinkedin()" href={$row->getLinkedin()} target="_blank">
                         <img class="imgContactsNetwork" src="{$basePath."/img/svg/linkedin.svg"}" />
                     </a>
                 </div>

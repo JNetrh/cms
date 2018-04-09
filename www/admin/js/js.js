@@ -53,10 +53,10 @@ var fileUpload = function (id, images, urlDel){
     uploader.fileinput(options);
 };
 
-$(document).ready(function() {
-
 /*----------------------------------------------------------------------------*/
 /* Toggle colorpicker: */
+$(document).ready(function() {
+
     $(".openColpick").click(function () {
         $(".divColpick").hide();
         $(this).next(".divColpick").show();
@@ -69,6 +69,23 @@ $(document).ready(function() {
         var typed = $(this).val();
         if(typed.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i))
             $(this).next('.openColpick').css('background-color', typed)
+    })
+    $('html').click(function (e) {
+        if($(e.target).attr('isColpick') != undefined){
+            if($(e.target).attr('isColpick') == "false"){
+                e.target.setAttribute('isColpick', 'true');
+                console.log('1')
+                return
+            }
+            else {
+                e.target.setAttribute('isColpick', 'false');
+                console.log('2')
+            }
+        }
+        if($(e.target).hasClass('farbtastic') || $(e.target).hasClass('wheel') || $(e.target).hasClass('divColpick')){
+            return
+        }
+        $('.divColpick').hide()
     })
 });
 
@@ -122,6 +139,8 @@ function getTooltip(nr) {
 }
 
 
+/*----------------------------------------------------------------------------*/
+/* Confirm box before delete: */
 var confirmBox = '<div class="modal fade confirm-modal">' +
     '<div class="modal-dialog modal-sm" role="document">' +
     '<div class="modal-content">' +
