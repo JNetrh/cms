@@ -624,7 +624,9 @@ iframe /*----NEMAZAT----*/
     cursor: pointer;
     text-decoration: none;
 }
-
+.buttonBack {
+    padding: 11px 18px;
+}
 .buttonBlockSummary {
     width: 100%;
     margin: 5px 0;

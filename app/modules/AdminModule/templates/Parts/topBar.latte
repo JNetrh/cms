@@ -1,10 +1,10 @@
 
 <div n:if="$destination != null" class="divBack col-md-2">
-    <a n:if="isset($blockId)" class="buttonCisty buttonView" n:href="$destination, $blockId"><i class="fa fa-chevron-circle-left"></i> Back</a>
-    <a n:if="!isset($blockId)" class="buttonCisty buttonView" n:href="$destination"><i class="fa fa-chevron-circle-left"></i> Back</a>
+    <a n:if="isset($blockId)" class="buttonCisty buttonView buttonBack" n:href="$destination, $blockId"><i class="fa fa-chevron-circle-left"></i> Back</a>
+    <a n:if="!isset($blockId)" class="buttonCisty buttonView buttonBack" n:href="$destination"><i class="fa fa-chevron-circle-left"></i> Back</a>
 </div>
 <div n:if="isset($create)" class="divBack col-md-2">
-    <a class="buttonCisty buttonAdd" n:href="$create $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
+    <a class="buttonCisty buttonAdd buttonBack" n:href="$create $data->getId()"><i class="fa fa-plus-square"></i> Add Sub block</a>
 </div>
 <div class="panel col-md-8">
     <div id="expandNewArrow" class="panel-heading">
