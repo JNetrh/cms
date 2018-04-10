@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>{ifset title}{include title|stripHtml} | {/ifset}Page</title>
+        <meta name="keywords" content="{ifset keywords}{include keywords}{/ifset}" />
+        <meta name="description" content="{ifset description}{include description}{/ifset}" />
+
+
+        <link rel="shortcut icon" href="{ifset favicon}{include favicon}{/ifset}"" />
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{ifset title}{include title|stripHtml} | {/ifset}Page</title>
-
-        {*<script src="{$basePath}/js/jquery-3.3.1.min.js"></script>*}
-        {*Necessary for bootstrap v 4.0 *}
-        {*<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>*}
-        {*<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>*}
-        {*<script src="{$basePath}/js/bootstrap.min.js"></script>*}
-
-        {*<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" >*}
+        <meta name="robots" content="index, follow, archive, snippet">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,8 +30,8 @@
             {ifset cmsStyle}{include cmsStyle}{/ifset}
     </head>
 
-    <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-        {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
+    <body itemscope itemtype='http://schema.org/LocalBusiness' id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 
 
@@ -45,6 +45,9 @@
 
         {block scripts}
             <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+            <script type="text/javascript">
+
+            </script>
         {/block}
 
         {include bordel}

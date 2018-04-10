@@ -225,7 +225,7 @@ create TABLE events
 (
   id                    SERIAL,
   heading               varchar(255) not null DEFAULT "",
-  event_time            DATETIME,
+  event_time            varchar(255) not null DEFAULT "",
   text                  TEXT not null DEFAULT "",
   link                  VARCHAR(255) not null DEFAULT "#",
   image                 VARCHAR(255) default null,
@@ -276,6 +276,7 @@ create TABLE seo
   id                    SERIAL,
   keywords              TEXT,
   description           VARCHAR(255) default "",
+  favicon               VARCHAR(255) DEFAULT "",
   primary key (id)
 ) ENGINE=InnoDB CHARACTER SET utf8
 ;

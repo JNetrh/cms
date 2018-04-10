@@ -38,6 +38,7 @@ services:
 	- App\Model\Services\ArticleService
 	- App\Model\Services\SponsorService
 	- App\Model\Services\MenuService
+	- App\Model\Services\SeoService
 	- App\Model\DbFactory
 	authenticator: App\Model\Authenticator
 	authorizatorFactory: App\Model\AuthorizatorFactory

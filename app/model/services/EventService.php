@@ -89,7 +89,11 @@ class EventService
     }
 
     public function findById($val) {
-        return $this->entities->findOneBy(array('id' => $val));
+	    foreach ($this->getEntities() as $el){
+		    if($el->getId() == $val){
+			    return $el;
+		    }
+	    }
     }
 
     public function getEntities() {
@@ -97,7 +101,8 @@ class EventService
     }
 
     public function findSubById($blockId, $subId){
-        return $this->findById($blockId)->findById($subId);
+    	$first = $this->findById($blockId);
+        return $first->findById($subId);
 
     }
 

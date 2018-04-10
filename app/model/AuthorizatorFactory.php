@@ -23,6 +23,7 @@ class AuthorizatorFactory {
         $permission->addRole('articles');
         $permission->addRole('sponsors');
         $permission->addRole('menu');
+        $permission->addRole('seo');
         $permission->addRole('authenticated');
         /* TODO: Insert previous values to DB */
 
@@ -36,11 +37,12 @@ class AuthorizatorFactory {
         $permission->addResource('Admin:Articles');
         $permission->addResource('Admin:Sponsors');
         $permission->addResource('Admin:Menu');
+        $permission->addResource('Admin:Seo');
         $permission->addResource('Admin:Summary');
         $permission->addResource('Admin:');
 
         /* zákldní pole zdrojů */
-        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles', 'Admin:Sponsors', 'Admin:Menu');
+        $basicArray = array('Admin:', 'Admin:Main', 'Admin:Header', 'Admin:Members', 'Admin:References', 'Admin:Summary', 'Admin:Events', 'Admin:Contacts', 'Admin:Articles', 'Admin:Sponsors', 'Admin:Menu', 'Admin:Seo');
 
         /* základní pole práv */
         $defaultPrivileges = array('default', 'detail', 'logout');
@@ -55,6 +57,7 @@ class AuthorizatorFactory {
         $permission->allow('articles', $basicArray, $defaultPrivileges);
         $permission->allow('sponsors', $basicArray, $defaultPrivileges);
         $permission->allow('menu', $basicArray, $defaultPrivileges);
+        $permission->allow('seo', $basicArray, $defaultPrivileges);
 
         /* pole privilegií k úpravám */
         $managePrivileges = array('create','delete','edit', 'handle', 'new');
@@ -82,6 +85,9 @@ class AuthorizatorFactory {
 
         //muze upravovat Menu
         $permission->allow('menu', 'Admin:Menu', $managePrivileges);
+
+        //muze upravovat SEO
+        $permission->allow('seo', 'Admin:Seo', $managePrivileges);
 
         /* ADMIN má práva na všechno */
         $permission->allow('admin', $basicArray, $managePrivileges);

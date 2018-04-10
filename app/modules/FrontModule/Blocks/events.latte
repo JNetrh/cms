@@ -13,12 +13,12 @@
                             </div>
                             <div class="divEvent">
                                 <h4>{$eRow->getHeading()}</h4>
-                                <p class="pEventTime">{$eRow->getEventTime()->format('Y/m/d')}</p>
+                                <p class="pEventTime">{$eRow->getEventTime()}</p>
                                 <div class="divPEvent">
                                     {$eRow->getText()|noescape}
                                 </div>
                                 <div class="divEventArrow">
-                                    <a href="{$eRow->getLink()}" target="_blank"><img src="{$basePath}/img/svg/arrow_right.svg" aria-hidden="true" /></a>
+                                    <a n:if="$eRow->getLink()" href="{$eRow->getLink()}" target="_blank"><img src="{$basePath}/img/svg/arrow_right.svg" aria-hidden="true" /></a>
                                 </div>
                             </div>
                         </div>

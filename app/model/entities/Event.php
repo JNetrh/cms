@@ -40,7 +40,7 @@ class Event
 
     /**
      * right name column
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string")
      */
     protected $event_time;
 
@@ -107,7 +107,7 @@ class Event
         return [
             'id' => $this->getId(),
             'heading' => $this->getHeading(),
-            'event_time' => $this->getEventTime()->format('d/m/Y'),
+            'event_time' => $this->getEventTime(),
             'text' => $this->getText(),
             'link' => $this->getLink(),
             'image' => $this->getImage(),

@@ -1,0 +1,70 @@
+{block title}Edit SEO optimization{/block}
+{block heading}<h1>Edit Search engine optimization</h1>{/block}
+{block content}
+    {include '../Parts/topBar.latte', destination => 'Summary:'}
+
+    <form n:name=seoForm>
+        <div class="container odsaditBottom-50">
+
+
+            <div class="col-md-12">
+                <div class="panel container-fluid">
+                    <div class="panel-title">
+                        <h3 class="h3form">Keywords &amp; Description</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="18">Keywords</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input type="text" n:name="keywords" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError keywords}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="19">Description</label>
+                            <div class="col-md-12 inputGroupContainer">
+                                <input type="text" n:name="description" class="form-control">
+                                <span class="formError red" n:ifcontent>{inputError description}</span> {* error *}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputCaption" class="col-md-12 col-form-label" data-toggle="tooltip" tpId="20">Favicon image</label>
+                            <div class="col-md-12">
+                                <div class="file-loading">
+                                    <input id="up_1" n:name="favicon" type="file">
+                                </div>
+                                <span class="formError red" n:ifcontent>{inputError favicon}</span> {* error *}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> {*end col-md*}
+
+
+            <div class="col-md-12">
+                <button type="submit" n:name="submit" value="Send" class="buttonCisty">Submit</button>
+            </div> {*end col-md*}
+        </div>
+
+
+    </form>
+
+
+{/block}
+
+{block bordel}
+    <script type="text/javascript">
+
+        {*tinymce.init({*}
+            {*selector: 'textarea',*}
+            {*entity_encoding : "raw",*}
+            {*init_instance_callback : function tinyInstance (editor) {*}
+                {*editor.setContent({$data->getHeading()});*}
+            {*}*}
+        {*});*}
+
+        fileUpload('up_1', [{$basePath."/".$data->getFavicon()}], {link deleteImg!, $linkId});
+
+    </script>
+
+{/block}

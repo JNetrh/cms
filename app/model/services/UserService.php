@@ -7,8 +7,9 @@
  */
 namespace App\Model\Services;
 
-use App\Model\Entities\User;
+use App\Model\Entities\User as User;
 use Kdyby\Doctrine\EntityManager;
+use Doctrine\DBAL\Exception\ConnectionException as connException;
 
 class UserService
 {
@@ -20,7 +21,12 @@ class UserService
 
     public function __construct(EntityManager $entityManager)
     {
-        $this->entities = $entityManager->getRepository(User::class);
+    	try {
+		    $this->entities = $entityManager->getRepository(User::class);
+	    }
+	    catch (connException $e){
+
+	    }
     }
 
     public function createEntity($email, $password)

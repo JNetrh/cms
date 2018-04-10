@@ -194,16 +194,12 @@ class EventsPresenter extends SecuredBasePresenter {
         isset($data['active']) ? $data['active'] = 1 : $data['active'] = 0;
 
         $entity->setHeading($data['heading']);
-//        $entity->setEventTime($data['event_time']);
-//        TODO: implement date
-        $entity->setEventTime(new Nette\Utils\DateTime('22-03-2018 13:13:13'));
+        $entity->setEventTime($data['event_time']);
         $entity->setText($data['text']);
         $entity->setLink($data['link']);
         $entity->setOwner($this->events->findById($data['block_id']));
         $entity->setActive($data['active']);
         $entity->setPosition($data['position']);
-
-        bdump($entity);
 
         $path = $entity->getImage();
 

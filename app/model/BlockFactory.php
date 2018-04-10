@@ -20,6 +20,7 @@ use App\Model\Services\ArticleService;
 use App\Model\Services\SponsorService;
 
 use App\Model\Services\MenuService;
+use App\Model\Services\SeoService;
 
 
 class BlockFactory
@@ -38,6 +39,7 @@ class BlockFactory
     private $sponsors;
 
     private $menu;
+    private $seo;
 
 
     public function __construct(
@@ -50,7 +52,8 @@ class BlockFactory
         ArticleService $articles,
         SponsorService $sponsors,
 
-        MenuService $menu
+        MenuService $menu,
+        SeoService $seo
     )
     {
 	    $this->entityManager = $entityManager;
@@ -64,6 +67,7 @@ class BlockFactory
         $this->sponsors = $sponsors;
 
         $this->menu = $menu;
+        $this->seo = $seo;
     }
 
 
@@ -130,6 +134,14 @@ class BlockFactory
     public function getBlockMenus()
     {
         return $this->menu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBlockSeo()
+    {
+        return $this->seo;
     }
 
 

@@ -125,7 +125,8 @@ p.pContact{
     width: 80%;
 }
 p.pEventTime {
-
+    font-family: 'roboto', sans-serif;
+    font-weight: 700;
 }
 p.pHeader {
     font-family: 'roboto', sans-serif;

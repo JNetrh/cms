@@ -3,7 +3,7 @@
         <div class="col-md-12 myFlex">
 
             <div class="col-md-4 equal">
-                <img class="img-responsive" src="{$basePath."/".$row->getImage()|noescape}" alt="event-image">
+                <img n:if="$row->getImage() != ''" class="img-responsive" src="{$basePath."/".$row->getImage()|noescape}" alt="event-image">
                 {*<div class="divAvatarImg" style="background-image: url('{$basePath."/".$row->getImage()|noescape}');"></div>*}
             </div>
             <div class="col-md-6 equal divPanelTable">
@@ -14,7 +14,7 @@
                     </tr>
                     <tr>
                         <td class="tdHeading">Time</td>
-                        <td class="">{$row->getEventTime()->format('d/m/Y')}</td>
+                        <td class="">{$row->getEventTime()}</td>
                     </tr>
                     <tr>
                         <td class="tdHeading">Text</td>

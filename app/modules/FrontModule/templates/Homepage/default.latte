@@ -9,6 +9,16 @@
 {import '../../Blocks/sponsors.latte'}
 {import '../../Blocks/footer.latte'}
 
+{block keywords}
+    {$keywords|trim}
+{/block}
+{block description}
+    {$description|trim}
+{/block}
+{block favicon}
+    {$basePath.$favicon}
+{/block}
+
 {block content}
     <header>
         {include blockyMenu row => $menu}

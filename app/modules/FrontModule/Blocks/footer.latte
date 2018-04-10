@@ -6,12 +6,12 @@
                 <div class="col-md-4 text-left">
                     <div class=" hidden-sm hidden-xs">
                         {foreach $row->getMenus() as $eRow}
-                            {if $eRow->getActive() == 1}
-                                {first 5}<ul class="ulFooterMenu">{/first}
-                                <li><a href="#{$eRow->getLink()}">{$eRow->getText()}</a></li>
-                                {last 5}</ul>{/last}
-                                {last}</ul>{/last}
-                            {/if}
+                            {first 5}<ul class="ulFooterMenu">{/first}
+                                {if $eRow->getActive() == 1}
+                                    <li><a href="#{$eRow->getLink()}">{$eRow->getText()}</a></li>
+                                {/if}
+                            {last 5}</ul>{/last}
+                            {last}</ul>{/last}
                         {/foreach}
                     </div>
                 </div>
