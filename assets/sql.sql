@@ -429,7 +429,8 @@ INSERT INTO `rights` (`id`, `name`) VALUES
   (7, 'articles'),
   (8, 'sponsors'),
   (9, 'menus'),
-  (10, 'authenticated');
+  (10, 'seo'),
+  (11, 'authenticated');
 
 --
 -- Vypisuji data pro tabulku `userrights` a data pro tabulku `users`

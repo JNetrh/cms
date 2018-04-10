@@ -164,7 +164,7 @@ div.divFlashMessage {
     margin-left: -200px;
     margin-top: 15px;
     width: 400px;
-    height: 50px;
+    padding: 15px;
     background-color: #2672a6;
     z-index: 3003;
 }
@@ -476,7 +476,12 @@ ul li
     padding: 10px 0 0 5px;
     list-style-type: disc;
 }
+ul.ulFlashMessage {
 
+}
+ul.ulFlashMessage li {
+
+}
 ul.menu
 {
     position: relative;

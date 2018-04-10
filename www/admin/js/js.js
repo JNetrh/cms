@@ -207,18 +207,60 @@ var dialog = function(el, text, trueCallback, abortCallback) {
 /*----------------------------------------------------------------------------*/
 /* Flash messages: */
 
+var position = $("#flashMessage").position();
+var c = 0;
+var t;
+var timer_is_on = 0;
 function flashMessage(message){
-    var position = $("#flashMessage").position();
-    console.log(position.top);
-    if(position.top < 0){
-        setTimeout(function () {
-            $("#flashMessage").animate({
-                top: '0px'
-            }, 200)
-            console.log('xxx')
-        }, 4000)
+    startCount();
+    c = 0
+    ToggleMessage(true)
 
+
+
+    $("#flashMessage").find('ul').append('<li>nová message</li>');
+
+
+
+}
+
+function ToggleMessage(bol) {
+    if(bol) {
+        $("#flashMessage").animate({
+            top: '0px'
+        }, 400);
     }
+    else {
+        $("#flashMessage").animate({
+            top: '-400px'
+        }, 400);
+    }
+}
+
+function timedCount() {
+
+    c = c + 1;
+    t = setTimeout(function(){
+        if(c > 2){
+            stopCount()
+            ToggleMessage(false)
+            $("#flashMessage").find('ul').html('')
+        }
+        timedCount()
+    }, 1000);
+}
+
+
+function startCount() {
+    if (!timer_is_on) {
+        timer_is_on = 1;
+        timedCount();
+    }
+}
+
+function stopCount() {
+    clearTimeout(t);
+    timer_is_on = 0;
 }
 
 
