@@ -60,6 +60,11 @@
     {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
 
 
+    <div id="flashMessage" class="divFlashMessage">
+
+    </div>
+
+
             <nav class="navbar navbar-default visible-xs">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -162,6 +167,9 @@
     {ifset bordel}{include bordel}{/ifset}
     {block scripts}
         <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+        <script type="text/javascript">
+            flashMessage('ahoj')
+        </script>
     {/block}
     </body>
 </html>

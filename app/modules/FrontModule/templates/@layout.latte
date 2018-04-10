@@ -31,8 +31,7 @@
     </head>
 
     <body itemscope itemtype='http://schema.org/LocalBusiness' id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-        <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
+        {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
 
 
 
@@ -45,9 +44,7 @@
 
         {block scripts}
             <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-            <script type="text/javascript">
 
-            </script>
         {/block}
 
         {include bordel}

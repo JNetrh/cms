@@ -201,4 +201,48 @@ var dialog = function(el, text, trueCallback, abortCallback) {
         });
 
     });
+};
+
+
+/*----------------------------------------------------------------------------*/
+/* Flash messages: */
+
+function flashMessage(message){
+    var position = $("#flashMessage").position();
+    console.log(position.top);
+    if(position.top < 0){
+        setTimeout(function () {
+            $("#flashMessage").animate({
+                top: '0px'
+            }, 200)
+            console.log('xxx')
+        }, 4000)
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
