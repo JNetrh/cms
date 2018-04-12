@@ -35,6 +35,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->articles->delete($blockId);
+	    $this->flashMessage('Block has been deleted');
         $this->redirect('Summary:');
     }
 
@@ -42,6 +43,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
         $entity = $this->articles->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image successfully deleted');
         $this->redirect('Articles:edit', $id);
     }
 
@@ -49,6 +51,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
         $entity = $this->articles->findById($id);
         $entity->deleteImageArticle();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image linked to the article successfully deleted');
         $this->redirect('Articles:edit', $id);
     }
 
@@ -154,6 +157,7 @@ class ArticlesPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Article successfully saved');
             $this->redirect('Summary:');
         }
 

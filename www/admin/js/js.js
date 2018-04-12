@@ -215,13 +215,7 @@ function flashMessage(message){
     startCount();
     c = 0
     ToggleMessage(true)
-
-
-
-    $("#flashMessage").find('ul').append('<li>nová message</li>');
-
-
-
+    $("#flashMessage").find('ul').append('<li>' + message + '</li>');
 }
 
 function ToggleMessage(bol) {
@@ -241,7 +235,7 @@ function timedCount() {
 
     c = c + 1;
     t = setTimeout(function(){
-        if(c > 2){
+        if(c > 3){
             stopCount()
             ToggleMessage(false)
             $("#flashMessage").find('ul').html('')

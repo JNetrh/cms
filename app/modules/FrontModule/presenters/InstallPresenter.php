@@ -11,6 +11,7 @@ use PDOException;
 class InstallPresenter  extends BasePresenter
 {
 
+	public  $db;
 
 	public function __construct()
 	{
@@ -59,7 +60,7 @@ class InstallPresenter  extends BasePresenter
 
 
 	    try {
-		    new Nette\Database\Connection("mysql:host=$host;dbname=$dbname", $username, $password);
+		    $this->db = new Nette\Database\Connection("mysql:host=$host;dbname=$dbname", $username, $password);
 	    }
 	    catch(PDOException $e)
 	    {
@@ -70,9 +71,30 @@ class InstallPresenter  extends BasePresenter
 
 		if(!$form->hasErrors()){
 			$this->write_ini_file('./config.ini', $data);
+
+			$this->createDatabase();
+
 			$this->redirect('Homepage:');
 		}
 
+    }
+
+
+    public function createDatabase() {
+	    define('ROOTPATH', dirname(__FILE__));
+	    $file = './sql.sql';
+	    if($fp = file_get_contents($file)) {
+		    $var_array = explode(';',$fp);
+		    bdump($var_array);
+		    foreach($var_array as $value) {
+		    	bdump($value);
+		    	try {
+				    $this->db->query($value.';');
+			    }
+			    catch(Nette\Database\DriverException $e){
+			    }
+		    }
+	    }
     }
 
 

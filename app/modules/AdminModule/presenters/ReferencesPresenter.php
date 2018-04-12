@@ -50,11 +50,13 @@ class ReferencesPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->references->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteReference($referenceId, $blockId){
         $this->references->deleteReference($blockId, $referenceId);
+	    $this->flashMessage('Sub block successfully removed');
         $this->redirect('References:edit', $blockId);
     }
 
@@ -62,6 +64,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $entity = $this->references->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Background image successfully removed');
         $this->redirect('References:edit', $id);
     }
 
@@ -69,6 +72,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         $entity = $this->references->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image successfully removed');
         $this->redirect('References:editReference', $id, $blockId);
     }
 
@@ -148,6 +152,7 @@ class ReferencesPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Block successfully removed');
             $this->redirect('Summary:');
         }
 
@@ -207,10 +212,9 @@ class ReferencesPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
 
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Reference successfully removed');
             $this->redirect('References:edit', $entity->getOwner());
         }
-
-//        $this->redirect('References', $entity->getOwner());
 
     }
 

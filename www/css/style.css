@@ -500,14 +500,6 @@ body {
 .bg-grey {
     background-color: #f6f6f6;
 }
-.logo-small {
-    color: #f4511e;
-    font-size: 50px;
-}
-.logo {
-    color: #f4511e;
-    font-size: 200px;
-}
 .thumbnail {
     padding: 0 0 15px 0;
     border: none;
@@ -516,44 +508,7 @@ body {
 .item span {
     font-style: normal;
 }
-.panel {
-    border: 1px solid #f4511e;
-    border-radius:0 !important;
-    transition: box-shadow 0.5s;
-}
-.panel:hover {
-    box-shadow: 5px 0px 40px rgba(0,0,0, .2);
-}
-.panel-footer .btn:hover {
-    border: 1px solid #f4511e;
-    background-color: #fff !important;
-    color: #f4511e;
-}
-.panel-heading {
-    color: #fff !important;
-    background-color: #f4511e !important;
-    padding: 25px;
-    border-bottom: 1px solid transparent;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-.panel-footer {
-    background-color: white !important;
-}
-.panel-footer h3 {
-    font-size: 32px;
-}
-.panel-footer h4 {
-    color: #aaa;
-    font-size: 14px;
-}
-.panel-footer .btn {
-    margin: 15px 0;
-    background-color: #f4511e;
-    color: #fff;
-}
+
 .navbar {
     margin-bottom: 0;
     z-index: 9999;
@@ -617,11 +572,6 @@ footer .glyphicon {
         margin-bottom: 35px;
     }
 }
-@media screen and (max-width: 480px) {
-    .logo {
-        font-size: 150px;
-    }
-}
 
 
 .carousel-inner img {
@@ -675,6 +625,9 @@ nav .container-fluid {
 }
 div.divReference-inner {
     margin: 0 -30px;
+}
+div.divTop-100 {
+    margin-top: 100px
 }
  /*Extra small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
@@ -815,54 +768,3 @@ div.divReference-inner {
 
 
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,700i&subset=latin-ext');
-
-/*@font-face {*/
-    /*font-family: 'robotoregular';*/
-    /*src: url('../font/Roboto-Regular.eot');*/
-    /*src: url('../font/Roboto-Regular.eot?#iefix') format('embedded-opentype'),*/
-    /*url('../font/Roboto-Regular.woff2') format('woff2'),*/
-    /*url('../font/Roboto-Regular.woff') format('woff'),*/
-    /*url('../font/Roboto-Regular.svg#robotoregular') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/
-/*@font-face {*/
-    /*font-family: 'robotoblack';*/
-    /*src: url('../font/Roboto-Black.eot');*/
-    /*src: url('../font/Roboto-Black.eot?#iefix') format('embedded-opentype'),*/
-    /*url('../font/Roboto-Black.woff2') format('woff2'),*/
-    /*url('../font/Roboto-Black.woff') format('woff'),*/
-    /*url('../font/Roboto-Black.svg#robotoblack') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/
-/*@font-face {*/
-    /*font-family: 'robotoblack_italic';*/
-    /*src: url('../font/Roboto-Black-Italic.eot');*/
-    /*src: url('../font/Roboto-Black-Italic.eot?#iefix') format('embedded-opentype'),*/
-    /*url('../font/Roboto-Black-Italic.woff2') format('woff2'),*/
-    /*url('../font/Roboto-Black-Italic.woff') format('woff'),*/
-    /*url('../font/Roboto-Black-Italic.svg#robotoblack_italic') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/
-/*@font-face {*/
-    /*font-family: 'robotobold';*/
-    /*src: url('../font/Roboto-Bold.eot');*/
-    /*src: url('../font/Roboto-Bold.eot?#iefix') format('embedded-opentype'),*/
-    /*url('../font/Roboto-Bold.woff2') format('woff2'),*/
-    /*url('../font/Roboto-Bold.woff') format('woff'),*/
-    /*url('../font/Roboto-Bold.svg#robotobold_condensed_italic') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/
-/*@font-face {*/
-    /*font-family: 'robotothin';*/
-    /*src: url('../font/Roboto-Thin.eot');*/
-    /*src: url('../font/Roboto-Thin.eot?#iefix') format('embedded-opentype'),*/
-    /*url('../font/Roboto-Thin.woff2') format('woff2'),*/
-    /*url('../font/Roboto-Thin.woff') format('woff'),*/
-    /*url('../font/Roboto-Thin.svg#robotobold_condensed_italic') format('svg');*/
-    /*font-weight: normal;*/
-    /*font-style: normal;*/
-/*}*/

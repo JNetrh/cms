@@ -45,6 +45,7 @@ class MenuPresenter extends SecuredBasePresenter {
 
     public function handleDeleteMenu($menuId, $blockId){
         $this->menus->deleteMenu($blockId, $menuId);
+	    $this->flashMessage('Menu item successfully removed');
         $this->redirect('Menu:edit');
     }
 
@@ -53,6 +54,7 @@ class MenuPresenter extends SecuredBasePresenter {
         $entity = $this->entity;
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Favicon successfully removed');
 	    $this->redirect('Menu:edit');
     }
 
@@ -146,6 +148,7 @@ class MenuPresenter extends SecuredBasePresenter {
 			        unset($data['newext_link']);
 			        unset($data['newext_position']);
 			        unset($data['newext_text']);
+			        $this->flashMessage('New link successfully created');
 		        }
         	}
             if(end($value) === 'color'){
@@ -209,6 +212,7 @@ class MenuPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Menu successfully saved');
             $this->redirect('Menu:edit');
         }
 

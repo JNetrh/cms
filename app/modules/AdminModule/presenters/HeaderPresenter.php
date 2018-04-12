@@ -34,6 +34,7 @@ class HeaderPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->headers->delete($blockId);
+	    $this->flashMessage('Header block successfully removed');
         $this->redirect('Summary:');
     }
 
@@ -41,6 +42,7 @@ class HeaderPresenter extends SecuredBasePresenter {
         $entity = $this->headers->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Logo image successfully removed');
         $this->redirect('Header:edit', $id);
     }
 
@@ -142,6 +144,7 @@ class HeaderPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Header successfully saved');
             $this->redirect('Summary:');
         }
     }

@@ -50,11 +50,13 @@ class EventsPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->events->delete($blockId);
+	    $this->flashMessage('Block has been successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteEvent($eventId, $blockId){
         $this->events->deleteEvent($blockId, $eventId);
+	    $this->flashMessage('Event successfully removed');
         $this->redirect('Events:edit', $blockId);
     }
 
@@ -63,6 +65,7 @@ class EventsPresenter extends SecuredBasePresenter {
         $entity = $this->events->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Background image successfully removed');
         $this->redirect('Events:edit', $id);
     }
 
@@ -70,6 +73,7 @@ class EventsPresenter extends SecuredBasePresenter {
         $entity = $this->events->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Event Image successfully removed');
         $this->redirect('Events:editEvent', $id, $blockId);
     }
 
@@ -151,6 +155,7 @@ class EventsPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Event Block successfully saved');
             $this->redirect('Summary:');
         }
 
@@ -216,10 +221,9 @@ class EventsPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
 
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Event successfully saved');
             $this->redirect('Events:edit', $entity->getOwner());
         }
-
-//        $this->redirect('Events:edit', $entity->getOwner());
 
     }
 

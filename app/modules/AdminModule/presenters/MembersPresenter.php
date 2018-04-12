@@ -50,11 +50,14 @@ class MembersPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->members->delete($blockId);
+	    $this->flashMessage('Members block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteMember($memberId, $blockId){
+    	$member = $this->members->findSubById($blockId, $memberId)->getName();
         $this->members->deleteMember($blockId, $memberId);
+	    $this->flashMessage("$member successfully removed");
         $this->redirect('Members:edit', $blockId);
     }
 
@@ -63,6 +66,7 @@ class MembersPresenter extends SecuredBasePresenter {
         $entity = $this->members->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Background image successfully removed');
         $this->redirect('Members:edit', $id);
     }
 
@@ -70,6 +74,7 @@ class MembersPresenter extends SecuredBasePresenter {
         $entity = $this->members->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image successfully removed');
         $this->redirect('Members:editMember', $id, $blockId);
     }
 
@@ -150,6 +155,7 @@ class MembersPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Block successfully saved');
             $this->redirect('Summary:');
         }
 
@@ -209,10 +215,10 @@ class MembersPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
 
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Sub Block successfully saved');
             $this->redirect('Members:edit', $entity->getOwner());
         }
 
-//        $this->redirect('Members:edit', $entity->getOwner());
 
     }
 

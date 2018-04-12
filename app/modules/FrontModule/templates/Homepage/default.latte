@@ -24,7 +24,15 @@
         {include blockyMenu row => $menu}
     </header>
 
-
+    {if count($blocks) == 0}
+        <div class="container divTop-100">
+            <div class="panel">
+                <div class="panel-body">
+                    <p>To start creating your stunning websites processed to  <a href="{link :Admin:Main:}">administration</a> </p>
+                </div>
+            </div>
+        </div>
+    {/if}
     {foreach $blocks as $row}
         {if $row->getActive() == 1}
             <section>

@@ -49,41 +49,48 @@ class SummaryPresenter extends SecuredBasePresenter {
     public function handleDeleteMember($blockId){
     	$this->deleteMenu($this->members->findById($blockId));
         $this->members->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteHeader($blockId){
         $this->headers->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteReference($blockId){
 	    $this->deleteMenu($this->references->findById($blockId));
         $this->references->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteEvent($blockId){
 	    $this->deleteMenu($this->events->findById($blockId));
         $this->events->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteContact($blockId){
 	    $this->deleteMenu($this->contacts->findById($blockId));
         $this->contacts->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteArticle($blockId){
 	    $this->deleteMenu($this->articles->findById($blockId));
         $this->articles->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteSponsor($blockId){
 	    $this->deleteMenu($this->sponsors->findById($blockId));
         $this->sponsors->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
@@ -96,7 +103,6 @@ class SummaryPresenter extends SecuredBasePresenter {
 	public function handlePreview($string, $id)
 	{
 
-//		$this->template->singleMember = $this->database->query('SELECT users.id, users.name, users.email, users.surname, users.about, users.specialization, users.clubposition, users.member_display, images.category, images.alt, images.img, owner FROM users JOIN images ON (users.id = images.owner) WHERE images.category="people" AND users.id = ? LIMIT 1', $userId)->fetch();
 		if( $this->isAjax() ) {
 			$toDisplay = $this->myBlocks->searchByIdExt($string, $id);
 			$this->template->block = $toDisplay;

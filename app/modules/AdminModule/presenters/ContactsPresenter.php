@@ -35,6 +35,7 @@ class ContactsPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->contacts->delete($blockId);
+	    $this->flashMessage('Block has been removed');
         $this->redirect('Summary:');
     }
 
@@ -43,6 +44,7 @@ class ContactsPresenter extends SecuredBasePresenter {
         $entity = $this->contacts->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image successfully removed');
         $this->redirect('Contacts:edit', $id);
     }
 
@@ -149,6 +151,7 @@ class ContactsPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Block contacts successfully saved');
             $this->redirect('Summary:');
         }
 

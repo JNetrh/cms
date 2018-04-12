@@ -39,6 +39,7 @@ class SeoPresenter extends SecuredBasePresenter {
         $entity = $this->entity;
         $entity->deleteFavicon();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Favicon successfully removed');
 	    $this->redirect('Seo:edit');
     }
 
@@ -101,6 +102,7 @@ class SeoPresenter extends SecuredBasePresenter {
 
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Successfully saved');
             $this->redirect('Seo:edit');
         }
 

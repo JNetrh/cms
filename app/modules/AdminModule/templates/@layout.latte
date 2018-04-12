@@ -6,13 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{ifset title}{include title|stripHtml} | {/ifset}Administration</title>
 
-        {*<script src="{$basePath}/js/jquery-3.3.1.min.js"></script>*}
-        {*Necessary for bootstrap v 4.0 *}
-        {*<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>*}
-        {*<script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>*}
-        {*<script src="{$basePath}/js/bootstrap.min.js"></script>*}
-
-        {*<link href="{$basePath}/css/bootstrap.min.css" rel="stylesheet" >*}
         <!--STYLE Bootstrap stylesheet-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!--STYLE Font general-->
@@ -57,13 +50,11 @@
     </head>
 
     <body>
-    {*<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>*}
 
-
-    <div id="flashMessage" class="divFlashMessage">
-        <ul class="ulFlashMessage">
-        </ul>
-    </div>
+        <div id="flashMessage" class="divFlashMessage">
+            <ul class="ulFlashMessage">
+            </ul>
+        </div>
 
 
             <nav class="navbar navbar-default visible-xs">
@@ -94,17 +85,6 @@
                         <li id="summary"><a n:href="Menu:edit" >Menu</a></li>
                         <li id="summary"><a n:href="Seo:edit" >SEO</a></li>
                         <li><a n:href=":Front:Homepage:" target="_blank">Web</a></li>
-                        {*<li id="blocks" class="liSPozadim"><a href="#" >New block</a>*}
-                            {*<!--První submenu-->*}
-                            {*<ul class="ulSubmenu1">*}
-                                {*<li id="header"><a n:href="Header:new" >New Header</a></li>*}
-                                {*<li id="members"><a n:href="Members:new" >New Members</a></li>*}
-                                {*<li id=""><a n:href="Members:newMember 1" >New member</a></li>*}
-                                {*<li id="references"><a n:href="References:new" >New references</a></li>*}
-                                {*<li id=""><a n:href="References:newReference 1" >New reference</a></li>*}
-                            {*</ul>*}
-                            {*<!--Konec První Sub-->*}
-                        {*</li>*}
                     </ul>
                 </div>
             </div>
@@ -114,46 +94,21 @@
 
 
 
-
-
-
-            {*<div class="col-md-2 sidenav hidden-sm hidden-xs divMenu same-height">*}
-                {*<a n:href="Main:"><img class="img-responsive imgLogo" src="{$basePath}/admin/img/svg/moje.svg" alt="logo"/></a>*}
-                {*<ul class="nav nav-pills nav-stacked menu">*}
-
-                    {*<li id="home" class="liMenu"><a n:href="Main:" >Home</a></li>*}
-                    {*<li id="blocks" class="liMenu"><a href="#" >New block</a></li>*}
-                    {*<ul class='ulSubmenu1'>*}
-                        {*<li id="header"><a n:href="Header:new" >New Header</a></li>*}
-                        {*<li id="members"><a n:href="Members:new" >New Members</a></li>*}
-                        {*<li id=""><a n:href="Members:newMember 1" >New member</a></li>*}
-                        {*<li id="references"><a n:href="References:new" >New references</a></li>*}
-                        {*<li id=""><a n:href="References:newReference 1" >New reference</a></li>*}
-                    {*</ul>*}
-
-                {*</ul>*}
-            {*</div>*}
-
             <div class="divLayoutTop navbar hidden-xs">
-                {*<div class="container-fluid">*}
-                    <div class="divPageH">
-                        {include heading}
-                    </div>
-                    <ul class="list-inline ulNav">
-                        <li><i class="fa fa-user-circle-o" aria-hidden="true"></i></li>
-                        <li>{ifset $this->getParameter('user')->getIdentity()->data['email']}{$this->getParameter('user')->getIdentity()->data['email']}{/ifset}</li>
-                        <li>|</li>
-                        <li><a class="bila" n:href="logout"><strong>Sign out</strong></a></li>
-                    </ul>
-                {*</div>*}
+                <div class="divPageH">
+                    {include heading}
+                </div>
+                <ul class="list-inline ulNav">
+                    <li><i class="fa fa-user-circle-o" aria-hidden="true"></i></li>
+                    <li>{ifset $this->getParameter('user')->getIdentity()->data['email']}{$this->getParameter('user')->getIdentity()->data['email']}{/ifset}</li>
+                    <li>|</li>
+                    <li><a class="bila" n:href="logout"><strong>Sign out</strong></a></li>
+                </ul>
             </div>
 
 
 
             <div class="divLayoutRight by-height">
-
-                <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
                 {include content}
             </div>
 
@@ -165,24 +120,15 @@
 
 
 
+    <script type="text/javascript">
+        {foreach $flashes as $flash}
+            var flash = {$flash->message}
+            flashMessage(flash);
+        {/foreach}
+    </script>
     {ifset bordel}{include bordel}{/ifset}
     {block scripts}
         <script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-        <script type="text/javascript">
-            flashMessage('ahoj')
-            setTimeout(function () {
-                flashMessage('ahoj')
-            },2000)
-            setTimeout(function () {
-                flashMessage('ahoj')
-            },4000)
-            setTimeout(function () {
-                flashMessage('ahoj')
-            },9000)
-            setTimeout(function () {
-                flashMessage('ahoj')
-            },16000)
-        </script>
     {/block}
     </body>
 </html>

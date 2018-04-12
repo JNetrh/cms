@@ -50,11 +50,13 @@ class SponsorsPresenter extends SecuredBasePresenter {
 
     public function handleDelete($blockId){
         $this->sponsors->delete($blockId);
+	    $this->flashMessage('Block successfully removed');
         $this->redirect('Summary:');
     }
 
     public function handleDeleteSponsor($sponsorId, $blockId){
         $this->sponsors->deleteSponsor($blockId, $sponsorId);
+	    $this->flashMessage('Sub block successfully removed');
         $this->redirect('Sponsors:edit', $blockId);
     }
 
@@ -62,6 +64,7 @@ class SponsorsPresenter extends SecuredBasePresenter {
         $entity = $this->sponsors->findById($id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Background image successfully removed');
         $this->redirect('Sponsors:edit', $id);
     }
 
@@ -69,6 +72,7 @@ class SponsorsPresenter extends SecuredBasePresenter {
         $entity = $this->sponsors->findSubById($blockId, $id);
         $entity->deleteImage();
         $this->service->saveEntity($entity);
+	    $this->flashMessage('Image successfully removed');
         $this->redirect('Sponsors:edit', $blockId);
     }
 
@@ -151,6 +155,7 @@ class SponsorsPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
             $this->service->saveEntity($entity);
 	        $this->blockFactory->setMenu($entity);
+	        $this->flashMessage('Block successfully saved');
             $this->redirect('Summary:');
         }
 
@@ -204,10 +209,10 @@ class SponsorsPresenter extends SecuredBasePresenter {
         if(!$form->hasErrors()){
 
             $this->service->saveEntity($entity);
+	        $this->flashMessage('Sub block successfully saved');
             $this->redirect('Sponsors:edit', $entity->getOwner());
         }
 
-//        $this->redirect('Sponsors:edit', $entity->getOwner());
 
     }
 
