@@ -6,7 +6,9 @@ namespace App\FrontModule\Presenters;
 
 use Nette\Application\UI\Form;
 use Nette;
+use Nette\Database\Connection;
 use PDOException;
+
 
 class InstallPresenter  extends BasePresenter
 {
@@ -24,7 +26,7 @@ class InstallPresenter  extends BasePresenter
 
     public function createComponentDatabaseForm(){
 		$form = new Form();
-		$form->addText('password');
+		$form->addPassword('password');
 		$form->addText('username');
 		$form->addText('dbname');
 		$form->addText('host');
@@ -36,14 +38,27 @@ class InstallPresenter  extends BasePresenter
 		return $form;
     }
 
+    public function createComponentNewAccountForm(){
+		$form = new Form();
+		$form->addPassword('password');
+		$form->addText('email');
+
+		$form->addSubmit('submit');
+
+	    $form->onSuccess[] = [$this, 'newAccountFormSucceeded'];
+
+		return $form;
+    }
+
     public function databaseFormSucceeded($form){
 		$data = $form->getHttpData();
+		$password = true;
 		unset($data['_submit'], $data['_do']);
 
 		if($data['password'] == "") {
-			$form['password']->addError('fill the password');
+			$password = false;
 		}
-		elseif ($data['username'] == ""){
+		if ($data['username'] == ""){
 			$form['username']->addError('fill the username');
 		}
 		elseif ($data['host'] == ""){
@@ -55,12 +70,12 @@ class InstallPresenter  extends BasePresenter
 
 	    $host = $data['host'];
 	    $username = $data['username'];
-	    $password = $data['password'];
+	    $password = $password == true ? $data['password'] : "";
 	    $dbname = $data['dbname'];
 
-
 	    try {
-		    $this->db = new Nette\Database\Connection("mysql:host=$host;dbname=$dbname", $username, $password);
+		    $this->db = new Connection("mysql:host=$host;dbname=$dbname", $username, $password);
+
 	    }
 	    catch(PDOException $e)
 	    {
@@ -73,6 +88,61 @@ class InstallPresenter  extends BasePresenter
 			$this->write_ini_file('./config.ini', $data);
 
 			$this->createDatabase();
+
+			$this->redirect('Install:account');
+		}
+
+    }
+
+    public function newAccountFormSucceeded($form){
+		$data = $form->getHttpData();
+		unset($data['_submit'], $data['_do']);
+
+		if($data['password'] == "") {
+			$form['password']->addError('password is required');
+		}
+		if ($data['email'] == ""){
+			$form['email']->addError('fill in the email');
+		}
+
+
+	    $email = $data['email'];
+	    $password = $data['password'];
+
+
+
+	    $ini_array = parse_ini_file("./config.ini");
+
+	    if(isset($ini_array['username'])){
+		    $dbUsername = $ini_array['username'];
+		    $dbPassword = $ini_array['password'];
+		    $dbDbname = $ini_array['dbname'];
+		    $dbHost = $ini_array['host'];
+	    }
+	    else {
+		    $form->addError('set up the database first');
+		    $this->redirect('Install:');
+	    }
+
+
+		if(!$form->hasErrors()){
+			$connection = new Connection("mysql:host=$dbHost;dbname=$dbDbname", $dbUsername, $dbPassword);
+
+			$check = $connection->query('SELECT * FROM users WHERE email = ? LIMIT 1', $email)->fetchAll();
+
+			if(count($check) > 0){
+				$form->addError('This email already exists');
+				die();
+			}
+
+
+			$connection->query('INSERT INTO users (email, password) values (?, ?)', $email, password_hash($password, PASSWORD_DEFAULT));
+			$newUser = $connection->query('SELECT * FROM users WHERE email = ? LIMIT 1', $email)->fetchAll();
+
+
+			$userId = $newUser[0]->id;
+			$connection->query('INSERT INTO `userrights`(`userId`, `rightId`) VALUES (?,1) ', $userId);
+
 
 			$this->redirect('Homepage:');
 		}
@@ -166,45 +236,5 @@ class InstallPresenter  extends BasePresenter
 		return true;
 	}
 
-
-//	public function write_php_ini($array, $file)
-//	{
-//		unset($array['_do'],$array['_submit']);
-//		bdump($array);
-//		$res = array();
-//		foreach($array as $key => $val)
-//		{
-//			if(is_array($val))
-//			{
-//				$res[] = "[$key]";
-//				foreach($val as $skey => $sval) $res[] = "$skey = ".(is_numeric($sval) ? $sval : '"'.$sval.'"');
-//			}
-//			else $res[] = "$key = ".(is_numeric($val) ? $val : '"'.$val.'"');
-//		}
-//		$this->safefilerewrite($file, implode("\r\n", $res));
-//	}
-//
-//	public function safefilerewrite($fileName, $dataToSave)
-//	{    if ($fp = fopen($fileName, 'w'))
-//			{
-//				$startTime = microtime(TRUE);
-//				do
-//				{
-//					$canWrite = flock($fp, LOCK_EX);
-//					// If lock not obtained sleep for 0 - 100 milliseconds, to avoid collision and CPU load
-//					if(!$canWrite) usleep(round(rand(0, 100)*1000));
-//				} while ((!$canWrite)and((microtime(TRUE)-$startTime) < 5));
-//
-//				//file was locked so now we can store information
-//				if ($canWrite) {
-//
-//					bdump($dataToSave);
-//					fwrite($fp, $dataToSave);
-//					flock($fp, LOCK_UN);
-//				}
-//				fclose($fp);
-//			}
-//
-//	}
 
 }

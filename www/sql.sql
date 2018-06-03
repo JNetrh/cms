@@ -342,7 +342,5 @@ INSERT INTO `rights` (`id`, `name`) VALUES
 -- Vypisuji data pro tabulku `userrights` a data pro tabulku `users`
 --
 
-INSERT INTO `users`(`email`, `password`) VALUES ("netj01@vse.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
-INSERT INTO `userrights`(`userId`, `rightId`) VALUES (1,1);
-INSERT INTO `users`(`email`, `password`) VALUES ("example@example.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
-INSERT INTO `userrights`(`userId`, `rightId`) VALUES (2,1);
+INSERT INTO `users`(`id`,`email`, `password`) VALUES (69,"example@example.cz", "$2y$10$4iP5iusxv7MAYDaB92moYuZdhEK.51V4j9mv7pSQbJnjP5NBG4BMa");
+INSERT INTO `userrights`(`userId`, `rightId`) VALUES (69,1);

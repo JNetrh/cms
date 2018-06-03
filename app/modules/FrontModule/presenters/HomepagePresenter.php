@@ -6,8 +6,12 @@ use Nette;
 use App\Model\BlockFactory as BF;
 
 
+
 class HomepagePresenter  extends BasePresenter
 {
+
+
+	private $blockFactory;
 
 	private $blocks;
 	private $menu;
@@ -15,6 +19,8 @@ class HomepagePresenter  extends BasePresenter
 
 	public function __construct(BF $blockFactory)
 	{
+		$this->blockFactory = $blockFactory;
+
 		$this->blocks = $blockFactory->getAllBlocks();
 		$this->menu = $blockFactory->getBlockMenus()->getOne();
 		$this->seo = $blockFactory->getBlockSeo()->getOne();

@@ -2,15 +2,10 @@
 [![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/its-not-a-lie-if-you-believe-it.svg)](https://forthebadge.com)
 
-Nette Web Project
+BLOCKY CMS
 =================
 
-This is a simple, skeleton application using the [Nette](https://nette.org). This is meant to
-be used as a starting point for your new projects.
-
-[Nette](https://nette.org) is a popular tool for PHP web development.
-It is designed to be the most usable and friendliest as possible. It focuses
-on security and performance and is definitely one of the safest PHP frameworks.
+One page based CMS powered by [Nette](https://nette.org) framework
 
 
 Requirements
@@ -18,15 +13,15 @@ Requirements
 
 PHP 5.6 or higher.
 
+MariaDB
+
 
 Installation
 ------------
 
-The best way to install Web Project is using Composer. If you don't have Composer yet,
-download it following [the instructions](https://doc.nette.org/composer). Then use command:
-
-	composer create-project nette/web-project path/to/install
-	cd path/to/install
+There is no need to install anything. Package contains all dependencies. Simply upload all files
+to the web hosting and processed to URL given. You will be redirected to the installation 
+page.
 
 
 Make directories `temp/` and `log/` writable.
@@ -46,6 +41,9 @@ should be ready to go.
 
 **It is CRITICAL that whole `app/`, `log/` and `temp/` directories are not accessible directly
 via a web browser. See [security warning](https://nette.org/security-warning).**
+
+For a database connection on localhost you can use Xampp or MAMP that run Maria DB. sql.sql file can be found in cms/www/sql.sql.
+It contains all database configuration. 
 
 Notice: Composer PHP version
 ----------------------------

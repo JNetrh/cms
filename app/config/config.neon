@@ -1,6 +1,5 @@
 parameters:
 
-
 doctrine:
     user: @App\Model\DbFactory::username
     password: @App\Model\DbFactory::password
